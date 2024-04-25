@@ -16,8 +16,6 @@ class AutoSim(tk.Tk):
         self.loop = asyncio.new_event_loop()
         self.thread = threading.Thread(target=self.start_loop, args=(self.loop,))
         self.thread.start()
-        self.ignore_next_stop = False  # error with the code duel hitting the toggle for some reason
-        self.autosim_last_click_time = time.time() - 1
         self.autosim_running = False  # This will track the running state internally, not in config
         keyboard.register_hotkey(AUTOSIM_KEY, self.toggle_autosim, suppress=True)
         self.autosim_label = None
