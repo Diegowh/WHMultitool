@@ -6,6 +6,8 @@ import keyboard
 import pyautogui
 
 
+AUTOSIM_KEY = 'f1'
+
 class AutoSim(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -17,11 +19,11 @@ class AutoSim(tk.Tk):
         self.ignore_next_stop = False  # error with the code duel hitting the toggle for some reason
         self.autosim_last_click_time = time.time() - 1
         self.autosim_running = False  # This will track the running state internally, not in config
-        keyboard.register_hotkey('f6', self.toggle_autosim, suppress=True)
+        keyboard.register_hotkey(AUTOSIM_KEY, self.toggle_autosim, suppress=True)
         self.autosim_label = None
         
         self.text_input = tk.StringVar()
-        self.title("Wallhack el mejor UwU")
+        self.title("ADAT - AutoSim")
         self.geometry("300x200")
         self.resizable(False, False)
         self.init_gui()
@@ -30,7 +32,7 @@ class AutoSim(tk.Tk):
         """
         Initialize the GUI components.
         """
-        instructions_label = tk.Label(self, text="F6 - Toggle autosim")
+        instructions_label = tk.Label(self, text=f"{AUTOSIM_KEY} - Toggle autosim")
         instructions_label.pack(padx=20, pady=20)
         self.autosim_label = instructions_label
         
