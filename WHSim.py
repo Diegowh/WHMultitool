@@ -115,5 +115,10 @@ class AutoSim(tk.Tk):
             await self.move_and_click(170, 880)
             await self.move_and_click(964, 964)
             
+    def destroy(self) -> None:
+        self.loop.call_soon_threadsafe(self.loop.stop)
+        self.thread.join()
+        super().destroy()
+            
 app = AutoSim()
 app.mainloop()
