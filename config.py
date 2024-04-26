@@ -24,6 +24,13 @@ class Config:
         
         for key in self.config:
             setattr(self, key, self.config[key])
+        
+        # I don't want these values to be configurable by the user
+        self.APP_VERSION = "v0.2.2"
+        self.APP_WEIGHT = 300
+        self.APP_HEIGHT = 200
+        self.APP_TITLE = f"{self.APP_VERSION} - ADAT - AutoSim"
+        self.BACKGROUND_IMAGE = "messi_en_brazos.jpg"
 
 
     def _load_config(self) -> None:
