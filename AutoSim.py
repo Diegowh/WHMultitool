@@ -5,32 +5,29 @@ import tkinter as tk
 import keyboard
 import pyautogui
 
-AUTOSIM_KEY = 'f1'
-APP_WEIGHT = 300
-APP_HEIGHT = 200
-APP_VERSION = "v0.1.1"
-APP_TITLE = f"{APP_VERSION} ADAT - AutoSim"
-BACKGROUND_IMAGE = "messi_en_brazos.jpg"
+from config import Config
+
 
 class AutoSim(tk.Tk):
-    def __init__(self):
+    def __init__(self, config: Config):
         super().__init__()
         
+        self.config = config
         self.autosim_task = None
         self.loop = asyncio.new_event_loop()
         self.thread = threading.Thread(target=self.start_loop, args=(self.loop,))
         self.thread.start()
         self.autosim_running = False  # This will track the running state internally, not in config
-        keyboard.register_hotkey(AUTOSIM_KEY, self.toggle_autosim, suppress=True)
+        keyboard.register_hotkey(self.config.AUTOSIM_KEY, self.toggle_autosim, suppress=True)
         self.autosim_label = None
         
         self.text_input = tk.StringVar()
-        self.title("ADAT - AutoSim")
-        self.geometry(f"{APP_WEIGHT}x{APP_HEIGHT}")
+        self.title(self.config.APP_TITLE)
+        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
         self.resizable(False, False)
-        self.image_file = BACKGROUND_IMAGE
+        self.image_file = self.config.BACKGROUND_IMAGE
         image = Image.open(self.image_file)
-        image = image.resize((APP_WEIGHT, APP_HEIGHT))
+        image = image.resize((self.config.APP_WEIGHT, self.config.APP_HEIGHT))
         self.background_image = ImageTk.PhotoImage(image)
         self.init_gui()
 
@@ -40,7 +37,7 @@ class AutoSim(tk.Tk):
         """
         background_label = tk.Label(self, image=self.background_image)
         background_label.place(x=0, y=0, relwidth=1, relheight=1)
-        instructions_label = tk.Label(self, text=f"{AUTOSIM_KEY} - Toggle autosim")
+        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
         instructions_label.pack(padx=20, pady=20)
         self.autosim_label = instructions_label
         
@@ -130,5 +127,7 @@ class AutoSim(tk.Tk):
         self.thread.join()
         super().destroy()
 
-app = AutoSim()
+
+config = Config()
+app = AutoSim(config=config)
 app.mainloop()
