@@ -11,8 +11,6 @@ from config import Config
 
 class AutoSim():
     def __init__(self, config: Config):
-        super().__init__()
-        
         self.config = config
         self.autosim_task = None
         self.loop = asyncio.new_event_loop()
