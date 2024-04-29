@@ -81,11 +81,8 @@ class BreederManager:
         print("Destroying BreederManager...")
         if self.autoeggdrop_task is not None:
             self.loop.call_soon_threadsafe(self.loop.stop)
-        self.loop.call_soon_threadsafe(self.loop.close)
-        
         while self.loop.is_running():
             time.sleep(0.1)
-        
         self.loop.close()
         self.thread.join()
 

@@ -9,7 +9,7 @@ import time
 from config import Config
 
 
-class AutoSim(tk.Tk):
+class AutoSim():
     def __init__(self, config: Config):
         super().__init__()
         
@@ -51,7 +51,7 @@ class AutoSim(tk.Tk):
     async def run_auto_sim(self):
         try:
             while self.autosim_running:
-                map_number = self.text_input.get()
+                map_number = self.gui.text_input.get()
                 await self.autosim_routine(map_number)
             print("Auto-sim stopping")
         except Exception as e:
@@ -100,12 +100,10 @@ class AutoSim(tk.Tk):
         print("Destroying AutoSim...")
         if self.autosim_task is not None:
             self.loop.call_soon_threadsafe(self.loop.stop)
-        self.loop.call_soon_threadsafe(self.loop.close)
         while self.loop.is_running():
             time.sleep(0.1)
         self.loop.close()
         self.thread.join()
-
 
 
 class AutoSimGUI(tk.Tk):
@@ -120,10 +118,6 @@ class AutoSimGUI(tk.Tk):
         self.title(self.config.APP_TITLE)
         self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
         self.resizable(False, False)
-        self.image_file = self.config.BACKGROUND_IMAGE
-        image = Image.open(self.image_file)
-        image = image.resize((self.config.APP_WEIGHT, self.config.APP_HEIGHT))
-        self.background_image = ImageTk.PhotoImage(image)
         self.init_gui()
         self.autosim = autosim
         
@@ -132,8 +126,6 @@ class AutoSimGUI(tk.Tk):
         """
         Initialize the GUI components.
         """
-        background_label = tk.Label(self, image=self.background_image)
-        background_label.place(x=0, y=0, relwidth=1, relheight=1)
         instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
         instructions_label.pack(padx=20, pady=20)
         self.autosim_label = instructions_label
