@@ -19,7 +19,7 @@ class BreederManager:
         self.autoeggdrop_running = False
         keyboard.register_hotkey('f1', self.toggle_autoeggdrop, suppress=True)
         
-        self.gui = BreederManagerGUI(self)
+        self.gui = BreederManagerGUI(breeder_manager=self)
         self.gui.mainloop()
 
     def stop_loop(self):
@@ -88,12 +88,11 @@ class BreederManager:
         
         self.loop.close()
         self.thread.join()
-        print("BreederManager destroyed")
 
 
 class BreederManagerGUI(tk.Tk):
-    
-    def __init__(self, breeder_manager) -> None:
+
+    def __init__(self, breeder_manager: BreederManager) -> None:
         super().__init__()
         self.geometry("200x300")
         self.init_gui()
@@ -109,6 +108,7 @@ class BreederManagerGUI(tk.Tk):
     def destroy(self):
         self.breeder_manager.destroy()
         super().destroy()
+        print("BreederManager destroyed")
 
 
 
