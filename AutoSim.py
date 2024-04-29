@@ -20,33 +20,10 @@ class AutoSim(tk.Tk):
         self.thread.start()
         self.autosim_running = False  # This will track the running state internally, not in config
         keyboard.register_hotkey(self.config.AUTOSIM_KEY, self.toggle_autosim, suppress=True)
-        self.autosim_label = None
         
-        self.text_input = tk.StringVar()
-        self.title(self.config.APP_TITLE)
-        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
-        self.resizable(False, False)
-        self.image_file = self.config.BACKGROUND_IMAGE
-        image = Image.open(self.image_file)
-        image = image.resize((self.config.APP_WEIGHT, self.config.APP_HEIGHT))
-        self.background_image = ImageTk.PhotoImage(image)
-        self.init_gui()
+        self.gui = AutoSimGUI(autosim=self, config=self.config)
+        self.gui.mainloop()
 
-    def init_gui(self) :
-        """
-        Initialize the GUI components.
-        """
-        background_label = tk.Label(self, image=self.background_image)
-        background_label.place(x=0, y=0, relwidth=1, relheight=1)
-        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
-        instructions_label.pack(padx=20, pady=20)
-        self.autosim_label = instructions_label
-        
-        map_num_label = tk.Label(self, text="Map number:")
-        map_num_label.pack()
-
-        map_num_entry = tk.Entry(self, textvariable=self.text_input)
-        map_num_entry.pack(padx=10, pady=10)
 
     def start_loop(self, loop: asyncio.AbstractEventLoop):
         asyncio.set_event_loop(loop)
@@ -100,11 +77,6 @@ class AutoSim(tk.Tk):
         pyautogui.moveTo(x, y)
         pyautogui.click()
         await asyncio.sleep(sleep_time)
-    
-    # def debug_function(self, map_number):
-    #     while self.autosim_running:
-    #         print(f"function running with map number: {map_number}")
-    #         time.sleep(1)
         
     async def autosim_routine(self, map_number):
         while self.autosim_running:
@@ -125,6 +97,7 @@ class AutoSim(tk.Tk):
             await self.move_and_click(964, 964)
             
     def destroy(self) -> None:
+        print("Destroying AutoSim...")
         if self.autosim_task is not None:
             self.loop.call_soon_threadsafe(self.loop.stop)
         self.loop.call_soon_threadsafe(self.loop.close)
@@ -132,9 +105,51 @@ class AutoSim(tk.Tk):
             time.sleep(0.1)
         self.loop.close()
         self.thread.join()
+
+
+
+class AutoSimGUI(tk.Tk):
+
+    def __init__(self, config: Config, autosim: AutoSim) -> None:
+        super().__init__()
+        
+        self.config = config
+        
+        self.autosim_label = None
+        self.text_input = tk.StringVar()
+        self.title(self.config.APP_TITLE)
+        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
+        self.resizable(False, False)
+        self.image_file = self.config.BACKGROUND_IMAGE
+        image = Image.open(self.image_file)
+        image = image.resize((self.config.APP_WEIGHT, self.config.APP_HEIGHT))
+        self.background_image = ImageTk.PhotoImage(image)
+        self.init_gui()
+        self.autosim = autosim
+        
+        
+    def init_gui(self) :
+        """
+        Initialize the GUI components.
+        """
+        background_label = tk.Label(self, image=self.background_image)
+        background_label.place(x=0, y=0, relwidth=1, relheight=1)
+        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
+        instructions_label.pack(padx=20, pady=20)
+        self.autosim_label = instructions_label
+        
+        map_num_label = tk.Label(self, text="Map number:")
+        map_num_label.pack()
+
+        map_num_entry = tk.Entry(self, textvariable=self.text_input)
+        map_num_entry.pack(padx=10, pady=10)
+        
+    def destroy(self) -> None:
+        self.autosim.destroy()
         super().destroy()
+        print("AutoSim destroyed")
 
 
-config = Config()
-app = AutoSim(config=config)
-app.mainloop()
+if __name__ == "__main__":
+    config = Config()
+    app = AutoSim(config=config)
