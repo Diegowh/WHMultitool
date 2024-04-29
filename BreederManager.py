@@ -19,9 +19,9 @@ class BreederManager:
         self.autoeggdrop_running = False
         keyboard.register_hotkey('f1', self.toggle_autoeggdrop, suppress=True)
         
-        self.gui = BreederManagerGUI()
+        self.gui = BreederManagerGUI(self)
         self.gui.mainloop()
-        
+
     def stop_loop(self):
         for task in asyncio.all_tasks(self.loop):
             task.cancel()
@@ -64,44 +64,21 @@ class BreederManager:
     
     async def _autoeggdrop_routine(self):
         while self.autoeggdrop_running:
+            
             open_inventory()
-            
-            move_cursor_and_click(
-                location=PlayerInventoryCoordinates.SEARCH_BAR,
-                )
-            
-            type_text(
-                text="fertilized egg", 
-                post_delay=0.2
-            )
-            
-            move_cursor_and_click(
-                location=PlayerInventoryCoordinates.FIRST_SLOT,
-            )
-            
+            move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR)
+            type_text(text="fertilized egg", post_delay=0.2)
+            move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
             pop_item()
-            
             close_inventory()
-            
-            move(
-                direction=MoveDirection.LEFT,
-                prev_delay=0.3
-            )
+            move(direction=MoveDirection.LEFT, prev_delay=0.3)
 
-
-    
-    
-
-            
     def start_loop(self, loop: asyncio.AbstractEventLoop):
         asyncio.set_event_loop(loop)
         loop.run_forever()
 
-
-    
-
-    
     def destroy(self):
+        print("Destroying BreederManager...")
         if self.autoeggdrop_task is not None:
             self.loop.call_soon_threadsafe(self.loop.stop)
         self.loop.call_soon_threadsafe(self.loop.close)
@@ -111,24 +88,29 @@ class BreederManager:
         
         self.loop.close()
         self.thread.join()
-        super().destroy()
+        print("BreederManager destroyed")
+
 
 class BreederManagerGUI(tk.Tk):
     
-    def __init__(self) -> None:
+    def __init__(self, breeder_manager) -> None:
         super().__init__()
         self.geometry("200x300")
         self.init_gui()
-    
+        self.breeder_manager = breeder_manager
+
     def init_gui(self):
         """
         Initialize the GUI components.
         """
         instructions_label = tk.Label(self, text="Press F1 to toggle")
         instructions_label.pack(padx=20, pady=20)
-        
-    
-    
+
+    def destroy(self):
+        self.breeder_manager.destroy()
+        super().destroy()
+
+
+
 if __name__ == "__main__":
     bm = BreederManager()
-    
