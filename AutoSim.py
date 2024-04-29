@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import tkinter as tk
 import keyboard
 import pyautogui
+import time
 
 from config import Config
 
@@ -90,7 +91,7 @@ class AutoSim(tk.Tk):
         width, height = pyautogui.size()
         return width, height
     
-    async def move_and_click(self, x, y, sleep_time=0.5):
+    async def move_and_click(self, x, y, sleep_time=1):
         screen_w, screen_h = self.get_screen_resolution()
         # Default values are for 1920x1080 resolution, so we need to check if the resolution is different
         if screen_w != 1920 or screen_h != 1080:
@@ -114,7 +115,8 @@ class AutoSim(tk.Tk):
             pyautogui.press('enter')
             await asyncio.sleep(0.5)  # Wait for the map list to load
             await self.move_and_click(930, 335)  # Click on the first map in the list
-            await self.move_and_click(1700, 945, 3)  # Click Join and wait 3 seconds for the mod selection screen to load
+            await self.move_and_click(930, 335)  # Click again to confirm the map selection, sometimes the first click doesn't register
+            await self.move_and_click(1700, 945, 5)  # Click Join and wait 3 seconds for the mod selection screen to load
             await self.move_and_click(340, 930)  # Click Join
             await asyncio.sleep(10)  # Delay to allow the Server full message to appear
             pyautogui.press('esc')
@@ -123,7 +125,12 @@ class AutoSim(tk.Tk):
             await self.move_and_click(964, 964)
             
     def destroy(self) -> None:
-        self.loop.call_soon_threadsafe(self.loop.stop)
+        if self.autosim_task is not None:
+            self.loop.call_soon_threadsafe(self.loop.stop)
+        self.loop.call_soon_threadsafe(self.loop.close)
+        while self.loop.is_running():
+            time.sleep(0.1)
+        self.loop.close()
         self.thread.join()
         super().destroy()
 
