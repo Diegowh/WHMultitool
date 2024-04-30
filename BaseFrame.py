@@ -14,4 +14,4 @@ class BaseFrame(tk.Frame, ABC):
     
     def create_widgets(self):
         back_btn = tk.Button(self, text="Back", command=self.destroy_screen)
-        back_btn.pack(pady=10)
+        back_btn.pack(side=tk.BOTTOM, pady=20)
