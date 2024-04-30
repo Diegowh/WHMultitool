@@ -8,23 +8,20 @@ from threading import Thread
 import keyboard
 from config import Config
 from BaseFrame import BaseFrame
-import utils
 
 
-
-
-class BreederManager:
+class EggPopper:
     
     def __init__(self, config: Config, master, controller) -> None:
         self.config = config
-        self.gui = BreederManagerGUI(breeder_manager=self, config=self.config, master=master, controller=controller)
+        self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         self.autoeggdrop_task = None
         self.loop = asyncio.new_event_loop()
         self.thread = Thread(target=self.start_loop, args=(self.loop,))
         self.thread.start()
         self.autoeggdrop_running = False
         keyboard.register_hotkey('f1', self.toggle_autoeggdrop, suppress=True)
-        print("BreederManager initialized\n")
+        print("EggPopper initialized\n")
         
     def start_loop(self, loop: asyncio.AbstractEventLoop):
         asyncio.set_event_loop(loop)
@@ -73,7 +70,7 @@ class BreederManager:
 
 
     def destroy_loop(self):
-        print("Destroying BreederManager...")
+        print("Destroying EggPopper...")
         self.loop.call_soon_threadsafe(self.loop.stop)
         while self.loop.is_running():
             time.sleep(0.1)
@@ -81,14 +78,14 @@ class BreederManager:
         self.thread.join()
 
 
-class BreederManagerGUI(BaseFrame):
+class EggPopperGUI(BaseFrame):
 
-    def __init__(self, breeder_manager: BreederManager, config: Config, master, controller) -> None:
+    def __init__(self, egg_popper: EggPopper, config: Config, master, controller) -> None:
         super().__init__(master=master, controller=controller)
         
         self.config = config
         self.init_gui()
-        self.breeder_manager = breeder_manager
+        self.egg_popper = egg_popper
 
     def init_gui(self):
         """
@@ -98,6 +95,6 @@ class BreederManagerGUI(BaseFrame):
         instructions_label.pack(padx=20, pady=20)
 
     def destroy_gui(self):
-        self.breeder_manager.destroy_loop()
+        self.egg_popper.destroy_loop()
         super().destroy()
-        print("BreederManager destroyed")
+        print("EggPopper destroyed")
