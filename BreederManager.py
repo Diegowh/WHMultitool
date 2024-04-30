@@ -26,12 +26,9 @@ class BreederManager:
         keyboard.register_hotkey('f1', self.toggle_autoeggdrop, suppress=True)
         print("BreederManager initialized\n")
         
-    def stop_loop(self):
-        for task in asyncio.all_tasks(self.loop):
-            task.cancel()
-        self.loop.stop()
-        if self.thread.is_alive():
-            self.thread.join()
+    def start_loop(self, loop: asyncio.AbstractEventLoop):
+        asyncio.set_event_loop(loop)
+        loop.run_forever()
 
     def start_autoeggdrop(self):
         assert not self.autoeggdrop_running
@@ -41,14 +38,12 @@ class BreederManager:
 
     def _start_autoeggdrop_coroutine(self):
         self.autoeggdrop_task = asyncio.create_task(self.run_autoeggdrop())
-        print("Auto-eggdrop task created\n")
 
     def stop_autoeggdrop(self):
         if self.autoeggdrop_running:
             self.autoeggdrop_running = False
             if self.autoeggdrop_task is not None:
                 self.loop.call_soon_threadsafe(self._stop_autoeggdrop_coroutine)
-            print("Auto-eggdrop stopped\n")
 
     def _stop_autoeggdrop_coroutine(self):
         self.autoeggdrop_task.cancel()
