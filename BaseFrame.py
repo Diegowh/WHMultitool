@@ -9,11 +9,11 @@ class BaseFrame(tk.Frame, ABC):
         self.create_widgets()
 
     @abstractmethod
-    def destroy(self):
+    def destroy_gui(self):
         pass
     
     def destroy_screen(self):
-        self.destroy()
+        self.destroy_gui()
         self.controller.show_main()
     
     def create_widgets(self):
