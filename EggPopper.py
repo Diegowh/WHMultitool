@@ -16,7 +16,7 @@ class EggPopper(BaseTaskManager):
         self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         
         self.hotkey = self.config.EGG_POPPER_HOTKEY
-        keyboard.register_hotkey('f1', self.toggle_task, suppress=True)
+        self.register_key()
         print("EggPopper initialized\n")
     
     def _task_routine(self):
@@ -28,8 +28,13 @@ class EggPopper(BaseTaskManager):
         close_inventory()
         move(direction=MoveDirection.LEFT, prev_delay=0.3)
 
-    def unbind_key(self):
-        keyboard.unregister_hotkey('f1')
+    def register_key(self):
+        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
+        print(f"Registered hotkey: {self.hotkey}")
+        
+    def unregister_key(self):
+        keyboard.unregister_hotkey(self.hotkey)
+        print(f"Unregistered hotkey: {self.hotkey}")
 
 class EggPopperGUI(BaseFrame):
 
@@ -49,6 +54,6 @@ class EggPopperGUI(BaseFrame):
 
     def destroy_gui(self):
         self.egg_popper.destroy_loop()
-        self.egg_popper.unbind_key()
+        self.egg_popper.unregister_key()
         super().destroy()
         print("EggPopper destroyed")
