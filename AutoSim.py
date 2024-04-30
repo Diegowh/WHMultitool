@@ -42,12 +42,8 @@ class AutoSimGUI(BaseFrame):
         super().destroy()
         print("AutoSim destroyed")
     
-    def destroy_screen(self):
-        self.destroy()
-        self.controller.show_main()
 
-
-class AutoSim():
+class AutoSim:
     def __init__(self, config: Config, gui: AutoSimGUI):
         self.config = config
         self.autosim_task = None
@@ -134,12 +130,8 @@ class AutoSim():
         print("Destroying AutoSim...")
         if self.autosim_task is not None:
             self.loop.call_soon_threadsafe(self.loop.stop)
+        # TODO: El while se llama infinitamente si no se ha iniciado el autosim
         while self.loop.is_running():
             time.sleep(0.1)
         self.loop.close()
         self.thread.join()
-
-
-if __name__ == "__main__":
-    config = Config()
-    app = AutoSim(config=config)
