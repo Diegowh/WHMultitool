@@ -30,6 +30,7 @@ class Config:
         self.APP_WEIGHT = 350
         self.APP_HEIGHT = 200
         self.APP_TITLE = f"{self.APP_VERSION} - ADAT - All in One"
+        self.EGG_POPPER_HOTKEY = "f1"
 
 
     def _load_config(self) -> None:

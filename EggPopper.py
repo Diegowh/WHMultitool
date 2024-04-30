@@ -15,6 +15,7 @@ class EggPopper(BaseTaskManager):
         self.config = config
         self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         
+        self.hotkey = self.config.EGG_POPPER_HOTKEY
         keyboard.register_hotkey('f1', self.toggle_task, suppress=True)
         print("EggPopper initialized\n")
     
