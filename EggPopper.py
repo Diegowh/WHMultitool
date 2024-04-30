@@ -1,10 +1,8 @@
-import asyncio
 from player_actions import *
 from screen_manager import (
     PlayerInventoryCoordinates,
 )
 import tkinter as tk
-from threading import Thread
 import keyboard
 from config import Config
 from BaseFrame import BaseFrame
@@ -29,7 +27,8 @@ class EggPopper(BaseTaskManager):
         close_inventory()
         move(direction=MoveDirection.LEFT, prev_delay=0.3)
 
-
+    def unbind_key(self):
+        keyboard.unregister_hotkey('f1')
 
 class EggPopperGUI(BaseFrame):
 
@@ -49,5 +48,6 @@ class EggPopperGUI(BaseFrame):
 
     def destroy_gui(self):
         self.egg_popper.destroy_loop()
+        self.egg_popper.unbind_key()
         super().destroy()
         print("EggPopper destroyed")
