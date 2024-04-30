@@ -9,8 +9,12 @@ class BaseFrame(tk.Frame, ABC):
         self.create_widgets()
 
     @abstractmethod
-    def destroy_screen(self):
+    def destroy(self):
         pass
+    
+    def destroy_screen(self):
+        self.destroy()
+        self.controller.show_main()
     
     def create_widgets(self):
         back_btn = tk.Button(self, text="Back", command=self.destroy_screen)
