@@ -1,7 +1,7 @@
 import tkinter as tk
 from config import Config
-from AutoSim import AutoSimGUI
-from BreederManager import BreederManagerGUI
+from AutoSim import AutoSim
+from BreederManager import BreederManager
 
 
 class AppController(tk.Tk):
@@ -10,8 +10,8 @@ class AppController(tk.Tk):
         self.config = config
         
         self.apps = {
-            "AutoSim": AutoSimGUI,
-            "BreederManager": BreederManagerGUI,
+            "AutoSim": AutoSim,
+            "BreederManager": BreederManager,
         }
         
         self.title(self.config.APP_TITLE)
@@ -25,7 +25,7 @@ class AppController(tk.Tk):
         self.main_screen.pack_forget()
         app_name = list(self.apps.keys())[i]
         app_class = self.apps[app_name]
-        self.current_option_screen = app_class(config=self.config, master=self, controller=self)
+        self.current_option_screen = app_class(config=self.config, master=self, controller=self).gui
         self.current_option_screen.pack(fill=tk.BOTH, expand=True)
 
     def show_main(self):
@@ -47,9 +47,6 @@ class MainScreen(tk.Frame):
             
     def create_command(self, i):
         def command():
-            app_name = list(self.controller.apps.keys())[i]
-            app_class = self.controller.apps[app_name]
-            app_instance = app_class(config=self.controller.config, master=self.controller, controller=self.controller)
             self.controller.show_option(i)
         return command
 

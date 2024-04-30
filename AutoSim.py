@@ -128,9 +128,8 @@ class AutoSim:
             
     def destroy(self) -> None:
         print("Destroying AutoSim...")
-        if self.autosim_task is not None:
+        if self.autosim_task is not None or not self.loop.is_running():
             self.loop.call_soon_threadsafe(self.loop.stop)
-        # TODO: El while se llama infinitamente si no se ha iniciado el autosim
         while self.loop.is_running():
             time.sleep(0.1)
         self.loop.close()
