@@ -2,7 +2,7 @@ import time
 import keyboard
 import threading
 from enum import StrEnum
-
+import pyperclip
 import pyautogui
 from utils import get_screen_resolution
 from screen_manager import ScreenCoordinates
@@ -141,5 +141,6 @@ def type_text(
     if prev_delay is not None:
         time.sleep(prev_delay)
     
-    pyautogui.write(text)
+    pyperclip.copy(text)
+    pyautogui.hotkey('ctrl', 'v')
     time.sleep(post_delay)
