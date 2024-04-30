@@ -1,26 +1,62 @@
 import asyncio
 import threading
-from PIL import Image, ImageTk
 import tkinter as tk
 import keyboard
 import pyautogui
 import time
 
 from config import Config
+from BaseFrame import BaseFrame
+
+
+class AutoSimGUI(BaseFrame):
+
+    def __init__(self, config: Config, master, controller) -> None:
+        super().__init__(master=master, controller=controller)
+        
+        self.config = config
+        
+        self.autosim_label = None
+        self.text_input = tk.StringVar()
+        
+        self.init_gui()
+        
+        self.autosim = AutoSim(config=self.config, gui=self)
+        
+    def init_gui(self) :
+        """
+        Initialize the GUI components.
+        """
+        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_HOTKEY} - Toggle autosim")
+        instructions_label.pack(padx=20, pady=20)
+        self.autosim_label = instructions_label
+        
+        map_num_label = tk.Label(self, text="Map number:")
+        map_num_label.pack()
+
+        map_num_entry = tk.Entry(self, textvariable=self.text_input)
+        map_num_entry.pack(padx=10, pady=10)
+        
+    def destroy(self) -> None:
+        self.autosim.destroy()
+        super().destroy()
+        print("AutoSim destroyed")
+    
+    def destroy_screen(self):
+        self.destroy()
+        self.controller.show_main()
 
 
 class AutoSim():
-    def __init__(self, config: Config):
+    def __init__(self, config: Config, gui: AutoSimGUI):
         self.config = config
         self.autosim_task = None
         self.loop = asyncio.new_event_loop()
         self.thread = threading.Thread(target=self.start_loop, args=(self.loop,))
         self.thread.start()
         self.autosim_running = False  # This will track the running state internally, not in config
-        keyboard.register_hotkey(self.config.AUTOSIM_KEY, self.toggle_autosim, suppress=True)
-        
-        self.gui = AutoSimGUI(autosim=self, config=self.config)
-        self.gui.mainloop()
+        keyboard.register_hotkey(self.config.AUTOSIM_HOTKEY, self.toggle_autosim, suppress=True)
+        self.gui = gui
 
 
     def start_loop(self, loop: asyncio.AbstractEventLoop):
@@ -102,42 +138,6 @@ class AutoSim():
             time.sleep(0.1)
         self.loop.close()
         self.thread.join()
-
-
-class AutoSimGUI(tk.Tk):
-
-    def __init__(self, config: Config, autosim: AutoSim) -> None:
-        super().__init__()
-        
-        self.config = config
-        
-        self.autosim_label = None
-        self.text_input = tk.StringVar()
-        self.title(self.config.APP_TITLE)
-        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
-        self.resizable(False, False)
-        self.init_gui()
-        self.autosim = autosim
-        
-        
-    def init_gui(self) :
-        """
-        Initialize the GUI components.
-        """
-        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
-        instructions_label.pack(padx=20, pady=20)
-        self.autosim_label = instructions_label
-        
-        map_num_label = tk.Label(self, text="Map number:")
-        map_num_label.pack()
-
-        map_num_entry = tk.Entry(self, textvariable=self.text_input)
-        map_num_entry.pack(padx=10, pady=10)
-        
-    def destroy(self) -> None:
-        self.autosim.destroy()
-        super().destroy()
-        print("AutoSim destroyed")
 
 
 if __name__ == "__main__":
