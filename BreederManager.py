@@ -26,7 +26,6 @@ class BreederManager:
         keyboard.register_hotkey('f1', self.toggle_autoeggdrop, suppress=True)
         print("BreederManager initialized\n")
         
-        
     def stop_loop(self):
         for task in asyncio.all_tasks(self.loop):
             task.cancel()
@@ -57,8 +56,7 @@ class BreederManager:
     async def run_autoeggdrop(self):
         try:
             while self.autoeggdrop_running:
-                await asyncio.sleep(0)
-                utils.dummy_routine()
+                self._autoeggdrop_routine()
         except Exception as e:
             print(f"Error: {e}")
             self.autoeggdrop_running = False
@@ -69,7 +67,7 @@ class BreederManager:
         elif self.autoeggdrop_task is None or self.autoeggdrop_task.done():
             self.start_autoeggdrop()
     
-    async def _autoeggdrop_routine(self):
+    def _autoeggdrop_routine(self):
         open_inventory()
         move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR)
         type_text(text="fertilized egg", post_delay=0.2)
@@ -81,16 +79,13 @@ class BreederManager:
     def start_loop(self, loop: asyncio.AbstractEventLoop):
         asyncio.set_event_loop(loop)
         loop.run_forever()
+        self.loop_started = True
 
     def destroy(self):
         print("Destroying BreederManager...")
-        if self.autoeggdrop_task is not None or not self.loop.is_running():
-            self.loop.call_soon_threadsafe(self.loop.stop)
-            
-        #TODO: Si no he ejecutado la task el loop se queda esperando infinitamente
+        self.loop.call_soon_threadsafe(self.loop.stop)
         while self.loop.is_running():
             time.sleep(0.1)
-        
         self.loop.close()
         self.thread.join()
 
