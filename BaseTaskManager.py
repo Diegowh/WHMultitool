@@ -1,9 +1,9 @@
 import asyncio
 from threading import Thread
 import time
+from abc import ABC, abstractmethod
 
-
-class BaseTaskManager:
+class BaseTaskManager(ABC):
     """
     This is a base class for task managers. It provides a basic structure for managing tasks in a separate thread.
     """
@@ -13,8 +13,12 @@ class BaseTaskManager:
         self.loop = None
         self.thread = None
         self.task_running = False
-        
-    
+
+
+    @abstractmethod
+    def _task_routine(self) -> None:
+        pass    
+
     def start_loop(self, loop: asyncio.AbstractEventLoop) -> None:
         """Starts the asyncio loop in a separate thread.
 
