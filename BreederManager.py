@@ -76,12 +76,8 @@ class BreederManager:
         close_inventory()
         move(direction=MoveDirection.LEFT, prev_delay=0.3)
 
-    def start_loop(self, loop: asyncio.AbstractEventLoop):
-        asyncio.set_event_loop(loop)
-        loop.run_forever()
-        self.loop_started = True
 
-    def destroy(self):
+    def destroy_loop(self):
         print("Destroying BreederManager...")
         self.loop.call_soon_threadsafe(self.loop.stop)
         while self.loop.is_running():
@@ -106,7 +102,7 @@ class BreederManagerGUI(BaseFrame):
         instructions_label = tk.Label(self, text="Press F1 to toggle")
         instructions_label.pack(padx=20, pady=20)
 
-    def destroy(self):
-        self.breeder_manager.destroy()
+    def destroy_gui(self):
+        self.breeder_manager.destroy_loop()
         super().destroy()
         print("BreederManager destroyed")
