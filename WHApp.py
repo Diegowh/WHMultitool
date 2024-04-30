@@ -1,7 +1,7 @@
 import tkinter as tk
 from config import Config
 from AutoSim import AutoSim
-from BreederManager import BreederManager
+from EggPopper import EggPopper
 
 
 class AppController(tk.Tk):
@@ -11,7 +11,7 @@ class AppController(tk.Tk):
         
         self.apps = {
             "AutoSim": AutoSim,
-            "BreederManager": BreederManager,
+            "EggPopper": EggPopper,
         }
         
         self.title(self.config.APP_TITLE)
