@@ -20,9 +20,9 @@ class EggPopper(BaseTaskManager):
         print("EggPopper initialized\n")
     
     def _task_routine(self):
-        open_inventory()
-        move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR)
-        type_text(text="fertilized egg", post_delay=0.2)
+        open_inventory(post_delay=0.3)
+        move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
+        type_text(text="fert", post_delay=0.2)
         move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
         pop_item()
         close_inventory()
