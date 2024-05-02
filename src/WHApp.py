@@ -54,7 +54,9 @@ class AppController(tk.Tk):
     def show_main(self):
         self.main_screen.pack(fill=tk.BOTH, expand=True)
         del self.current_option_screen
-
+        
+        # I had to add this line to make the MainScreen visible in MacOS. I didn't have this issue in Windows.
+        self.update_idletasks()
 
 class MainScreen(tk.Frame):
     def __init__(self, master=None, controller: AppController=None):
