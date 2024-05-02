@@ -1,14 +1,11 @@
 import pyautogui
 import pyperclip
 from enum import StrEnum
-import time
-import asyncio
+
 
 def get_screen_resolution()->tuple[int, int]:
     resolution = pyautogui.size()
     return resolution.width, resolution.height
-
-
 
 class TaskName(StrEnum):
     pass

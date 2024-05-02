@@ -30,13 +30,13 @@ class Config:
         self.APP_WEIGHT = 350
         self.APP_HEIGHT = 200
         self.APP_TITLE = f"{self.APP_VERSION} - ADAT - All in One"
-        self.EGG_POPPER_HOTKEY = "f1"
+        self.AUTO_EGGDROP_HOTKEY = "f1"
         self.AUTOSIM_HOTKEY = "f1"
 
 
     def _load_config(self) -> None:
         try:
-            with open("config.json", "r") as f:
+            with open("src/config/config.json", "r") as f:
                 self.config = json.load(f)
         except FileNotFoundError:
             with open("config.json", "w") as f:

@@ -1,11 +1,10 @@
 import time
 import keyboard
-import threading
 from enum import StrEnum
 import pyperclip
 import pyautogui
-from utils import get_screen_resolution
-from screen_manager import ScreenCoordsEnum
+from src.utils.utils import get_screen_resolution
+from src.utils.screen_manager import ScreenCoordsEnum
 
 class MoveDirection(StrEnum):
     FORWARD = 'w'

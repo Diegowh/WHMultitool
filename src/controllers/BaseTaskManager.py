@@ -1,6 +1,4 @@
 import asyncio
-from threading import Thread
-import time
 from abc import ABC, abstractmethod
 
 import keyboard

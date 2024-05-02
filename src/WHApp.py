@@ -1,8 +1,8 @@
 import asyncio
 import tkinter as tk
-from config import Config
-from AutoSim import AutoSim
-from EggPopper import EggPopper
+from src.config.config import Config
+from src.controllers.AutoSim import AutoSim
+from src.controllers.AutoEggDrop import AutoEggDrop
 
 
 class AppController(tk.Tk):
@@ -18,7 +18,7 @@ class AppController(tk.Tk):
         
         self.apps = {
             "AutoSim": AutoSim,
-            "EggPopper": EggPopper,
+            "AutoEggDrop": AutoEggDrop,
         }
         
         self.title(self.config.APP_TITLE)
@@ -74,11 +74,7 @@ class MainScreen(tk.Frame):
         return command
 
 
-async def main():
+async def run():
     config = Config()
     with AppController(config=config) as root:
         await root.mainloop()
-
-
-if __name__ == "__main__":
-    asyncio.run(main())
