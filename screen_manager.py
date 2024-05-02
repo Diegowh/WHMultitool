@@ -16,11 +16,11 @@ def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, fl
     
     return round(abs_position[0] / screen_res[0], 3), round(abs_position[1] / screen_res[1], 3)
 
-class ScreenCoordinates(Enum):
+class ScreenCoordsEnum(Enum):
     pass
 
 
-class PlayerInventoryCoordinates(ScreenCoordinates):
+class PlayerInventoryCoordinates(ScreenCoordsEnum):
     """
     This class is used to store the relative screen coordinates of the player's inventory.
     """
@@ -36,7 +36,7 @@ class PlayerInventoryCoordinates(ScreenCoordinates):
     FIRST_SLOT = (0.11, 0.26)
 
 
-class StructureInventoryCoordinates(ScreenCoordinates):
+class StructureInventoryCoordinates(ScreenCoordsEnum):
     """
     This class is used to store the relative screen coordinates of the structure's inventory.
     """
@@ -52,8 +52,45 @@ class StructureInventoryCoordinates(ScreenCoordinates):
     YOU_BUTTON = (0.41, 0.13)
     STRUCTURE_BUTTON = (0.58, 0.13)
     
-    
 
+class MainMenuScreenCoordinates(ScreenCoordsEnum):
+    """
+    This class is used to store the relative screen coordinates of the main menu screen.
+    """
+    PRESS_TO_START = (0.49, 0.79)
+    JOIN_LAST_SESSION = (0.49, 0.88)
+    ESC = (0.92, 0.095)
+
+
+class GameModeScreenCoordinates(ScreenCoordsEnum):
+    """
+    This class is used to store the relative screen coordinates of the game mode screen.
+    """
+    BOBS_TALL_TALES = (0.055, 0.555)
+    JOIN_GAME = (0.314, 0.533)
+    CREATE_OR_RESUME_GAME = (0.541, 0.544)
+    MODS_LIST = (0.76, 0.521)
+
+
+class ServerSelectionScreenCoordinates(ScreenCoordsEnum):
+    """
+    This class is used to store the relative screen coordinates of the server selection screen.
+    """
+    FIRST_SERVER = (0.502, 0.305)
+    SEARCH_BOX = (0.834, 0.179)
+    ESC = (0.922, 0.097)
+    BACK = (0.087, 0.817)
+    REFRESH = (0.501, 0.869)
+    JOIN = (0.893, 0.878)
+
+
+class ModsSelectionScreenCoordinates(ScreenCoordsEnum):
+    """
+    This class is used to store the relative screen coordinates of the mods selection screen.
+    """
+    JOIN = (0.18, 0.866)
+    BACK = (0.285, 0.865)
+    
 def get_screen_resolution() -> tuple[int, int]:
     """
     This function returns the screen resolution of the monitor.
