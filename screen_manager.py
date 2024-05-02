@@ -70,7 +70,7 @@ class GameModeScreenCoordinates(ScreenCoordsEnum):
     JOIN_GAME = (0.314, 0.533)
     CREATE_OR_RESUME_GAME = (0.541, 0.544)
     MODS_LIST = (0.76, 0.521)
-
+    BACK = (0.499, 0.893)
 
 class ServerSelectionScreenCoordinates(ScreenCoordsEnum):
     """
