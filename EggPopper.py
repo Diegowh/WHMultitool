@@ -1,5 +1,5 @@
 import asyncio
-from player_actions import *
+import player_actions as pa
 from screen_manager import (
     PlayerInventoryCoordinates,
 )
@@ -21,13 +21,13 @@ class EggPopper(BaseTaskManager):
         print("EggPopper initialized\n")
     
     async def _task(self):
-        open_inventory(post_delay=0.3)
-        move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
-        type_text(text="fert", post_delay=0.2)
-        move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
-        pop_item()
-        close_inventory()
-        move(direction=MoveDirection.LEFT, prev_delay=0.3)
+        pa.open_inventory(post_delay=0.3)
+        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
+        pa.type_text(text="fert", post_delay=0.2)
+        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
+        pa.pop_item()
+        pa.close_inventory()
+        pa.move(direction=pa.MoveDirection.LEFT, prev_delay=0.3)
         
 
     def register_key(self):
