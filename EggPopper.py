@@ -12,12 +12,12 @@ from BaseTaskManager import BaseTaskManager
 class EggPopper(BaseTaskManager):
     
     def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
-        super().__init__(loop=loop)
+        
         self.config = config
+        self.hotkey = self.config.EGG_POPPER_HOTKEY
+        super().__init__(loop=loop)
         self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         
-        self.hotkey = self.config.EGG_POPPER_HOTKEY
-        self.register_key()
         print("EggPopper initialized\n")
     
     async def _task(self):
@@ -56,6 +56,5 @@ class EggPopperGUI(BaseFrame):
 
     def destroy_gui(self):
         self.egg_popper.destroy()
-        self.egg_popper.unregister_key()
         super().destroy()
         print("EggPopper destroyed")

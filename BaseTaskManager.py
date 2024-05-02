@@ -14,11 +14,21 @@ class BaseTaskManager(ABC):
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
 
+        self.register_key()
 
     @abstractmethod
     async def _task(self) -> None:
         pass    
-
+    
+    @abstractmethod
+    def register_key(self) -> None:
+        pass
+    
+    @abstractmethod
+    def unregister_key(self) -> None:
+        pass
+    
+    
     async def coroutine(self) -> None:
         """Method to encapsulate the task coroutine.
         """
@@ -66,3 +76,4 @@ class BaseTaskManager(ABC):
         print("Destroying TaskManager...")
         if self.task is not None:
             self.loop.call_soon_threadsafe(self.task.cancel)
+        self.unregister_key()
