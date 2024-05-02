@@ -1,3 +1,4 @@
+import asyncio
 from player_actions import *
 from screen_manager import (
     PlayerInventoryCoordinates,
@@ -10,8 +11,8 @@ from BaseTaskManager import BaseTaskManager
 
 class EggPopper(BaseTaskManager):
     
-    def __init__(self, config: Config, master, controller) -> None:
-        super().__init__()
+    def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
+        super().__init__(loop=loop)
         self.config = config
         self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         
@@ -19,7 +20,7 @@ class EggPopper(BaseTaskManager):
         self.register_key()
         print("EggPopper initialized\n")
     
-    def _task_routine(self):
+    async def _task(self):
         open_inventory(post_delay=0.3)
         move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
         type_text(text="fert", post_delay=0.2)
@@ -27,6 +28,7 @@ class EggPopper(BaseTaskManager):
         pop_item()
         close_inventory()
         move(direction=MoveDirection.LEFT, prev_delay=0.3)
+        await asyncio.sleep(0)
 
     def register_key(self):
         keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
@@ -53,7 +55,7 @@ class EggPopperGUI(BaseFrame):
         instructions_label.pack(padx=20, pady=20)
 
     def destroy_gui(self):
-        self.egg_popper.destroy_loop()
+        self.egg_popper.destroy()
         self.egg_popper.unregister_key()
         super().destroy()
         print("EggPopper destroyed")
