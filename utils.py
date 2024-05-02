@@ -1,7 +1,6 @@
 import pyautogui
 import pyperclip
 from enum import StrEnum
-from player_actions import *
 import time
 import asyncio
 
