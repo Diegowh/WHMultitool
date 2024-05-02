@@ -18,7 +18,7 @@ class BaseTaskManager(ABC):
 
     @abstractmethod
     async def _task(self) -> None:
-        pass    
+        pass
     
     @abstractmethod
     def register_key(self) -> None:
@@ -36,6 +36,12 @@ class BaseTaskManager(ABC):
             while self.task_running:
                 print("Running task...")
                 await self._task()
+                
+                # This is a non-blocking call.
+                # It's used to give control to the asyncio event loop.
+                # Allows other tasks to run before this task continues.
+                await asyncio.sleep(0)
+        
         except asyncio.CancelledError:
             print("Task cancelled")
             self.task_running = False

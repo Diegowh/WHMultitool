@@ -28,7 +28,7 @@ class EggPopper(BaseTaskManager):
         pop_item()
         close_inventory()
         move(direction=MoveDirection.LEFT, prev_delay=0.3)
-        await asyncio.sleep(0)
+        
 
     def register_key(self):
         keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
