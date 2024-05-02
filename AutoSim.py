@@ -20,9 +20,10 @@ from screen_manager import (
 
 class AutoSim(BaseTaskManager):
     def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
-        self.config = config
-        self.hotkey = self.config.AUTOSIM_HOTKEY
         super().__init__(loop=loop)
+        self.config = config
+        self.hotkey = self.config.EGG_POPPER_HOTKEY 
+        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
         self.gui = AutoSimGUI(autosim=self, config=self.config, master=master, controller=controller)
 
     async def _task(self):
@@ -45,14 +46,6 @@ class AutoSim(BaseTaskManager):
         pa.move_cursor_and_click(ServerSelectionScreenCoordinates.BACK)
         pa.move_cursor_and_click(GameModeScreenCoordinates.BACK)
 
-            
-    def register_key(self) -> None:
-        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
-        print(f"Registered hotkey: {self.hotkey}")
-    
-    def unregister_key(self) -> None:
-        keyboard.unregister_hotkey(self.hotkey)
-        print(f"Unregistered hotkey: {self.hotkey}")
 
 class AutoSimGUI(BaseFrame):
 

@@ -3,31 +3,21 @@ from threading import Thread
 import time
 from abc import ABC, abstractmethod
 
+import keyboard
+
 class BaseTaskManager(ABC):
     """
     This is a base class for task managers. It provides a basic structure for managing tasks in a separate thread.
     """
     def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
-        
         self.loop = loop
         self.task = None
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
 
-        self.register_key()
-
     @abstractmethod
     async def _task(self) -> None:
         pass
-    
-    @abstractmethod
-    def register_key(self) -> None:
-        pass
-    
-    @abstractmethod
-    def unregister_key(self) -> None:
-        pass
-    
     
     async def coroutine(self) -> None:
         """Method to encapsulate the task coroutine.
@@ -82,4 +72,6 @@ class BaseTaskManager(ABC):
         print("Destroying TaskManager...")
         if self.task is not None:
             self.loop.call_soon_threadsafe(self.task.cancel)
-        self.unregister_key()
+        
+        keyboard.unregister_all_hotkeys()
+        print(f"Unregistered all hotkeys")

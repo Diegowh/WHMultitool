@@ -13,9 +13,10 @@ class EggPopper(BaseTaskManager):
     
     def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
         
-        self.config = config
-        self.hotkey = self.config.EGG_POPPER_HOTKEY
         super().__init__(loop=loop)
+        self.config = config
+        self.hotkey = self.config.EGG_POPPER_HOTKEY 
+        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
         self.gui = EggPopperGUI(egg_popper=self, config=self.config, master=master, controller=controller)
         
         print("EggPopper initialized\n")
@@ -29,14 +30,6 @@ class EggPopper(BaseTaskManager):
         pa.close_inventory()
         pa.move(direction=pa.MoveDirection.LEFT, prev_delay=0.3)
         
-
-    def register_key(self):
-        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
-        print(f"Registered hotkey: {self.hotkey}")
-        
-    def unregister_key(self):
-        keyboard.unregister_hotkey(self.hotkey)
-        print(f"Unregistered hotkey: {self.hotkey}")
 
 class EggPopperGUI(BaseFrame):
 
