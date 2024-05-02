@@ -1,3 +1,4 @@
+import asyncio
 import tkinter as tk
 from config import Config
 from AutoSim import AutoSim
@@ -5,9 +6,15 @@ from EggPopper import EggPopper
 
 
 class AppController(tk.Tk):
-    def __init__(self, config: Config):
-        super().__init__()
+    def __init__(self, config: Config, sleep_interval: float = 0.05):
         self.config = config
+        
+        self.sleep_interval = sleep_interval
+        self.app_closing = False
+        self.loop = asyncio.get_event_loop()
+        super().__init__()
+        self.protocol("WM_DELETE_WINDOW", self.close_app)
+        self.option_add("*tearOff", 0)
         
         self.apps = {
             "AutoSim": AutoSim,
@@ -21,11 +28,27 @@ class AppController(tk.Tk):
         self.main_screen = MainScreen(master=self, controller=self)
         self.main_screen.pack(fill=tk.BOTH, expand=True)
 
+    
+    def __enter__(self):
+        return self
+    
+    def __exit__(self, *_x):
+        self.destroy()
+        
+    def close_app(self):
+        self.app_closing = True
+    
+    async def mainloop(self, _n=0):
+        while not self.app_closing:
+            self.update()
+            await asyncio.sleep(self.sleep_interval)
+    
+    
     def show_option(self, i):
         self.main_screen.pack_forget()
         app_name = list(self.apps.keys())[i]
         app_class = self.apps[app_name]
-        self.current_option_screen = app_class(config=self.config, master=self, controller=self).gui
+        self.current_option_screen = app_class(loop=self.loop, config=self.config, master=self, controller=self).gui
         self.current_option_screen.pack(fill=tk.BOTH, expand=True)
 
     def show_main(self):
@@ -51,8 +74,11 @@ class MainScreen(tk.Frame):
         return command
 
 
+async def main():
+    config = Config()
+    with AppController(config=config) as root:
+        await root.mainloop()
+
 
 if __name__ == "__main__":
-    config = Config()
-    app = AppController(config=config)
-    app.mainloop()
+    asyncio.run(main())
