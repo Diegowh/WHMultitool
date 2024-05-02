@@ -5,7 +5,7 @@ from enum import StrEnum
 import pyperclip
 import pyautogui
 from utils import get_screen_resolution
-from screen_manager import ScreenCoordinates
+from screen_manager import ScreenCoordsEnum
 
 class MoveDirection(StrEnum):
     FORWARD = 'w'
@@ -96,7 +96,7 @@ def close_inventory(
     time.sleep(post_delay
 )
 def move_cursor(
-    location: ScreenCoordinates,
+    location: ScreenCoordsEnum,
     prev_delay: float = None,
     post_delay: float = None,
 ) -> None:
@@ -118,7 +118,7 @@ def move_cursor(
     
 
 def move_cursor_and_click(
-    location: ScreenCoordinates,
+    location: ScreenCoordsEnum,
     prev_delay: float = None,
     post_delay: float = 0.2,
     clicks: int = 1
