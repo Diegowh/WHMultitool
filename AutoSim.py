@@ -1,43 +1,70 @@
 import asyncio
 import threading
-from PIL import Image, ImageTk
 import tkinter as tk
 import keyboard
 import pyautogui
+import time
 
 from config import Config
+from BaseFrame import BaseFrame
+from BaseTaskManager import BaseTaskManager
+from utils import get_screen_resolution
+import player_actions as pa
+from screen_manager import (
+    ScreenCoordsEnum,
+    ModsSelectionScreenCoordinates,
+    ServerSelectionScreenCoordinates,
+    GameModeScreenCoordinates,
+    MainMenuScreenCoordinates,
+)
+
+class AutoSim(BaseTaskManager):
+    def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
+        super().__init__(loop=loop)
+        self.config = config
+        self.hotkey = self.config.EGG_POPPER_HOTKEY 
+        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
+        self.gui = AutoSimGUI(autosim=self, config=self.config, master=master, controller=controller)
+
+    async def _task(self):
+        
+        pa.move_cursor_and_click(MainMenuScreenCoordinates.PRESS_TO_START) # Press middle button on the start screen
+        
+        pa.move_cursor_and_click(GameModeScreenCoordinates.JOIN_GAME)  # Press Join Game button
+        
+        pa.move_cursor_and_click(ServerSelectionScreenCoordinates.SEARCH_BOX)  # Click on the map search bar
+        pyautogui.write(self.gui.text_input.get())
+        pyautogui.press('enter')
+        asyncio.sleep(0.5)  # Wait for the map list to load
+        pa.move_cursor_and_click(ServerSelectionScreenCoordinates.FIRST_SERVER)  # Click on the first map in the list
+        pa.move_cursor_and_click(ServerSelectionScreenCoordinates.FIRST_SERVER)  # Click again to confirm the map selection, sometimes the first click doesn't register
+        pa.move_cursor_and_click(ServerSelectionScreenCoordinates.JOIN)  # Click Join and wait 3 seconds for the mod selection screen to load
+        pa.move_cursor_and_click(ModsSelectionScreenCoordinates.JOIN, prev_delay=3)  # Click Join
+        await asyncio.sleep(10)  # Delay to allow the Server full message to appear
+        pyautogui.press('esc')
+        await asyncio.sleep(0.5)
+        pa.move_cursor_and_click(ServerSelectionScreenCoordinates.BACK)
+        pa.move_cursor_and_click(GameModeScreenCoordinates.BACK)
 
 
-class AutoSim(tk.Tk):
-    def __init__(self, config: Config):
-        super().__init__()
+class AutoSimGUI(BaseFrame):
+
+    def __init__(self, autosim: AutoSim, config: Config, master, controller) -> None:
+        super().__init__(master=master, controller=controller)
         
         self.config = config
-        self.autosim_task = None
-        self.loop = asyncio.new_event_loop()
-        self.thread = threading.Thread(target=self.start_loop, args=(self.loop,))
-        self.thread.start()
-        self.autosim_running = False  # This will track the running state internally, not in config
-        keyboard.register_hotkey(self.config.AUTOSIM_KEY, self.toggle_autosim, suppress=True)
         self.autosim_label = None
-        
         self.text_input = tk.StringVar()
-        self.title(self.config.APP_TITLE)
-        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
-        self.resizable(False, False)
-        self.image_file = self.config.BACKGROUND_IMAGE
-        image = Image.open(self.image_file)
-        image = image.resize((self.config.APP_WEIGHT, self.config.APP_HEIGHT))
-        self.background_image = ImageTk.PhotoImage(image)
         self.init_gui()
-
+        self.autosim = autosim
+        
+        
+        
     def init_gui(self) :
         """
         Initialize the GUI components.
         """
-        background_label = tk.Label(self, image=self.background_image)
-        background_label.place(x=0, y=0, relwidth=1, relheight=1)
-        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_KEY} - Toggle autosim")
+        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_HOTKEY} - Toggle autosim")
         instructions_label.pack(padx=20, pady=20)
         self.autosim_label = instructions_label
         
@@ -46,88 +73,9 @@ class AutoSim(tk.Tk):
 
         map_num_entry = tk.Entry(self, textvariable=self.text_input)
         map_num_entry.pack(padx=10, pady=10)
-
-    def start_loop(self, loop: asyncio.AbstractEventLoop):
-        asyncio.set_event_loop(loop)
-        loop.run_forever()
         
-    def start_autosim(self):
-        if not self.autosim_running:
-            self.autosim_running = True
-            self.loop.call_soon_threadsafe(self._start_autosim_coroutine)
-            print("Auto-sim started")
-
-    def _start_autosim_coroutine(self):
-        self.autosim_task = asyncio.create_task(self.run_auto_sim())
-
-    def stop_autosim(self):
-        if self.autosim_running:
-            self.autosim_running = False
-            if self.autosim_task is not None:
-                self.loop.call_soon_threadsafe(self._stop_autosim_coroutine)
-            print("Auto-sim stopped")
-
-    def _stop_autosim_coroutine(self):
-        self.autosim_task.cancel()
-    
-    async def run_auto_sim(self):
-        try:
-            while self.autosim_running:
-                map_number = self.text_input.get()
-                await self.autosim_routine(map_number)
-            print("Auto-sim stopping")
-        except Exception as e:
-            print(f"Error: {e}")
-            self.autosim_running = False
-
-    def toggle_autosim(self, event=None):
-        if self.autosim_running:
-            self.stop_autosim()
-        else:
-            self.start_autosim()
-
-    def get_screen_resolution(self):
-        width, height = pyautogui.size()
-        return width, height
-    
-    async def move_and_click(self, x, y, sleep_time=0.5):
-        screen_w, screen_h = self.get_screen_resolution()
-        # Default values are for 1920x1080 resolution, so we need to check if the resolution is different
-        if screen_w != 1920 or screen_h != 1080:
-            x *= screen_w / 1920
-            y *= screen_h / 1080
-        pyautogui.moveTo(x, y)
-        pyautogui.click()
-        await asyncio.sleep(sleep_time)
-    
-    # def debug_function(self, map_number):
-    #     while self.autosim_running:
-    #         print(f"function running with map number: {map_number}")
-    #         time.sleep(1)
-        
-    async def autosim_routine(self, map_number):
-        while self.autosim_running:
-            await self.move_and_click(934, 858)  # Press middle button on the start screen
-            await self.move_and_click(705, 523)  # Press Join Game button
-            await self.move_and_click(1670, 200)  # Click on the map search bar
-            pyautogui.write(map_number)
-            pyautogui.press('enter')
-            await asyncio.sleep(0.5)  # Wait for the map list to load
-            await self.move_and_click(930, 335)  # Click on the first map in the list
-            await self.move_and_click(1700, 945, 3)  # Click Join and wait 3 seconds for the mod selection screen to load
-            await self.move_and_click(340, 930)  # Click Join
-            await asyncio.sleep(10)  # Delay to allow the Server full message to appear
-            pyautogui.press('esc')
-            await asyncio.sleep(0.5)
-            await self.move_and_click(170, 880)
-            await self.move_and_click(964, 964)
-            
-    def destroy(self) -> None:
-        self.loop.call_soon_threadsafe(self.loop.stop)
-        self.thread.join()
+    def destroy_gui(self) -> None:
+        self.autosim.destroy()
         super().destroy()
-
-
-config = Config()
-app = AutoSim(config=config)
-app.mainloop()
+        print("AutoSim destroyed")
+    
