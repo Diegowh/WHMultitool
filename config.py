@@ -26,7 +26,7 @@ class Config:
             setattr(self, key, self.config[key])
         
         # I don't want these values to be configurable by the user
-        self.APP_VERSION = "v0.3.0"
+        self.APP_VERSION = "v0.5"
         self.APP_WEIGHT = 350
         self.APP_HEIGHT = 200
         self.APP_TITLE = f"{self.APP_VERSION} - ADAT - All in One"
