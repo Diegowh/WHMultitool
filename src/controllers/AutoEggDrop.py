@@ -17,12 +17,15 @@ class AutoEggDrop(BaseTaskManager):
     def __init__(self, loop: asyncio.AbstractEventLoop, config: 'Config', master, controller) -> None:
         
         super().__init__(loop=loop)
-        self.config = config
-        self.hotkey = self.config.AUTO_EGGDROP_HOTKEY 
-        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
+        self.config = config.load_service(self.__name__())
+        self.toggle_key = self.config.toggle_key 
+        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
         self.gui = AutoEggDropGUI(auto_eggdrop=self, config=self.config, master=master, controller=controller)
         
         print("AutoEggDrop initialized\n")
+    
+    def __name__(self):
+        return "AUTOEGGDROP"
     
     async def _task(self):
         pa.open_inventory(post_delay=0.3)

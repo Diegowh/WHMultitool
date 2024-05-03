@@ -18,11 +18,14 @@ from src.components.AutoSimGUI import AutoSimGUI
 class AutoSim(BaseTaskManager):
     def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
         super().__init__(loop=loop)
-        self.config = config
-        self.hotkey = self.config.AUTO_EGGDROP_HOTKEY 
-        keyboard.register_hotkey(self.hotkey, self.toggle_task, suppress=True)
+        self.config = config.load_service(self.__name__())
+        self.toggle_key = self.config.toggle_key 
+        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
         self.gui = AutoSimGUI(autosim=self, config=self.config, master=master, controller=controller)
 
+    def __name__(self):
+        return "AUTOSIM"
+    
     async def _task(self):
         
         pa.move_cursor_and_click(MainMenuScreenCoordinates.PRESS_TO_START) # Press middle button on the start screen
