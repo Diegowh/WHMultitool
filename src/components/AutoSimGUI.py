@@ -25,7 +25,7 @@ class AutoSimGUI(BaseFrame):
         """
         Initialize the GUI components.
         """
-        instructions_label = tk.Label(self, text=f"{self.config.AUTOSIM_HOTKEY} - Toggle autosim")
+        instructions_label = tk.Label(self, text=f"{self.config.toggle_key} - Toggle autosim")
         instructions_label.pack(padx=20, pady=20)
         self.autosim_label = instructions_label
         
