@@ -9,6 +9,8 @@ Date: 5/2024
 """
 from src.config.service_config import ServiceConfig
 from src.config.exceptions import ConfigError
+from src.controllers.AutoSim import AutoSim
+from src.controllers.AutoEggDrop import AutoEggDrop
 
 
 class Config:
@@ -20,6 +22,12 @@ class Config:
         self.app_height = 200
         self.app_title = f"{self.app_version} - ADAT - All in One"
 
+        self.main_loop_sleep_interval = 0.05
+
+        self.services = {
+            "AutoSim": AutoSim,
+            "AutoEggDrop": AutoEggDrop,
+        }
 
     def load_service(self, service_name: str) -> ServiceConfig | None:
         """Load the configuration of a service.
