@@ -1,5 +1,9 @@
 """
+This module contains the AutoSimGUI,
+which is used as the GUI component of the Autosim class.
 
+Author: DiegoWH
+Date: 5/2024
 """
 import tkinter as tk
 from typing import TYPE_CHECKING
@@ -8,7 +12,6 @@ from src.components.BaseFrame import BaseFrame
 if TYPE_CHECKING:
     from src.controllers.AutoSim import AutoSim
     from src.config.config import Config
-
 
 
 class AutoSimGUI(BaseFrame):
@@ -22,8 +25,6 @@ class AutoSimGUI(BaseFrame):
         self.text_input = tk.StringVar()
         self.init_gui()
         self.autosim = autosim
-
-
 
     def init_gui(self):
         """
