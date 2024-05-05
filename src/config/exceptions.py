@@ -1,2 +1,7 @@
+"""
+Module for exceptions related to the config package.
+"""
+
 class ConfigError(Exception):
-    pass
+    """Exception raised for errors in the config package.
+    """
