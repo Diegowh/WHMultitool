@@ -3,7 +3,6 @@ import keyboard
 import pyautogui
 
 from src.config.config import Config
-from src.components.BaseFrame import BaseFrame
 from src.controllers.BaseTaskManager import BaseTaskManager
 import src.utils.player_actions as pa
 from src.utils.screen_manager import (
@@ -19,7 +18,8 @@ class AutoSim(BaseTaskManager):
     def __init__(self, loop: asyncio.AbstractEventLoop, config: Config, master, controller) -> None:
         super().__init__(loop=loop)
         self.config = config.load_service(self.__name__())
-        self.toggle_key = self.config.toggle_key 
+        self.toggle_key = self.config.toggle_key
+
         keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
         self.gui = AutoSimGUI(autosim=self, config=self.config, master=master, controller=controller)
 
@@ -39,8 +39,8 @@ class AutoSim(BaseTaskManager):
         pa.move_cursor_and_click(ServerSelectionScreenCoordinates.FIRST_SERVER)  # Click on the first map in the list
         pa.move_cursor_and_click(ServerSelectionScreenCoordinates.FIRST_SERVER)  # Click again to confirm the map selection, sometimes the first click doesn't register
         pa.move_cursor_and_click(ServerSelectionScreenCoordinates.JOIN)  # Click Join and wait 3 seconds for the mod selection screen to load
-        pa.move_cursor_and_click(ModsSelectionScreenCoordinates.JOIN, prev_delay=3)  # Click Join
-        await asyncio.sleep(10)  # Delay to allow the Server full message to appear
+        pa.move_cursor_and_click(ModsSelectionScreenCoordinates.JOIN, prev_delay=int(self.config.mod_selection_screen_waiting_time))  # Click Join
+        await asyncio.sleep(int(self.config.server_full_screen_waiting_time))  # Delay to allow the Server full message to appear
         pyautogui.press('esc')
         await asyncio.sleep(0.5)
         pa.move_cursor_and_click(ServerSelectionScreenCoordinates.BACK)

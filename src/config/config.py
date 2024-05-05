@@ -4,7 +4,7 @@ from src.config.exceptions import ConfigError
 
 class Config:
     def __init__(self) -> None:
-        self.APP_VERSION = "v0.6"
+        self.APP_VERSION = "v0.6.1"
         self.APP_WEIGHT = 350
         self.APP_HEIGHT = 200
         self.APP_TITLE = f"{self.APP_VERSION} - ADAT - All in One"
