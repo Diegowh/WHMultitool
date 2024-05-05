@@ -11,8 +11,6 @@ Date 5/2024
 import asyncio
 import tkinter as tk
 from src.config.config import Config
-from src.controllers.AutoSim import AutoSim
-from src.controllers.AutoEggDrop import AutoEggDrop
 
 
 class AppController(tk.Tk):
@@ -21,9 +19,8 @@ class AppController(tk.Tk):
     
     It is responsible for creating the main window and the main loop.
     """
-    def __init__(self, config: Config, sleep_interval: float = 0.05):
+    def __init__(self, config: Config):
         self.config = config
-
 
         # I had to add these lins to simulate Tkinter's mainloop in asyncio
         # This way I can control the mainloop for the different
@@ -34,13 +31,11 @@ class AppController(tk.Tk):
         self.protocol("WM_DELETE_WINDOW", self.close_app)
         self.option_add("*tearOff", 0)
 
-        self.apps = {
-            "AutoSim": AutoSim,
-            "AutoEggDrop": AutoEggDrop,
+        self.services = self.config.services
 
         # Main Tkinter window configuration
-        self.title(self.config.APP_TITLE)
-        self.geometry(f"{self.config.APP_WEIGHT}x{self.config.APP_HEIGHT}")
+        self.title(self.config.app_title)
+        self.geometry(f"{self.config.app_weight}x{self.config.app_height}")
         self.resizable(False, False)
 
         self.main_screen = MainScreen(master=self, controller=self)
@@ -61,7 +56,7 @@ class AppController(tk.Tk):
     async def mainloop(self, _n=0): # pylint: disable=W0236
         while not self.app_closing:
             self.update()
-            await asyncio.sleep(self.sleep_interval)
+            await asyncio.sleep(self.config.main_loop_sleep_interval)
 
 
     def show_option(self, i):
@@ -71,8 +66,8 @@ class AppController(tk.Tk):
             i (int): Index of the selected option.
         """
         self.main_screen.pack_forget()
-        app_name = list(self.apps.keys())[i]
-        app_class = self.apps[app_name]
+        app_name = list(self.services.keys())[i]
+        app_class = self.services[app_name]
         self.current_service_screen = app_class(loop=self.loop, config=self.config, master=self, controller=self).gui
         self.current_service_screen.pack(fill=tk.BOTH, expand=True)
 
@@ -97,7 +92,7 @@ class MainScreen(tk.Frame):
     def create_widgets(self):
         """Creates the widgets of the main screen.
         """
-        options = list(self.controller.apps.keys())
+        options = list(self.controller.services.keys())
         for i, option in enumerate(options):
             btn = tk.Button(self, text=option, command=self.show_option_command(i))
             btn.pack(pady=10)
