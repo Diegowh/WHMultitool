@@ -1,9 +1,13 @@
+"""Main file to run All-in-One application.
+"""
 import asyncio
-import src.WHApp as WHApp
+from src import all_in_one_app as app
 
 
 def main():
-    asyncio.run(WHApp.run())
+    """Main function to run the All-in-One application.
+    """
+    asyncio.run(app.run())
 
 
 if __name__ == "__main__":
