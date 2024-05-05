@@ -1,4 +1,3 @@
-
 """
 This module contains the BaseFrame class, 
 which is used as a base class for all the frames in the application.
