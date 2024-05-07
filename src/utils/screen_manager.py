@@ -11,19 +11,22 @@ This module contains functions, classes, and enums
 responsible for obtaining and managing screen coordinates.
 """
 
+__all__ = [
+    "PlayerInventoryCoordinates",
+    "StructureInventoryCoordinates",
+    "MainMenuScreenCoordinates",
+    "GameModeScreenCoordinates",
+    "ServerSelectionScreenCoordinates",
+    "ModsSelectionScreenCoordinates",
+    "relative_position",
+    "get_screen_resolution",
+]
+
 
 import time
 from enum import Enum
 import pyautogui
 
-
-def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, float]:
-    """
-    This function converts absolute screen coordinates to relative screen coordinates.
-    """
-    assert len(abs_position) == 2, "The absolute position must be a tuple of length 2."
-    assert len(screen_res) == 2, "The screen resolution must be a tuple of length 2."
-    return round(abs_position[0] / screen_res[0], 3), round(abs_position[1] / screen_res[1], 3)
 
 class ScreenCoordsEnum(Enum):
     """
@@ -101,6 +104,15 @@ class ModsSelectionScreenCoordinates(ScreenCoordsEnum):
     """
     JOIN = (0.18, 0.866)
     BACK = (0.285, 0.865)
+
+
+def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, float]:
+    """
+    This function converts absolute screen coordinates to relative screen coordinates.
+    """
+    assert len(abs_position) == 2, "The absolute position must be a tuple of length 2."
+    assert len(screen_res) == 2, "The screen resolution must be a tuple of length 2."
+    return round(abs_position[0] / screen_res[0], 3), round(abs_position[1] / screen_res[1], 3)
 
 
 def get_screen_resolution() -> tuple[int, int]:
