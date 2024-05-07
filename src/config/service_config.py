@@ -33,7 +33,7 @@ class ServiceConfig:
                 print(f"{key}: {self.config[self.service_name][key]}")
 
     def update(self, attr_name: str, new_value: str) -> None:
-        """Update the configuration of a service.
+        """Update the configuration attribute of a service.
 
         Args:
             attr_name (str): The name of the attribute to update.
