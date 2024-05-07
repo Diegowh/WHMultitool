@@ -9,8 +9,10 @@ import keyboard
 import pyperclip
 import pyautogui
 
-from src.utils.utils import get_screen_resolution
-from src.utils.screen_manager import ScreenCoordsEnum
+from src.utils.screen_manager import (
+    ScreenCoordsEnum,
+    get_screen_resolution,
+)
 from src.utils.validators import validate_hotkey
 
 
