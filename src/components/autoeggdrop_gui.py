@@ -16,8 +16,6 @@ if TYPE_CHECKING:
 
 
 
-
-
 class AutoEggDropGUI(BaseFrame):
     """Class that represents the GUI of the AutoEggDrop component.
     """
