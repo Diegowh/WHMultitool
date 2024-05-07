@@ -1,3 +1,8 @@
+"""
+Base class for service task managers.
+"""
+
+
 import asyncio
 from abc import ABC, abstractmethod
 
@@ -5,7 +10,8 @@ import keyboard
 
 class BaseTaskManager(ABC):
     """
-    This is a base class for task managers. It provides a basic structure for managing tasks in a separate thread.
+    Base class for task managers,
+    provides a basic structure for managing tasks in a separate thread.
     """
     def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
         self.loop = loop
@@ -15,28 +21,39 @@ class BaseTaskManager(ABC):
 
     @abstractmethod
     async def _task(self) -> None:
-        pass
-    
+        """
+        Abstract method repersenting the core task to be performed by a service controller.
+        
+        This metod is intended to be overridden by subclasses
+        to define a sequence of in-game actions.
+        
+        These actions are specific to the service
+        and are executed repeatedly  in a loop while the task is running.
+        
+        For example, a service controller might define this method
+        to automate a series of clicks, cursor movements, and text inputs.
+        """
+
     async def coroutine(self) -> None:
-        """Method to encapsulate the task coroutine.
+        """Method to encapsulate and control the task coroutine in a loop.
         """
         try:
             while self.task_running:
                 print("Running task...")
                 await self._task()
-                
+
                 # This is a non-blocking call.
                 # It's used to give control to the asyncio event loop.
                 # Allows other tasks to run before this task continues.
                 await asyncio.sleep(0)
-        
+
         except asyncio.CancelledError:
             print("Task cancelled")
             self.task_running = False
         # finally:
         #     print("Task stopped")
         #     self.task_running = False
-    
+
     def start_task(self) -> None:
         """Starts the task coroutine in the asyncio loop.
         
@@ -45,14 +62,14 @@ class BaseTaskManager(ABC):
         """
         self.task = self.loop.create_task(self.coroutine())
         self.task_running = True
-        print(f"Task started")
-    
+        print("Task started")
+
     def stop_task(self) -> None:
         """Stops the task coroutine in the asyncio loop.
         """
         if self.task is not None:
             self.task.cancel()
-            print(f"Task stopped")
+            print("Task stopped")
 
     def toggle_task(self) -> None:
         """Toggles the task coroutine on and off.
@@ -70,6 +87,6 @@ class BaseTaskManager(ABC):
         print("Destroying TaskManager...")
         if self.task is not None:
             self.loop.call_soon_threadsafe(self.task.cancel)
-        
+
         keyboard.unregister_all_hotkeys()
-        print(f"Unregistered all hotkeys")
+        print("Unregistered all hotkeys")

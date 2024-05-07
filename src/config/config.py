@@ -1,16 +1,12 @@
 """
 Module responsible of the entire configuration of the application.
-
-It is a centralized place to store all the configuration of the application
-and load the configuration of the services.
-
-Author: Diego WH
-Date: 5/2024
 """
+
+
 from src.config.service_config import ServiceConfig
 from src.config.exceptions import ConfigError
-from src.controllers.AutoSim import AutoSim
-from src.controllers.AutoEggDrop import AutoEggDrop
+from src.controllers.autosim import AutoSim
+from src.controllers.autoeggdrop import AutoEggDrop
 
 
 class Config:

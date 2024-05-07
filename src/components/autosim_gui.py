@@ -1,16 +1,16 @@
 """
 This module contains the AutoSimGUI,
 which is used as the GUI component of the Autosim class.
-
-Author: DiegoWH
-Date: 5/2024
 """
+
+
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.BaseFrame import BaseFrame
+from src.components.base_frame import BaseFrame
+
 if TYPE_CHECKING:
-    from src.controllers.AutoSim import AutoSim
+    from src.controllers.autosim import AutoSim
     from src.config.config import Config
 
 

@@ -1,6 +1,8 @@
 """
 Module for handling service configuration
 """
+
+
 from configparser import ConfigParser
 from src.config.exceptions import ConfigError
 

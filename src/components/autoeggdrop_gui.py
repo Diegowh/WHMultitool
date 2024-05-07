@@ -2,18 +2,16 @@
 This module contains class which represents the GUI of the AutoEggDrop service.
 
 AutoEggDropGUI is a subclass of BaseFrame, which is a subclass of tkinter.Frame.
-
-Author: DiegoWH
-Date: 5/2024
 """
+
 
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.BaseFrame import BaseFrame
+from src.components.base_frame import BaseFrame
 
 if TYPE_CHECKING:
-    from controllers.AutoEggDrop import AutoEggDrop
+    from src.controllers.autoeggdrop import AutoEggDrop
     from config.config import Config
 
 

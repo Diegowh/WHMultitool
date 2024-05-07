@@ -1,10 +1,20 @@
+# This module serves as a tool for obtaining
+# relative screen coordinates to create more enums as needed
+# for the different services of the application.
+# It can be run directly, and it will call the function get_mouse_relative_position()
+# responsible for obtaining the relative position of the mouse
+# on the screen based on the screen resolution.
+# This way it is easier to create new enums for the different services
+# of the application.
 """
-This module is used to store the conversion of absolute screen coordinates to relative screen coordinates.
+This module contains functions, classes, and enums
+responsible for obtaining and managing screen coordinates.
 """
 
-import pyautogui
-from enum import Enum
+
 import time
+from enum import Enum
+import pyautogui
 
 
 def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, float]:
@@ -13,11 +23,12 @@ def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, fl
     """
     assert len(abs_position) == 2, "The absolute position must be a tuple of length 2."
     assert len(screen_res) == 2, "The screen resolution must be a tuple of length 2."
-    
     return round(abs_position[0] / screen_res[0], 3), round(abs_position[1] / screen_res[1], 3)
 
 class ScreenCoordsEnum(Enum):
-    pass
+    """
+    Enum class used to store relative screen coordinates.
+    """
 
 
 class PlayerInventoryCoordinates(ScreenCoordsEnum):
@@ -51,7 +62,7 @@ class StructureInventoryCoordinates(ScreenCoordsEnum):
     SHOW_ENGRAMS = (0.90, 0.18)
     YOU_BUTTON = (0.41, 0.13)
     STRUCTURE_BUTTON = (0.58, 0.13)
-    
+
 
 class MainMenuScreenCoordinates(ScreenCoordsEnum):
     """
@@ -90,21 +101,28 @@ class ModsSelectionScreenCoordinates(ScreenCoordsEnum):
     """
     JOIN = (0.18, 0.866)
     BACK = (0.285, 0.865)
-    
+
+
 def get_screen_resolution() -> tuple[int, int]:
     """
     This function returns the screen resolution of the monitor.
     """
     return (pyautogui.size().width, pyautogui.size().height)
 
+
 def get_mouse_relative_position() -> tuple[int, int]:
+    """Get the relative position of the mouse on the screen. Based on the screen resolution.
+
+    Returns:
+        tuple[int, int]: The relative position of the mouse on the screen.
+    """
     screen_resolution = get_screen_resolution()
     while True:
         # Get the position of the mouse.
         position = pyautogui.position()
         x = position.x
         y = position.y
-        
+
         absolute_coords = (x, y)
         relative_coords = relative_position(absolute_coords, screen_resolution)
         print(relative_coords)

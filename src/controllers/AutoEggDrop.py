@@ -1,15 +1,14 @@
 """
 This module is the controller for the AutoEggDrop service.
-
-Author: Diego WH
-Date: 05/2021
 """
+
+
 from typing import TYPE_CHECKING
 import asyncio
 import keyboard
 import src.utils.player_actions as pa
-from src.components.AutoEggDropGUI import AutoEggDropGUI
-from src.controllers.BaseTaskManager import BaseTaskManager
+from src.components.autoeggdrop_gui import AutoEggDropGUI
+from src.controllers.base_task_manager import BaseTaskManager
 from src.utils.screen_manager import (
     PlayerInventoryCoordinates,
 )
@@ -47,10 +46,12 @@ class AutoEggDrop(BaseTaskManager):
         return "AUTOEGGDROP"
 
     async def _task(self):
+        """Method to automate the process of dropping eggs from the inventory in the game.
+        """
         pa.open_inventory(post_delay=0.3)
         pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
         pa.type_text(text="fert", post_delay=0.2)
         pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
         pa.pop_item()
         pa.close_inventory()
-        pa.move(direction=pa.MoveDirection.LEFT, prev_delay=0.3)
+        pa.move(direction=pa.MoveDirection.LEFT, pre_delay=0.3)

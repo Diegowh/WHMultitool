@@ -1,10 +1,9 @@
 """
 This module contains the BaseFrame class, 
 which is used as a base class for all the frames in the application.
-
-Author: DiegoWH
-Date: 5/2024
 """
+
+
 import tkinter as tk
 from abc import ABC, abstractmethod
 
