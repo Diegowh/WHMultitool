@@ -7,7 +7,7 @@ which is used as the GUI component of the Autosim class.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.configurable_frame import ConfigurableFrame
+from src.components.frames.configurable_frame import ConfigurableFrame
 
 if TYPE_CHECKING:
     from src.controllers.autosim import AutoSim

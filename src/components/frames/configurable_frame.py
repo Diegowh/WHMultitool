@@ -1,7 +1,7 @@
 import tkinter as tk
 from abc import ABC, abstractmethod
 
-from src.components.base_frame import BaseFrame
+from src.components.frames.base_frame import BaseFrame
 
 
 class ConfigurableFrame(BaseFrame):

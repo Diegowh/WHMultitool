@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 import keyboard
 import pyautogui
 from src.controllers.base_task_manager import BaseTaskManager
-from src.components.autosim_gui import AutoSimGUI
+from src.components.windows.autosim_gui import AutoSimGUI
 import src.utils.player_actions as pa
 from src.utils.screen_manager import (
     ModsSelectionScreenCoordinates,

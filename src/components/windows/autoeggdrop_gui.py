@@ -8,13 +8,10 @@ AutoEggDropGUI is a subclass of BaseFrame, which is a subclass of tkinter.Frame.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.base_frame import BaseFrame
-from src.components.configurable_frame import ConfigurableFrame
-from src.components.base_config_frame import BaseConfigFrame
+from src.components.frames.configurable_frame import ConfigurableFrame
 
 if TYPE_CHECKING:
     from src.controllers.autoeggdrop import AutoEggDrop
-    from config.config import Config
 
 
 
