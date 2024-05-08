@@ -2,7 +2,7 @@ import tkinter as tk
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
 from tkinter import ttk
-
+from src.utils.utils import transcript_attr_name
 
 class ConfigScreen(BaseFrame):
     def __init__(self, service, master=None):
@@ -20,19 +20,20 @@ class ConfigScreen(BaseFrame):
         title_frame.pack(side=tk.TOP, fill=tk.X)
 
         config_attributes = self.config.config[self.config.service_name]
-        for i, key in enumerate(config_attributes):
-            value = getattr(self.config, key)
+        for attr_name in config_attributes:
+            value = getattr(self.config, attr_name)
             frame = tk.Frame(self)
             frame.pack(fill=tk.X, padx=10, pady=10)
-            label = tk.Label(frame, text=key, anchor='w')
+            label = tk.Label(frame, text=transcript_attr_name(attr_name), anchor='w')
             label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
             entry = tk.Entry(frame, width=5)
             entry.insert(0, str(value))
             entry.pack(side=tk.RIGHT, padx=(0, 10))
-            self.entries[key] = entry
+            self.entries[attr_name] = entry
 
         save_button = ttk.Button(self, text="Save", command=None)
         save_button.pack(pady=20)
+
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
