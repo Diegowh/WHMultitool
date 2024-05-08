@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 import keyboard
 import pyautogui
 from src.controllers.base_task_manager import BaseTaskManager
-from src.components.autosim_gui import AutoSimGUI
+from src.components.windows.autosim_gui import AutoSimGUI
 import src.utils.player_actions as pa
 from src.utils.screen_manager import (
     ModsSelectionScreenCoordinates,
@@ -19,7 +19,7 @@ from src.utils.screen_manager import (
 )
 if TYPE_CHECKING:
     from config.config import Config
-    from src.all_in_one_app import AppController
+    from src.controllers.app_controller import AppController
 
 
 
@@ -38,10 +38,9 @@ class AutoSim(BaseTaskManager):
         self.config = config.load_service(self.__name__())
         self.toggle_key = self.config.toggle_key
 
-        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
+        self.register_hotkey(self.toggle_key)
         self.gui = AutoSimGUI(
             autosim=self,
-            config=self.config,
             master=master,
             controller=controller
         )
@@ -52,37 +51,37 @@ class AutoSim(BaseTaskManager):
     async def _task(self):
         """Method to automate the process of trying to join a full server in the game.
         """
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             MainMenuScreenCoordinates.PRESS_TO_START
         ) # Press middle button on the start screen
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             GameModeScreenCoordinates.JOIN_GAME
         )  # Press Join Game button
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.SEARCH_BOX
         )  # Click on the map search bar
 
         pyautogui.write(self.gui.text_input.get())
         pyautogui.press('enter')
-        asyncio.sleep(0.5)  # Wait for the map list to load
+        await asyncio.sleep(0.5)  # Wait for the map list to load
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
             )  # Click on the first map in the list
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
         )  # Click again to confirm the map selection, sometimes the first click doesn't register
 
-        pa.move_cursor_and_click(
-            ServerSelectionScreenCoordinates.JOIN
+        await pa.move_cursor_and_click(
+            ServerSelectionScreenCoordinates.JOIN,
+            post_delay=int(self.config.mod_selection_screen_waiting_time)
             )  # Click Join and wait 3 seconds for the mod selection screen to load
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ModsSelectionScreenCoordinates.JOIN,
-            pre_delay=int(self.config.mod_selection_screen_waiting_time)
         )  # Click Join
 
         await asyncio.sleep(
@@ -92,10 +91,14 @@ class AutoSim(BaseTaskManager):
         pyautogui.press('esc')
         await asyncio.sleep(0.5)
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.BACK
         )
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK
         )
+
+    def register_hotkey(self, hotkey):
+        
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

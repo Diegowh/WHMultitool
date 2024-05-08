@@ -32,8 +32,8 @@ class ServiceConfig:
                 setattr(self, key, self.config[self.service_name][key])
                 print(f"{key}: {self.config[self.service_name][key]}")
 
-    def update(self, attr_name: str, new_value: str) -> None:
-        """Update the configuration of a service.
+    def update_attr(self, attr_name: str, new_value: str) -> None:
+        """Update the configuration attribute of a service.
 
         Args:
             attr_name (str): The name of the attribute to update.
@@ -42,9 +42,16 @@ class ServiceConfig:
         if self.service_name in self.config and attr_name in self.config[self.service_name]:
 
             # update the configparser object
-            self.config[self.service_name[attr_name]] = new_value
+            self.config[self.service_name][attr_name] = new_value
 
             # update the object attribute
             setattr(self, attr_name, new_value)
             with open(CONFIG_FILE_NAME, "w", encoding="utf-8") as f:
                 self.config.write(f)
+            
+            # re-read the config.ini file
+            self.config.read(CONFIG_FILE_NAME)
+
+    def update(self, new_config: dict) -> None:
+        for attr_name, value in new_config.items():
+            self.update_attr(attr_name, value)

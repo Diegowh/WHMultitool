@@ -3,6 +3,7 @@ Module to handle player actions in the game.
 """
 
 
+import asyncio
 import time
 from enum import StrEnum
 import keyboard
@@ -27,7 +28,7 @@ class MoveDirection(StrEnum):
 
 
 @validate_hotkey
-def lay_down(
+async def lay_down(
     hotkey: str = 'x',
     pre_delay: float = None,
     post_delay: float = 0.2,
@@ -43,11 +44,11 @@ def lay_down(
         time.sleep(pre_delay)
 
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 @validate_hotkey
-def teleport_to_default(
+async def teleport_to_default(
     hotkey: str = 'r',
     pre_delay: float = None,
     post_delay: float = 1.5
@@ -63,11 +64,11 @@ def teleport_to_default(
         time.sleep(pre_delay)
 
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 @validate_hotkey
-def jump(
+async def jump(
     hotkey: str = 'space',
     pre_delay: float = None,
     post_delay: float = 0.2
@@ -83,11 +84,11 @@ def jump(
         time.sleep(pre_delay)
     
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 @validate_hotkey
-def pop_item(
+async def pop_item(
     hotkey: str = 'o',
     pre_delay: float = None,
     post_delay: float = 0.2
@@ -103,13 +104,14 @@ def pop_item(
         time.sleep(pre_delay)
 
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
-
-def move(
-    direction: MoveDirection,
+@validate_hotkey
+async def move(
+    direction: MoveDirection | str,
     pre_delay: float = None,
-    duration: float = 0.2
+    duration: float = 0.2,
+    post_delay: float = 0
     ) -> None:
     """Move the player in the game in a specific direction.
 
@@ -121,8 +123,6 @@ def move(
     Raises:
         ValueError: If the direction is not an instance of MoveDirection.
     """
-    if not isinstance(direction, MoveDirection):
-        raise ValueError(f'The direction must be an instance of {MoveDirection.__name__}')
 
     if pre_delay is not None:
         time.sleep(pre_delay)
@@ -130,10 +130,11 @@ def move(
     keyboard.press(direction)
     time.sleep(duration)
     keyboard.release(direction)
+    await asyncio.sleep(post_delay)
 
 
 @validate_hotkey
-def open_inventory(
+async def open_inventory(
     hotkey: str = 'i',
     pre_delay: float = None,
     post_delay: float = 0.2
@@ -149,11 +150,11 @@ def open_inventory(
         time.sleep(pre_delay)
 
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 @validate_hotkey
-def close_inventory(
+async def close_inventory(
     hotkey: str = 'esc',
     pre_delay: float = None,
     post_delay: float = 0.2
@@ -169,7 +170,7 @@ def close_inventory(
         time.sleep(pre_delay)
 
     keyboard.press_and_release(hotkey)
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 def move_cursor(
@@ -200,7 +201,7 @@ def move_cursor(
         time.sleep(post_delay)
 
 
-def move_cursor_and_click(
+async def move_cursor_and_click(
     location: ScreenCoordsEnum,
     pre_delay: float = None,
     post_delay: float = 0.2,
@@ -221,10 +222,10 @@ def move_cursor_and_click(
 
     pyautogui.click(clicks=clicks)
     print("Clicked")
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
-def type_text(
+async def type_text(
     text: str,
     pre_delay: float = None,
     post_delay: float = 0.2
@@ -243,4 +244,4 @@ def type_text(
     # it's more reliable and faster when typing long texts in ARK.
     pyperclip.copy(text)
     pyautogui.hotkey('ctrl', 'v')
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)

@@ -1,7 +1,7 @@
 """Main file to run All-in-One application.
 """
 import asyncio
-from src import all_in_one_app as app
+from src.controllers import app_controller as app
 
 
 def main():

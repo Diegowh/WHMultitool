@@ -13,10 +13,11 @@ class Config:
     """Main configuration class of the application.
     """
     def __init__(self) -> None:
-        self.app_version = "v0.6.1"
-        self.app_weight = 350
-        self.app_height = 200
-        self.app_title = f"{self.app_version} - ADAT - All in One"
+        self.app_version = "v0.10.1"
+        self.app_name = "All in One"
+        self.app_weight = 400
+        self.app_height = 500
+        self.app_title = f"{self.app_version} - ADAT - {self.app_name}"
 
         self.main_loop_sleep_interval = 0.05
 

@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import asyncio
 import keyboard
 import src.utils.player_actions as pa
-from src.components.autoeggdrop_gui import AutoEggDropGUI
+from src.components.windows.autoeggdrop_gui import AutoEggDropGUI
 from src.controllers.base_task_manager import BaseTaskManager
 from src.utils.screen_manager import (
     PlayerInventoryCoordinates,
@@ -15,7 +15,8 @@ from src.utils.screen_manager import (
 
 if TYPE_CHECKING:
     from config.config import Config
-    from src.all_in_one_app import AppController
+    from src.controllers.app_controller import AppController
+
 
 class AutoEggDrop(BaseTaskManager):
     """ 
@@ -32,10 +33,9 @@ class AutoEggDrop(BaseTaskManager):
         super().__init__(loop=loop)
         self.config = config.load_service(self.__name__())
         self.toggle_key = self.config.toggle_key
-        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
+        self.register_hotkey(self.toggle_key)
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
-            config=self.config,
             master=master,
             controller=controller
             )
@@ -48,10 +48,22 @@ class AutoEggDrop(BaseTaskManager):
     async def _task(self):
         """Method to automate the process of dropping eggs from the inventory in the game.
         """
-        pa.open_inventory(post_delay=0.3)
-        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
-        pa.type_text(text="fert", post_delay=0.2)
-        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
-        pa.pop_item()
-        pa.close_inventory()
-        pa.move(direction=pa.MoveDirection.LEFT, pre_delay=0.3)
+        await pa.open_inventory(
+            hotkey=self.config.pop_item_key,
+            post_delay=0.3
+        )
+        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
+        await pa.type_text(text="fert", post_delay=0.2)
+        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
+        await pa.pop_item(
+            hotkey=self.config.pop_item_key,
+        )
+        await pa.close_inventory()
+        await pa.move(
+            direction=self.config.move_direction_key,
+            pre_delay=0.3
+        )
+
+
+    def register_hotkey(self, hotkey):
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)
