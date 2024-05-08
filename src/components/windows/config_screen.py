@@ -1,7 +1,7 @@
 import tkinter as tk
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
-
+from tkinter import ttk
 
 
 class ConfigScreen(BaseFrame):
@@ -31,6 +31,8 @@ class ConfigScreen(BaseFrame):
             entry.pack(side=tk.RIGHT, padx=(0, 10))
             self.entries[key] = entry
 
+        save_button = ttk.Button(self, text="Save", command=None)
+        save_button.pack(pady=20)
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
