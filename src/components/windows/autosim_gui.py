@@ -11,20 +11,20 @@ from src.components.frames.configurable_frame import ConfigurableFrame
 
 if TYPE_CHECKING:
     from src.controllers.autosim import AutoSim
-    from src.config.config import Config
 
 
 class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
-    def __init__(self, autosim: 'AutoSim', config: 'Config', master, controller) -> None:
+    def __init__(self, autosim: 'AutoSim', master, controller) -> None:
         super().__init__(master=master, controller=controller)
 
-        self.config = config
+        self.master = master
         self.autosim_label = None
         self.text_input = tk.StringVar()
-        self.init_gui()
         self.autosim = autosim
+        self.config = self.autosim.config
+        self.init_gui()
 
     def init_gui(self):
         """

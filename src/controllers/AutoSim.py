@@ -41,7 +41,6 @@ class AutoSim(BaseTaskManager):
         keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
         self.gui = AutoSimGUI(
             autosim=self,
-            config=self.config,
             master=master,
             controller=controller
         )

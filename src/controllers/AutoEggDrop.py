@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 import asyncio
 import keyboard
 import src.utils.player_actions as pa
-from src.components.autoeggdrop_gui import AutoEggDropGUI
+from src.components.windows.autoeggdrop_gui import AutoEggDropGUI
 from src.controllers.base_task_manager import BaseTaskManager
 from src.utils.screen_manager import (
     PlayerInventoryCoordinates,
@@ -16,6 +16,7 @@ from src.utils.screen_manager import (
 if TYPE_CHECKING:
     from config.config import Config
     from src.all_in_one_app import AppController
+
 
 class AutoEggDrop(BaseTaskManager):
     """ 
@@ -35,7 +36,6 @@ class AutoEggDrop(BaseTaskManager):
         keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
-            config=self.config,
             master=master,
             controller=controller
             )
