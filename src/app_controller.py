@@ -10,7 +10,9 @@ Date 5/2024
 
 import asyncio
 import tkinter as tk
+from src.components.windows.main_screen import MainScreen
 from src.config.config import Config
+
 
 
 class AppController(tk.Tk):
