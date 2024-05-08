@@ -5,6 +5,7 @@ which is used as a base class for all the frames in the application.
 
 
 import tkinter as tk
+from tkinter import ttk
 from abc import ABC, abstractmethod
 
 
@@ -36,7 +37,7 @@ class BaseFrame(tk.Frame, ABC):
         self.controller.show_main()
 
     def back_btn(self, container):
-        back_btn = tk.Button(container, text="Back", command=self.destroy_screen)
+        back_btn = ttk.Button(container, text="Back", command=self.destroy_screen)
         back_btn.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return back_btn
 
