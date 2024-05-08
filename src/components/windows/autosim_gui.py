@@ -8,6 +8,7 @@ import tkinter as tk
 from typing import TYPE_CHECKING
 
 from src.components.frames.configurable_frame import ConfigurableFrame
+from src.components.windows.config_screen import ConfigScreen
 
 if TYPE_CHECKING:
     from src.controllers.autosim import AutoSim
@@ -46,4 +47,9 @@ class AutoSimGUI(ConfigurableFrame):
         print("AutoSim destroyed")
 
     def open_service_config(self) -> None:
-        ...
+        
+        # Hide the current frame
+        self.pack_forget()
+        
+        # Create the configuration screen
+        config_screen = ConfigScreen(self.autosim, self.master, self.controller).pack(fill=tk.BOTH, expand=True)
