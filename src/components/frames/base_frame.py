@@ -43,7 +43,7 @@ class BaseFrame(tk.Frame, ABC):
         bottom_container = tk.Frame(self)
         bottom_container.pack(side=tk.BOTTOM, fill=tk.X)
         return bottom_container
-
+    
     def create_widgets(self) -> tk.Frame:
         """This method creates the common widgets for all the frames.
         """

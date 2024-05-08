@@ -19,7 +19,7 @@ from src.utils.screen_manager import (
 )
 if TYPE_CHECKING:
     from config.config import Config
-    from src.all_in_one_app import AppController
+    from src.app_controller import AppController
 
 
 

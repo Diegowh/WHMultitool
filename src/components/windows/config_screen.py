@@ -1,9 +1,11 @@
 import tkinter as tk
 from src.components.frames.base_frame import BaseFrame
+from src.components.frames.title_frame import TitleFrame
+
 
 
 class ConfigScreen(BaseFrame):
-    def __init__(self, service, master=None, controller=None):
+    def __init__(self, service, master=None):
         super().__init__(master)
         self.service = service
         self.config = self.service.config
@@ -11,12 +13,11 @@ class ConfigScreen(BaseFrame):
         self.init_gui()
 
     def init_gui(self):
-        title_label = tk.Label(self, text=self.config.service_name)
-        title_label.pack(pady=10)
-        
-
-        separator_frame = tk.Canvas(self, height=1, width=250, bg='dark grey')
-        separator_frame.pack(pady=(0, 10))
+        title_frame = TitleFrame(
+            self,
+            self.config.service_name.capitalize() + " Config"
+        )
+        title_frame.pack(side=tk.TOP, fill=tk.X)
 
         config_attributes = self.config.config[self.config.service_name]
         for i, key in enumerate(config_attributes):
@@ -39,4 +40,5 @@ class ConfigScreen(BaseFrame):
         return save_button
     
     def destroy_gui(self):
-        ...
+        super().destroy()
+        self.service.gui.pack(fill=tk.BOTH, expand=True)

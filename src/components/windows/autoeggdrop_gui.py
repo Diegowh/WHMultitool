@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING
 
 from src.components.windows.config_screen import ConfigScreen
 from src.components.frames.configurable_frame import ConfigurableFrame
+from src.components.frames.title_frame import TitleFrame
 
 if TYPE_CHECKING:
     from src.controllers.autoeggdrop import AutoEggDrop
@@ -32,8 +33,14 @@ class AutoEggDropGUI(ConfigurableFrame):
         """
         Initialize the GUI components.
         """
-        instructions_label = tk.Label(self, text="Press F1 to toggle")
-        instructions_label.pack(padx=20, pady=20)
+        title_frame = TitleFrame(
+            self,
+            self.config.service_name.capitalize()
+        )
+        title_frame.pack(side=tk.TOP, fill=tk.X)
+        
+        toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
+        toggle_key_label.pack(pady=10)
 
     def destroy_gui(self):
         self.auto_eggdrop.destroy()
@@ -46,4 +53,4 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.pack_forget()
         
         # Create the configuration screen
-        config_screen = ConfigScreen(self.auto_eggdrop, self.master, self.controller).pack(fill=tk.BOTH, expand=True)
+        config_screen = ConfigScreen(self.auto_eggdrop, self.master).pack(fill=tk.BOTH, expand=True)
