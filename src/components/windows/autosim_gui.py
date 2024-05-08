@@ -27,6 +27,7 @@ class AutoSimGUI(ConfigurableFrame):
         self.text_input = tk.StringVar()
         self.autosim = autosim
         self.config = self.autosim.config
+        self.toggle_key_label = None
         self.init_gui()
 
     def init_gui(self):
@@ -50,8 +51,8 @@ class AutoSimGUI(ConfigurableFrame):
         map_num_entry = tk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
         map_num_entry.pack(side=tk.RIGHT, padx=(10, 10))
     
-        toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
-        toggle_key_label.pack(pady=10)
+        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
+        self.toggle_key_label.pack(pady=10)
     
     def destroy_gui(self) -> None:
         self.autosim.destroy()
@@ -61,7 +62,6 @@ class AutoSimGUI(ConfigurableFrame):
 
     def open_service_config(self) -> None:
         
-        # Hide the current frame
         self.pack_forget()
         
         # Create the configuration screen

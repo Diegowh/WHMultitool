@@ -3,7 +3,7 @@ from tkinter import ttk
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from src.app_controller import AppController
+    from src.controllers.app_controller import AppController
 
 __APP_NAME__ = "All in One"
 

@@ -38,7 +38,7 @@ class AutoSim(BaseTaskManager):
         self.config = config.load_service(self.__name__())
         self.toggle_key = self.config.toggle_key
 
-        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
+        self.register_hotkey(self.toggle_key)
         self.gui = AutoSimGUI(
             autosim=self,
             master=master,
@@ -98,3 +98,7 @@ class AutoSim(BaseTaskManager):
         await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK
         )
+
+    def register_hotkey(self, hotkey):
+        
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

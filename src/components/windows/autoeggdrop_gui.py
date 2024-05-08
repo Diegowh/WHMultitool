@@ -27,6 +27,7 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.controller = controller
         self.auto_eggdrop = auto_eggdrop
         self.config = self.auto_eggdrop.config
+        self.toggle_key_label = None
         self.init_gui()
 
     def init_gui(self):
@@ -39,8 +40,8 @@ class AutoEggDropGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-        toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
-        toggle_key_label.pack(pady=10)
+        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
+        self.toggle_key_label.pack(pady=10)
 
     def destroy_gui(self):
         self.auto_eggdrop.destroy()

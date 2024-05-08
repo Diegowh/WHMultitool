@@ -1,8 +1,11 @@
 import tkinter as tk
+
+import keyboard
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
 from tkinter import ttk
 from src.utils.utils import transcript_attr_name
+from src.config.service_config import ServiceConfig
 
 class ConfigScreen(BaseFrame):
     def __init__(self, service, master=None):
@@ -31,17 +34,32 @@ class ConfigScreen(BaseFrame):
             entry.pack(side=tk.RIGHT, padx=(0, 10))
             self.entries[attr_name] = entry
 
-        save_button = ttk.Button(self, text="Save", command=None)
-        save_button.pack(pady=20)
+        save_button = self.save_button()
 
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
     def save_button(self):
-        save_button = tk.Button(self, text="Save", command=self.save_config)
-        save_button.pack(pady=10)
+        save_button = ttk.Button(self, text="Save", command=self.save_config)
+        save_button.pack(pady=20)
         return save_button
+    
+    def save_config(self):
+        entries = self.get_entries()
+        self.config.update(entries)
+        
     
     def destroy_gui(self):
         super().destroy()
+        if hasattr(self.service, "register_hotkey"):
+            print("Unregistering all hotkeys")
+            keyboard.unregister_all_hotkeys()
+            print(f"Registering hotkey: {self.config.toggle_key} ")
+
+            self.service.register_hotkey(self.config.toggle_key)
+            
+            # Update the toggle key label
+            self.service.gui.toggle_key_label.config(text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off")
+    
         self.service.gui.pack(fill=tk.BOTH, expand=True)
+        

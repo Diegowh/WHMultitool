@@ -33,7 +33,7 @@ class AutoEggDrop(BaseTaskManager):
         super().__init__(loop=loop)
         self.config = config.load_service(self.__name__())
         self.toggle_key = self.config.toggle_key
-        keyboard.register_hotkey(self.toggle_key, self.toggle_task, suppress=True)
+        self.register_hotkey(self.toggle_key)
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
             master=master,
@@ -55,3 +55,7 @@ class AutoEggDrop(BaseTaskManager):
         await pa.pop_item()
         await pa.close_inventory()
         await pa.move(direction=pa.MoveDirection.LEFT, pre_delay=0.3)
+
+
+    def register_hotkey(self, hotkey):
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)
