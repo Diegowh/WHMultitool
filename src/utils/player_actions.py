@@ -3,6 +3,7 @@ Module to handle player actions in the game.
 """
 
 
+import asyncio
 import time
 from enum import StrEnum
 import keyboard
@@ -200,7 +201,7 @@ def move_cursor(
         time.sleep(post_delay)
 
 
-def move_cursor_and_click(
+async def move_cursor_and_click(
     location: ScreenCoordsEnum,
     pre_delay: float = None,
     post_delay: float = 0.2,
@@ -221,7 +222,7 @@ def move_cursor_and_click(
 
     pyautogui.click(clicks=clicks)
     print("Clicked")
-    time.sleep(post_delay)
+    await asyncio.sleep(post_delay)
 
 
 def type_text(

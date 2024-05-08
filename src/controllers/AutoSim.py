@@ -51,15 +51,15 @@ class AutoSim(BaseTaskManager):
     async def _task(self):
         """Method to automate the process of trying to join a full server in the game.
         """
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             MainMenuScreenCoordinates.PRESS_TO_START
         ) # Press middle button on the start screen
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             GameModeScreenCoordinates.JOIN_GAME
         )  # Press Join Game button
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.SEARCH_BOX
         )  # Click on the map search bar
 
@@ -67,19 +67,19 @@ class AutoSim(BaseTaskManager):
         pyautogui.press('enter')
         asyncio.sleep(0.5)  # Wait for the map list to load
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
             )  # Click on the first map in the list
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
         )  # Click again to confirm the map selection, sometimes the first click doesn't register
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.JOIN
             )  # Click Join and wait 3 seconds for the mod selection screen to load
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ModsSelectionScreenCoordinates.JOIN,
             pre_delay=int(self.config.mod_selection_screen_waiting_time)
         )  # Click Join
@@ -91,10 +91,10 @@ class AutoSim(BaseTaskManager):
         pyautogui.press('esc')
         await asyncio.sleep(0.5)
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.BACK
         )
 
-        pa.move_cursor_and_click(
+        await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK
         )
