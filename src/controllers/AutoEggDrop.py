@@ -15,7 +15,7 @@ from src.utils.screen_manager import (
 
 if TYPE_CHECKING:
     from config.config import Config
-    from src.app_controller import AppController
+    from src.controllers.app_controller import AppController
 
 
 class AutoEggDrop(BaseTaskManager):
