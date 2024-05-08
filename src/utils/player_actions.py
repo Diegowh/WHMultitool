@@ -106,8 +106,9 @@ async def pop_item(
     keyboard.press_and_release(hotkey)
     await asyncio.sleep(post_delay)
 
+@validate_hotkey
 async def move(
-    direction: MoveDirection,
+    direction: MoveDirection | str,
     pre_delay: float = None,
     duration: float = 0.2,
     post_delay: float = 0
@@ -122,8 +123,6 @@ async def move(
     Raises:
         ValueError: If the direction is not an instance of MoveDirection.
     """
-    if not isinstance(direction, MoveDirection):
-        raise ValueError(f'The direction must be an instance of {MoveDirection.__name__}')
 
     if pre_delay is not None:
         time.sleep(pre_delay)
