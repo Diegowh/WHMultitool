@@ -106,6 +106,13 @@ class ModsSelectionScreenCoordinates(ScreenCoordsEnum):
     BACK = (0.285, 0.865)
 
 
+class ConnectionFailedScreenCoordinates(ScreenCoordsEnum):
+    """
+    This class is used to store the relative screen coordinates of the connection failed screen.
+    """
+    ACCEPT = (0.443, 0.676)
+    CANCEL = (0.558, 0.676)
+    
 def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, float]:
     """
     This function converts absolute screen coordinates to relative screen coordinates.

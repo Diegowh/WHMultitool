@@ -16,6 +16,7 @@ from src.utils.screen_manager import (
     ServerSelectionScreenCoordinates,
     GameModeScreenCoordinates,
     MainMenuScreenCoordinates,
+    ConnectionFailedScreenCoordinates,
 )
 if TYPE_CHECKING:
     from config.config import Config
@@ -88,8 +89,10 @@ class AutoSim(BaseTaskManager):
             int(self.config.server_full_screen_waiting_time)
             )  # Delay to allow the Server full message to appear
 
-        pyautogui.press('esc')
-        await asyncio.sleep(0.5)
+        await pa.move_cursor_and_click(
+            ConnectionFailedScreenCoordinates.CANCEL,
+            post_delay=0.5
+        )
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.BACK
