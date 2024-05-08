@@ -48,10 +48,10 @@ class AutoEggDrop(BaseTaskManager):
     async def _task(self):
         """Method to automate the process of dropping eggs from the inventory in the game.
         """
-        pa.open_inventory(post_delay=0.3)
-        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
-        pa.type_text(text="fert", post_delay=0.2)
-        pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
-        pa.pop_item()
-        pa.close_inventory()
-        pa.move(direction=pa.MoveDirection.LEFT, pre_delay=0.3)
+        await pa.open_inventory(post_delay=0.3)
+        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
+        await pa.type_text(text="fert", post_delay=0.2)
+        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
+        await pa.pop_item()
+        await pa.close_inventory()
+        await pa.move(direction=pa.MoveDirection.LEFT, pre_delay=0.3)
