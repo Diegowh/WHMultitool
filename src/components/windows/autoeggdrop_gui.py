@@ -20,9 +20,10 @@ class AutoEggDropGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoEggDrop component.
     """
     def __init__(self, auto_eggdrop: 'AutoEggDrop', master, controller) -> None:
-        super().__init__(master=master, controller=controller)
+        super().__init__(master=master)
 
         self.master = master
+        self.controller = controller
         self.auto_eggdrop = auto_eggdrop
         self.config = self.auto_eggdrop.config
         self.init_gui()
@@ -38,6 +39,8 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.auto_eggdrop.destroy()
         super().destroy()
         print("AutoEggDrop destroyed")
+        self.controller.show_main()
+        
 
     def open_service_config(self) -> None:
         self.pack_forget()

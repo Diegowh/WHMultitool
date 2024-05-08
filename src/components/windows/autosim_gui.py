@@ -18,9 +18,10 @@ class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
     def __init__(self, autosim: 'AutoSim', master, controller) -> None:
-        super().__init__(master=master, controller=controller)
+        super().__init__(master=master)
 
         self.master = master
+        self.controller = controller
         self.autosim_label = None
         self.text_input = tk.StringVar()
         self.autosim = autosim
@@ -45,6 +46,7 @@ class AutoSimGUI(ConfigurableFrame):
         self.autosim.destroy()
         super().destroy()
         print("AutoSim destroyed")
+        self.controller.show_main()
 
     def open_service_config(self) -> None:
         

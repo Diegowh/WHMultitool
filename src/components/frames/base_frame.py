@@ -15,9 +15,8 @@ class BaseFrame(tk.Frame, ABC):
     
     Has the functionallity to create the common widgets needed for all the frames.
     """
-    def __init__(self, master=None, controller=None):
+    def __init__(self, master=None):
         super().__init__(master)
-        self.controller = controller
         self.create_widgets()
 
     @abstractmethod
@@ -25,19 +24,18 @@ class BaseFrame(tk.Frame, ABC):
         """This method is used to destroy the widgets of the frame.
         """
 
-    def destroy_screen(self):
-        """This method is used to encapsulate the destruction of the frame
-        and the showing of the main screen.
+    # def destroy_screen(self):
+    #     """This method is used to encapsulate the destruction of the frame
+    #     and the showing of the main screen.
         
-        This way when you inherit from this class,
-        you don't have to worry about calling the destroy method of the frame,
-        and showing the main screen.
-        """
-        self.destroy_gui()
-        self.controller.show_main()
+    #     This way when you inherit from this class,
+    #     you don't have to worry about calling the destroy method of the frame,
+    #     and showing the main screen.
+    #     """
+    #     self.destroy_gui()
 
     def back_btn(self, container):
-        back_btn = ttk.Button(container, text="Back", command=self.destroy_screen)
+        back_btn = ttk.Button(container, text="Back", command=self.destroy_gui)
         back_btn.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return back_btn
 

@@ -7,8 +7,8 @@ from src.components.frames.base_frame import BaseFrame
 
 class ConfigurableFrame(BaseFrame):
     
-    def __init__(self, master=None, controller=None):
-        super().__init__(master, controller)
+    def __init__(self, master=None):
+        super().__init__(master)
     
     @abstractmethod
     def open_service_config(self):
