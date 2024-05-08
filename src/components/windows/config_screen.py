@@ -6,6 +6,8 @@ from src.components.frames.title_frame import TitleFrame
 from tkinter import ttk
 from src.utils.utils import transcript_attr_name
 from src.config.service_config import ServiceConfig
+from src.utils.validators import validate_time_sleep_valid_input
+
 
 class ConfigScreen(BaseFrame):
     def __init__(self, service, master=None):
@@ -22,6 +24,7 @@ class ConfigScreen(BaseFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
 
+        vcmd = (self.register(validate_time_sleep_valid_input), '%P')
         config_attributes = self.config.config[self.config.service_name]
         for attr_name in config_attributes:
             value = getattr(self.config, attr_name)
@@ -29,13 +32,35 @@ class ConfigScreen(BaseFrame):
             frame.pack(fill=tk.X, padx=10, pady=10)
             label = tk.Label(frame, text=transcript_attr_name(attr_name), anchor='w')
             label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
+
             entry = tk.Entry(frame, width=5)
             entry.insert(0, str(value))
             entry.pack(side=tk.RIGHT, padx=(0, 10))
+            
+            if "key" in attr_name:
+                button = ttk.Button(frame, text="Press Key", command=lambda entry=entry: self.press_key(entry))
+                button.pack(padx=5, pady=5)
+                entry.config(state='readonly')
+
+            elif "time" in attr_name:
+                entry.config(validate='key', validatecommand=vcmd)
+
             self.entries[attr_name] = entry
 
         save_button = self.save_button()
 
+    def press_key(self, entry):
+        entry.config(state='normal')
+        entry.focus_set()
+        entry.bind('<Key>', self.update_entry)
+
+    def update_entry(self, event):
+        key = event.keysym
+        entry = event.widget
+        entry.delete(0, 'end')
+        entry.insert(0, key)
+        entry.config(state='readonly')
+    
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
