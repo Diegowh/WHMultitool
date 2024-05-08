@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -16,10 +17,19 @@ class MainScreen(tk.Frame):
     def create_widgets(self):
         """Creates the widgets of the main screen.
         """
+        title_label = tk.Label(self, text="All in One", font=("Arial", 17))
+        title_label.pack(pady=20)
+
+        separator_frame = tk.Canvas(self, height=1, width=250, bg='dark grey')
+        separator_frame.pack(pady=(0, 10))
+
         options = list(self.controller.services.keys())
         for i, option in enumerate(options):
-            btn = tk.Button(self, text=option, command=self.show_option_command(i))
+            btn = ttk.Button(self, text=option, command=self.show_option_command(i))
             btn.pack(pady=10)
+
+        footer_label = tk.Label(self, text="Footer", font=("Arial", 10))
+        footer_label.pack(pady=20)
 
     def show_option_command(self, i):
         """Method to use the show_option method with a parameter as a command.
