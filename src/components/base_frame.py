@@ -35,8 +35,20 @@ class BaseFrame(tk.Frame, ABC):
         self.destroy_gui()
         self.controller.show_main()
 
-    def create_widgets(self):
+    def back_btn(self, container):
+        back_btn = tk.Button(container, text="Back", command=self.destroy_screen)
+        back_btn.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
+        return back_btn
+
+    def bottom_container(self) -> tk.Frame:
+        bottom_container = tk.Frame(self)
+        bottom_container.pack(side=tk.BOTTOM, fill=tk.X)
+        return bottom_container
+
+    def create_widgets(self) -> tk.Frame:
         """This method creates the common widgets for all the frames.
         """
-        back_btn = tk.Button(self, text="Back", command=self.destroy_screen)
-        back_btn.pack(side=tk.BOTTOM, pady=20)
+        bottom_container = self.bottom_container()
+        back_btn = self.back_btn(bottom_container)
+
+        return bottom_container
