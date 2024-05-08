@@ -65,7 +65,7 @@ class AutoSim(BaseTaskManager):
 
         pyautogui.write(self.gui.text_input.get())
         pyautogui.press('enter')
-        asyncio.sleep(0.5)  # Wait for the map list to load
+        await asyncio.sleep(0.5)  # Wait for the map list to load
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
@@ -76,12 +76,12 @@ class AutoSim(BaseTaskManager):
         )  # Click again to confirm the map selection, sometimes the first click doesn't register
 
         await pa.move_cursor_and_click(
-            ServerSelectionScreenCoordinates.JOIN
+            ServerSelectionScreenCoordinates.JOIN,
+            post_delay=int(self.config.mod_selection_screen_waiting_time)
             )  # Click Join and wait 3 seconds for the mod selection screen to load
 
         await pa.move_cursor_and_click(
             ModsSelectionScreenCoordinates.JOIN,
-            pre_delay=int(self.config.mod_selection_screen_waiting_time)
         )  # Click Join
 
         await asyncio.sleep(
