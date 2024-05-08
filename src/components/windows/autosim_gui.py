@@ -7,6 +7,8 @@ which is used as the GUI component of the Autosim class.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
+import keyboard
+
 from src.components.frames.configurable_frame import ConfigurableFrame
 from src.components.windows.config_screen import ConfigScreen
 from src.utils.validators import validate_map_number
@@ -39,6 +41,7 @@ class AutoSimGUI(ConfigurableFrame):
             self,
             self.config.service_name.capitalize()
         )
+        
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
         map_num_frame = tk.Frame(self)
@@ -62,6 +65,7 @@ class AutoSimGUI(ConfigurableFrame):
 
     def open_service_config(self) -> None:
         
+        keyboard.unregister_all_hotkeys()
         self.pack_forget()
         
         # Create the configuration screen

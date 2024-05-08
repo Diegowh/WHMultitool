@@ -77,10 +77,6 @@ class ConfigScreen(BaseFrame):
     def destroy_gui(self):
         super().destroy()
         if hasattr(self.service, "register_hotkey"):
-            print("Unregistering all hotkeys")
-            keyboard.unregister_all_hotkeys()
-            print(f"Registering hotkey: {self.config.toggle_key} ")
-
             self.service.register_hotkey(self.config.toggle_key)
             
             # Update the toggle key label
