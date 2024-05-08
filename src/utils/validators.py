@@ -35,3 +35,8 @@ def validate_hotkey(func):
                 raise InvalidKeyError(f" '{hotkey}' is not a valid hotkey") from Exception
         return func(*args, **kwargs)
     return wrapper
+
+
+def validate_map_number(input_str: str) -> bool:
+    return input_str.isdigit() and len(input_str) <= 4 or input_str == ""
+    
