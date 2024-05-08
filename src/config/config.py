@@ -13,7 +13,7 @@ class Config:
     """Main configuration class of the application.
     """
     def __init__(self) -> None:
-        self.app_version = "v0.7"
+        self.app_version = "v0.10.1"
         self.app_name = "All in One"
         self.app_weight = 400
         self.app_height = 500
