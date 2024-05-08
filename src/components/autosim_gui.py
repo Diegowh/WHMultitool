@@ -7,14 +7,14 @@ which is used as the GUI component of the Autosim class.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.base_frame import BaseFrame
+from src.components.configurable_frame import ConfigurableFrame
 
 if TYPE_CHECKING:
     from src.controllers.autosim import AutoSim
     from src.config.config import Config
 
 
-class AutoSimGUI(BaseFrame):
+class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
     def __init__(self, autosim: 'AutoSim', config: 'Config', master, controller) -> None:
@@ -44,3 +44,6 @@ class AutoSimGUI(BaseFrame):
         self.autosim.destroy()
         super().destroy()
         print("AutoSim destroyed")
+
+    def open_service_config(self) -> None:
+        ...

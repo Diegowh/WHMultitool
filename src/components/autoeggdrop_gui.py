@@ -9,6 +9,8 @@ import tkinter as tk
 from typing import TYPE_CHECKING
 
 from src.components.base_frame import BaseFrame
+from src.components.configurable_frame import ConfigurableFrame
+from src.components.base_config_frame import BaseConfigFrame
 
 if TYPE_CHECKING:
     from src.controllers.autoeggdrop import AutoEggDrop
@@ -16,15 +18,16 @@ if TYPE_CHECKING:
 
 
 
-class AutoEggDropGUI(BaseFrame):
+class AutoEggDropGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoEggDrop component.
     """
-    def __init__(self, auto_eggdrop: 'AutoEggDrop', config: 'Config', master, controller) -> None:
+    def __init__(self, auto_eggdrop: 'AutoEggDrop', master, controller) -> None:
         super().__init__(master=master, controller=controller)
 
-        self.config = config
-        self.init_gui()
+        self.master = master
         self.auto_eggdrop = auto_eggdrop
+        self.config = self.auto_eggdrop.config
+        self.init_gui()
 
     def init_gui(self):
         """
@@ -37,3 +40,10 @@ class AutoEggDropGUI(BaseFrame):
         self.auto_eggdrop.destroy()
         super().destroy()
         print("AutoEggDrop destroyed")
+
+    def open_service_config(self) -> None:
+        # config_frame = BaseConfigFrame(
+        #     service=self.auto_eggdrop,
+        #     master=self.master
+        # ).pack()
+        ...
