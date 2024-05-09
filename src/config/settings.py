@@ -31,6 +31,16 @@ MAGIC_F_SUBSERVICES = {
 }
 
 
+# --- Magic-F --- #
+# Feed
+FOODS = [
+    "Raw Meat",
+    "Raw Fish",
+    "Cooked Meat",
+    "Berry",
+    
+]
+
 # Main Loop
 MAIN_LOOP_SLEEP_INTERVAL = 0.05
 DELETE_WINDOW_PROTOCOL = "WM_DELETE_WINDOW"
