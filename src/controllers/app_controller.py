@@ -30,8 +30,8 @@ class AppController(tk.Tk):
         self.loop = asyncio.get_event_loop()
         self.app_closing = False
         super().__init__()
-        self.protocol("WM_DELETE_WINDOW", self.close_app)
-        self.option_add("*tearOff", 0)
+        self.protocol(self.config.detele_window_protocol, self.close_app)
+        self.option_add(self.config.option_pattern, 0)
 
         self.services = self.config.services
 

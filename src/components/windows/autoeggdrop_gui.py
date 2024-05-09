@@ -8,7 +8,7 @@ AutoEggDropGUI is a subclass of BaseFrame, which is a subclass of tkinter.Frame.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-from src.components.windows.config_screen import ConfigScreen
+
 from src.components.frames.configurable_frame import ConfigurableFrame
 from src.components.frames.title_frame import TitleFrame
 
@@ -25,8 +25,8 @@ class AutoEggDropGUI(ConfigurableFrame):
 
         self.master = master
         self.controller = controller
-        self.auto_eggdrop = auto_eggdrop
-        self.config = self.auto_eggdrop.config
+        self.service_controller = auto_eggdrop
+        self.config = self.service_controller.config
         self.toggle_key_label = None
         self.init_gui()
 
@@ -44,14 +44,7 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.toggle_key_label.pack(pady=10)
 
     def destroy_gui(self):
-        self.auto_eggdrop.destroy()
+        self.service_controller.destroy()
         super().destroy()
         print("AutoEggDrop destroyed")
         self.controller.show_main()
-        
-
-    def open_service_config(self) -> None:
-        self.pack_forget()
-        
-        # Create the configuration screen
-        config_screen = ConfigScreen(self.auto_eggdrop, self.master).pack(fill=tk.BOTH, expand=True)

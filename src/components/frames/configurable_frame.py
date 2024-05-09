@@ -1,21 +1,30 @@
 import tkinter as tk
 from tkinter import ttk
-from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
+
+import keyboard
 
 from src.components.frames.base_frame import BaseFrame
-
+from src.components.windows.config_screen import ConfigScreen
+if TYPE_CHECKING:
+    from src.controllers.base_task_manager import BaseTaskManager
 
 class ConfigurableFrame(BaseFrame):
     
     def __init__(self, master=None):
         super().__init__(master)
+        self.master = master
     
-    @abstractmethod
-    def open_service_config(self):
-        """This method is used to open the configuration window of the service."""
         
+    def open_service_config(self, service:  'BaseTaskManager') -> None:
+        keyboard.unregister_all_hotkeys()
+        self.pack_forget()
+        
+        # Create the configuration screen
+        config_screen = ConfigScreen(service, self.master).pack(fill=tk.BOTH, expand=True)
+ 
     def config_btn(self, container):
-        config_button = ttk.Button(container, text="Config", command=self.open_service_config)
+        config_button = ttk.Button(container, text="Config", command=lambda: self.open_service_config(self.service_controller))
         config_button.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return config_button
 
@@ -28,3 +37,4 @@ class ConfigurableFrame(BaseFrame):
         config_button = self.config_btn(bottom_container)
         
         return bottom_container
+    

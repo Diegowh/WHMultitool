@@ -7,10 +7,8 @@ which is used as the GUI component of the Autosim class.
 import tkinter as tk
 from typing import TYPE_CHECKING
 
-import keyboard
-
 from src.components.frames.configurable_frame import ConfigurableFrame
-from src.components.windows.config_screen import ConfigScreen
+
 from src.utils.validators import validate_map_number
 from src.components.frames.title_frame import TitleFrame
 
@@ -27,8 +25,8 @@ class AutoSimGUI(ConfigurableFrame):
         self.master = master
         self.controller = controller
         self.text_input = tk.StringVar()
-        self.autosim = autosim
-        self.config = self.autosim.config
+        self.service_controller = autosim
+        self.config = self.service_controller.config
         self.toggle_key_label = None
         self.init_gui()
 
@@ -58,15 +56,7 @@ class AutoSimGUI(ConfigurableFrame):
         self.toggle_key_label.pack(pady=10)
     
     def destroy_gui(self) -> None:
-        self.autosim.destroy()
+        self.service_controller.destroy()
         super().destroy()
         print("AutoSim destroyed")
         self.controller.show_main()
-
-    def open_service_config(self) -> None:
-        
-        keyboard.unregister_all_hotkeys()
-        self.pack_forget()
-        
-        # Create the configuration screen
-        config_screen = ConfigScreen(self.autosim, self.master).pack(fill=tk.BOTH, expand=True)

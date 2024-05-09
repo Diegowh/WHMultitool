@@ -5,26 +5,26 @@ Module responsible of the entire configuration of the application.
 
 from src.config.service_config import ServiceConfig
 from src.config.exceptions import ConfigError
-from src.controllers.autosim import AutoSim
-from src.controllers.autoeggdrop import AutoEggDrop
+from src.config.settings import *
 
 
 class Config:
     """Main configuration class of the application.
     """
     def __init__(self) -> None:
-        self.app_version = "v0.11"
-        self.app_name = "All in One"
-        self.app_weight = 400
-        self.app_height = 500
-        self.app_title = f"{self.app_version} - ADAT - {self.app_name}"
+        self.app_version = APP_VERSION
+        self.app_name = APP_NAME
+        self.app_weight = APP_WEIGHT
+        self.app_height = APP_HEIGHT
+        self.app_title = APP_TITLE
 
-        self.main_loop_sleep_interval = 0.05
 
-        self.services = {
-            "AutoSim": AutoSim,
-            "AutoEggDrop": AutoEggDrop,
-        }
+        self.services = SERVICES
+        
+        # Main loop
+        self.main_loop_sleep_interval = MAIN_LOOP_SLEEP_INTERVAL
+        self.detele_window_protocol = DELETE_WINDOW_PROTOCOL
+        self.option_pattern = OPTION_PATTERN
 
     def load_service(self, service_name: str) -> ServiceConfig | None:
         """Load the configuration of a service.
