@@ -70,14 +70,14 @@ class AppController(tk.Tk):
         self.main_screen.pack_forget()
         app_name = list(self.services.keys())[i]
         app_class = self.services[app_name]
-        self.current_service_screen = app_class(loop=self.loop, config=self.config, master=self, controller=self).gui
+        self.current_service_screen = app_class(loop=self.loop, config=self.config, master=self, app_controller=self).gui
         self.current_service_screen.pack(fill=tk.BOTH, expand=True)
 
     def show_main(self):
         """Displays the main screen and destroys the previous service screen.
         """
         self.main_screen.pack(fill=tk.BOTH, expand=True)
-        del self.current_service_screen
+        del self.current_service_screen # I think this is not necessary but I did it to be sure
 
         # I had to add this line to make the MainScreen visible in MacOS.
         # I didn't have this issue in Windows.

@@ -19,11 +19,11 @@ if TYPE_CHECKING:
 class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
-    def __init__(self, autosim: 'AutoSim', master, controller) -> None:
+    def __init__(self, autosim: 'AutoSim', master, app_controller) -> None:
         super().__init__(master=master)
 
         self.master = master
-        self.controller = controller
+        self.app_controller = app_controller
         self.text_input = tk.StringVar()
         self.service_controller = autosim
         self.config = self.service_controller.config
@@ -59,4 +59,4 @@ class AutoSimGUI(ConfigurableFrame):
         self.service_controller.destroy()
         super().destroy()
         print("AutoSim destroyed")
-        self.controller.show_main()
+        self.app_controller.show_main()

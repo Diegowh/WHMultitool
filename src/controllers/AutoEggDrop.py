@@ -26,7 +26,7 @@ class AutoEggDrop(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-        controller: 'AppController',
+        app_controller: 'AppController',
         master
         ) -> None:
 
@@ -38,7 +38,7 @@ class AutoEggDrop(BaseTaskManager):
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
             master=master,
-            controller=controller
+            app_controller=app_controller
             )
 
         print("AutoEggDrop initialized\n")
@@ -67,7 +67,3 @@ class AutoEggDrop(BaseTaskManager):
             direction=self.config.move_direction_key,
             pre_delay=0.3
         )
-
-
-    def register_hotkey(self, hotkey):
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

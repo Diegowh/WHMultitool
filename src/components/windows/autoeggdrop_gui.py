@@ -20,11 +20,11 @@ if TYPE_CHECKING:
 class AutoEggDropGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoEggDrop component.
     """
-    def __init__(self, auto_eggdrop: 'AutoEggDrop', master, controller) -> None:
+    def __init__(self, auto_eggdrop: 'AutoEggDrop', master, app_controller) -> None:
         super().__init__(master=master)
 
         self.master = master
-        self.controller = controller
+        self.app_controller = app_controller
         self.service_controller = auto_eggdrop
         self.config = self.service_controller.config
         self.toggle_key_label = None
@@ -47,4 +47,4 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.service_controller.destroy()
         super().destroy()
         print("AutoEggDrop destroyed")
-        self.controller.show_main()
+        self.app_controller.show_main()

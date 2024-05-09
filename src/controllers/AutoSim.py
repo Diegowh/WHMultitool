@@ -32,7 +32,8 @@ class AutoSim(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-        master, controller: 'AppController'
+        master,
+        app_controller: 'AppController'
     ) -> None:
 
         super().__init__(loop=loop)
@@ -44,7 +45,7 @@ class AutoSim(BaseTaskManager):
         self.gui = AutoSimGUI(
             autosim=self,
             master=master,
-            controller=controller
+            app_controller=app_controller
         )
 
     def __name__(self):
@@ -105,7 +106,3 @@ class AutoSim(BaseTaskManager):
         await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK
         )
-
-    def register_hotkey(self, hotkey):
-        
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

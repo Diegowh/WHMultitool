@@ -13,9 +13,9 @@ if TYPE_CHECKING:
 
 class MagicFGUI(BaseFrame):
     
-    def __init__(self, magic_f: 'MagicF', master, controller):
+    def __init__(self, magic_f: 'MagicF', master, app_controller):
         super().__init__(master)
-        self.controller = controller
+        self.app_controller = app_controller
         self.service_controller = magic_f
         self.config = self.service_controller.app_config
         
@@ -32,4 +32,4 @@ class MagicFGUI(BaseFrame):
     
     def destroy_gui(self):
         super().destroy()
-        self.controller.show_main()
+        self.app_controller.show_main()

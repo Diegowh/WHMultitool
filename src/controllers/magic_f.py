@@ -11,14 +11,14 @@ class MagicF:
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
         master,
-        controller,
+        app_controller,
     ):
         self.loop = loop
         self.app_config = config
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
-            controller=controller
+            app_controller=app_controller
             
         )
     
