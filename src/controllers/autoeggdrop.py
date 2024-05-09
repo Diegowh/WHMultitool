@@ -43,11 +43,7 @@ class AutoEggDrop(BaseTaskManager):
 
         print("AutoEggDrop initialized\n")
 
-    def __name__(self):
-        for key, value in self.app_config.services.items():
-           if value is AutoEggDrop:
-               return key
-        return None
+
 
     async def _task(self):
         """Method to automate the process of dropping eggs from the inventory in the game.

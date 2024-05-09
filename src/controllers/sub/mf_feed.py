@@ -2,10 +2,11 @@ import asyncio
 from typing import TYPE_CHECKING
 import tkinter as tk
 
-from asyncio import AbstractEventLoop
 from src.controllers.base_task_manager import BaseTaskManager
 from src.components.windows.sub.mf_feed_gui import MFFeedGUI
+
 if TYPE_CHECKING:
+    from asyncio import AbstractEventLoop
     from config.config import Config
     from src.controllers.magic_f import MagicF
 
@@ -13,7 +14,7 @@ class MFFeed(BaseTaskManager):
     
     def __init__(
         self,
-        loop: AbstractEventLoop,
+        loop: 'AbstractEventLoop',
         config: 'Config',
         master,
         mf_controller: 'MagicF'
@@ -21,7 +22,6 @@ class MFFeed(BaseTaskManager):
         super().__init__(loop)
         
         self.app_config = config
-        print(f"El nombre es: {self.__name__().upper()}")
         self.config = self.app_config.load_service(self.__name__().upper())
         
         self.toggle_key = self.config.toggle_key

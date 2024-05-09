@@ -20,7 +20,6 @@ class MFFeedGUI(ConfigurableFrame):
         self.config = self.service_controller.config
         self.toggle_key_label = None
         self.init_gui()
-        print("GUI -> Feed, initialized")
 
     def init_gui(self):
         
