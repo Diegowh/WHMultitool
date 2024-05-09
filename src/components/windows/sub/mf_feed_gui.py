@@ -19,16 +19,21 @@ class MFFeedGUI(ConfigurableFrame):
         self.service_controller = mf_feed
         self.config = self.service_controller.config
         self.init_gui()
+        print("GUI -> Feed, initialized")
 
     def init_gui(self):
         
-        
-        title_frame = TitleFrame(
+        label = ttk.Label(
             self,
-            self.service_controller.__name__()
+            text="Feed"
         )
-        title_frame.pack(side=tk.TOP, fill=tk.X)
-        
+        label.pack(side=tk.TOP, pady=10)
+        # title_frame = TitleFrame(
+        #     self,
+        #     self.service_controller.__name__()
+        # )
+        # title_frame.pack(side=tk.TOP, fill=tk.X)
+
     
     def destroy_gui(self):
         self.service_controller.destroy()

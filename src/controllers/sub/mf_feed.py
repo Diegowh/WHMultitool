@@ -1,5 +1,6 @@
 import asyncio
 from typing import TYPE_CHECKING
+import tkinter as tk
 
 from asyncio import AbstractEventLoop
 from src.controllers.base_task_manager import BaseTaskManager
@@ -20,11 +21,13 @@ class MFFeed(BaseTaskManager):
         super().__init__(loop)
         
         self.app_config = config
-        self.config = self.app_config.load_service(self.__name().upper())
+        print(f"El nombre es: {self.__name__().upper()}")
+        self.config = self.app_config.load_service(self.__name__().upper())
         
         self.toggle_key = self.config.toggle_key
         self.register_hotkey(self.toggle_key)
         
+        print("MFFeed initialized")
         self.gui = MFFeedGUI(
             mf_feed=self,
             master=master,
@@ -32,7 +35,7 @@ class MFFeed(BaseTaskManager):
         )
         
     def __name__(self):
-        for key, value in self.app_config.services.items():
+        for key, value in self.app_config.magic_f_subservices.items():
            if value is MFFeed:
                return key
         return None

@@ -16,12 +16,12 @@ class MagicF:
     ):
         self.loop = loop
         self.app_config = config
-        self.services = self.app_config.magic_f_subservices
+        self.subservices = self.app_config.magic_f_subservices
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
-            app_controller=app_controller
-            
+            app_controller=app_controller,
+            loop=loop
         )
     
     def __name__(self):
