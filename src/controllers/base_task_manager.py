@@ -90,3 +90,7 @@ class BaseTaskManager(ABC):
 
         keyboard.unregister_all_hotkeys()
         print("Unregistered all hotkeys")
+
+    def register_hotkey(self, hotkey):
+        
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)
