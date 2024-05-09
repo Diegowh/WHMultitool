@@ -26,6 +26,9 @@ class MagicFGUI(BaseFrame):
             self.service_controller.__name__().capitalize()
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
+        
+        comming_soon_label = tk.Label(self, text="Comming soon...")
+        comming_soon_label.pack(pady=20)
     
     def destroy_gui(self):
         super().destroy()
