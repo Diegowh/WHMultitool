@@ -18,6 +18,7 @@ class BaseTaskManager(ABC):
         self.task = None
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
+        self.first_run = True
         
         self.repetitive_task = repetitive_task
 
@@ -57,6 +58,7 @@ class BaseTaskManager(ABC):
         except asyncio.CancelledError:
             print("Task cancelled")
             self.task_running = False
+            self.first_run = True
 
     def start_task(self) -> None:
         """Starts the task coroutine in the asyncio loop.
@@ -80,6 +82,8 @@ class BaseTaskManager(ABC):
         """
         if self.task_running:
             self.stop_task()
+            self.task_running = False
+            self.first_run = True
             print("Task toggled off")
         else:
             self.start_task()

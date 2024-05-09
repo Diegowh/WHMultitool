@@ -22,6 +22,9 @@ class Config:
         self.services = SERVICES
         self.magic_f_subservices = MAGIC_F_SUBSERVICES
         self.foods = FOODS
+        self.food_keywords = FOOD_KEYWORDS
+
+
         # Main loop
         self.main_loop_sleep_interval = MAIN_LOOP_SLEEP_INTERVAL
         self.detele_window_protocol = DELETE_WINDOW_PROTOCOL

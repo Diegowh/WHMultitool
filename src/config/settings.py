@@ -26,7 +26,7 @@ SERVICES = {
 
 MAGIC_F_SUBSERVICES = {
     "KeepOnly": MFKeepOnly,
-    "Feed": MFFeed,
+    "AutoFeed": MFFeed,
     "Retrieve": MFRetrieve,
 }
 
@@ -40,6 +40,13 @@ FOODS = [
     "Berry",
     
 ]
+
+FOOD_KEYWORDS = {
+    "Raw Meat": "raw",
+    "Raw Fish": "fish",
+    "Cooked Meat": "cooked",
+    "Berry": "berry",
+}
 
 # Main Loop
 MAIN_LOOP_SLEEP_INTERVAL = 0.05
