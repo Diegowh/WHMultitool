@@ -1,5 +1,6 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
+from src.controllers.magic_f import MagicF
 
 # Private settings for the application
 
@@ -16,6 +17,7 @@ APP_TITLE = f"{APP_VERSION} - ADAT - {APP_NAME}"
 SERVICES = {
     "AutoSim": AutoSim,
     "AutoEggDrop": AutoEggDrop,
+    "Magic-F": MagicF,
 }
 
 
