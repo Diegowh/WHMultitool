@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
 
-from src.config.settings import MAGIC_F_SUBSERVICES
+
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
 
@@ -19,7 +19,7 @@ class MagicFGUI(BaseFrame):
         self.service_controller = magic_f
         self.config = self.service_controller.app_config
         
-        self.services = MAGIC_F_SUBSERVICES
+        self.services = self.service_controller.services
         self.init_gui()
     
     
