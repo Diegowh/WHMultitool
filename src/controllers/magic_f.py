@@ -87,3 +87,11 @@ class MagicF:
         # Show the main interface
         for widget, pack_config in self.gui.original_pack_configs.items():
             widget.pack(**pack_config)
+            
+    def show_subservice(self, app_name):
+        for widget in self.gui.winfo_children():
+            widget.pack_forget()
+        
+        app_class = self.subservices[app_name]
+        self.gui.current_subservice_screen = app_class(loop=self.loop, config=self.app_config, master=self.gui, mf_controller=self)
+        self.gui.current_subservice_screen.gui.pack(fill=tk.BOTH, expand=True)
