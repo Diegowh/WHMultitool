@@ -54,5 +54,5 @@ class MagicFGUI(BaseFrame):
             widget.pack_forget()
         
         app_class = self.subservices[app_name]
-        self.current_subservice_screen = app_class(loop=self.loop, config=self.config, master=self, mf_controller=self)
+        self.current_subservice_screen = app_class(loop=self.loop, config=self.config, master=self, mf_controller=self.service_controller)
         self.current_subservice_screen.gui.pack(fill=tk.BOTH, expand=True)
