@@ -5,7 +5,7 @@ from src.controllers.magic_f import MagicF
 # Private settings for the application
 
 # Screen
-APP_VERSION = "v0.11"
+APP_VERSION = "v0.11.3"
 APP_NAME = "All in One"
 APP_WEIGHT = 400
 APP_HEIGHT = 500

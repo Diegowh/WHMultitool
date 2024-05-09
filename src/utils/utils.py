@@ -5,6 +5,20 @@ Module to handle utility functions, not enough related to be in a separate modul
 
 import pyautogui
 import pyperclip
+import base64
+
+
+
+def favicon_encoder():
+    icon_path = "src/assets/favicon.ico"
+    with open(icon_path, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read()).decode()
+
+    # Write the encoded string to a file
+    with open("encoded_favicon.txt", "w") as text_file:
+        text_file.write(encoded_string)
+
+    return encoded_string
 
 
 def dummy_routine():
