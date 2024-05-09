@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
 
+from src.config.settings import MAGIC_F_SUBSERVICES
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
 
@@ -16,14 +17,16 @@ class MagicFGUI(BaseFrame):
         super().__init__(master)
         self.controller = controller
         self.service_controller = magic_f
-        self.config = self.service_controller.config
+        self.config = self.service_controller.app_config
+        
+        self.services = MAGIC_F_SUBSERVICES
         self.init_gui()
     
     
     def init_gui(self):
         title_frame = TitleFrame(
             self,
-            self.service_controller.__name__().capitalize()
+            self.service_controller.__name__()
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
     

@@ -1,6 +1,10 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.magic_f import MagicF
+from src.controllers.sub.mf_feed import MFFeed
+from src.controllers.sub.mf_retrieve import MFRetrieve
+from src.controllers.sub.mf_keep_only import MFKeepOnly
+
 
 # Private settings for the application
 
@@ -20,6 +24,11 @@ SERVICES = {
     "Magic-F": MagicF,
 }
 
+MAGIC_F_SUBSERVICES = {
+    "Keep Only": MFKeepOnly,
+    "Feed": MFFeed,
+    "Retrieve": MFRetrieve,
+}
 
 
 # Main Loop
