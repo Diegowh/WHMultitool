@@ -85,4 +85,5 @@ class MagicF:
             self.gui.current_subservice_screen = None
 
         # Show the main interface
-        self.gui.pack(fill=tk.BOTH, expand=True)
+        for widget, pack_config in self.gui.original_pack_configs.items():
+            widget.pack(**pack_config)

@@ -18,6 +18,7 @@ class MFFeedGUI(ConfigurableFrame):
         self.mf_controller = mf_controller
         self.service_controller = mf_feed
         self.config = self.service_controller.config
+        self.toggle_key_label = None
         self.init_gui()
         print("GUI -> Feed, initialized")
 
@@ -28,6 +29,9 @@ class MFFeedGUI(ConfigurableFrame):
             self.service_controller.__name__()
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
+        
+        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
+        self.toggle_key_label.pack(pady=10)
 
     
     def destroy_gui(self):
