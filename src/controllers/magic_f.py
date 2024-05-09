@@ -1,6 +1,7 @@
 import asyncio
 from typing import TYPE_CHECKING
-
+import tkinter as tk
+from tkinter import ttk
 from src.components.windows.magic_f_gui import MagicFGUI
 if TYPE_CHECKING:
     from config.config import Config
@@ -15,6 +16,7 @@ class MagicF:
     ):
         self.loop = loop
         self.app_config = config
+        self.services = self.app_config.magic_f_subservices
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
@@ -27,3 +29,10 @@ class MagicF:
            if value is MagicF:
                return key
         return None
+    
+    def show_magic_f_main(self):
+        self.gui.pack(fill=tk.BOTH, expand=True)
+        
+        # I had to add this line to make the MainScreen visible in MacOS.
+        # I didn't have this issue in Windows.
+        self.update_iddle_tasks()
