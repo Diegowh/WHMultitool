@@ -36,7 +36,8 @@ class AutoSim(BaseTaskManager):
     ) -> None:
 
         super().__init__(loop=loop)
-        self.config = config.load_service(self.__name__())
+        self.app_config = config
+        self.config = self.app_config.load_service(self.__name__().upper())
         self.toggle_key = self.config.toggle_key
 
         self.register_hotkey(self.toggle_key)
@@ -47,7 +48,10 @@ class AutoSim(BaseTaskManager):
         )
 
     def __name__(self):
-        return "AUTOSIM"
+        for key, value in self.app_config.services.items():
+           if value is AutoSim:
+               return key
+        return None
 
     async def _task(self):
         """Method to automate the process of trying to join a full server in the game.

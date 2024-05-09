@@ -14,7 +14,7 @@ class MagicF:
         controller,
     ):
         self.loop = loop
-        self.config = config
+        self.app_config = config
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
@@ -23,5 +23,7 @@ class MagicF:
         )
     
     def __name__(self):
-       return "Magic-F" 
-   
+        for key, value in self.app_config.services.items():
+           if value is MagicF:
+               return key
+        return None
