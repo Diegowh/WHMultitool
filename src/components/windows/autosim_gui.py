@@ -5,6 +5,7 @@ which is used as the GUI component of the Autosim class.
 
 
 import tkinter as tk
+from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.components.frames.configurable_frame import ConfigurableFrame
@@ -19,11 +20,11 @@ if TYPE_CHECKING:
 class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
-    def __init__(self, autosim: 'AutoSim', master, controller) -> None:
+    def __init__(self, autosim: 'AutoSim', master, app_controller) -> None:
         super().__init__(master=master)
 
         self.master = master
-        self.controller = controller
+        self.app_controller = app_controller
         self.text_input = tk.StringVar()
         self.service_controller = autosim
         self.config = self.service_controller.config
@@ -37,7 +38,7 @@ class AutoSimGUI(ConfigurableFrame):
         
         title_frame = TitleFrame(
             self,
-            self.config.service_name.capitalize()
+            self.service_controller.__name__()
         )
         
         title_frame.pack(side=tk.TOP, fill=tk.X)
@@ -49,7 +50,7 @@ class AutoSimGUI(ConfigurableFrame):
         map_num_label.pack(side=tk.LEFT, fill=tk.X, expand=False, padx=10)
         
         vcmd = (self.register(validate_map_number), '%P')
-        map_num_entry = tk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
+        map_num_entry = ttk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
         map_num_entry.pack(side=tk.RIGHT, padx=(10, 10))
     
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
@@ -59,4 +60,4 @@ class AutoSimGUI(ConfigurableFrame):
         self.service_controller.destroy()
         super().destroy()
         print("AutoSim destroyed")
-        self.controller.show_main()
+        self.app_controller.show_main()

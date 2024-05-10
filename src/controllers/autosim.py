@@ -32,22 +32,28 @@ class AutoSim(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-        master, controller: 'AppController'
+        master,
+        app_controller: 'AppController'
     ) -> None:
 
         super().__init__(loop=loop)
-        self.config = config.load_service(self.__name__())
+        self.app_config = config
+        self.config = self.app_config.load_service(self.__name__().upper())
         self.toggle_key = self.config.toggle_key
 
         self.register_hotkey(self.toggle_key)
         self.gui = AutoSimGUI(
             autosim=self,
             master=master,
-            controller=controller
+
+            app_controller=app_controller
         )
 
     def __name__(self):
-        return "AUTOSIM"
+        for key, value in self.app_config.services.items():
+           if value is AutoSim:
+               return key
+        return None
 
     async def _task(self):
         """Method to automate the process of trying to join a full server in the game.
@@ -101,7 +107,3 @@ class AutoSim(BaseTaskManager):
         await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK
         )
-
-    def register_hotkey(self, hotkey):
-        
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

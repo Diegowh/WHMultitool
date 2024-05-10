@@ -1,6 +1,7 @@
 import asyncio
 from typing import TYPE_CHECKING
-
+import tkinter as tk
+from tkinter import ttk
 from src.components.windows.magic_f_gui import MagicFGUI
 if TYPE_CHECKING:
     from config.config import Config
@@ -11,17 +12,86 @@ class MagicF:
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
         master,
-        controller,
+        app_controller,
     ):
         self.loop = loop
-        self.config = config
+        self.app_config = config
+        self.subservices = self.app_config.magic_f_subservices
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
-            controller=controller
-            
+            app_controller=app_controller,
+            loop=loop
         )
     
     def __name__(self):
-       return "Magic-F" 
-   
+        for key, value in self.app_config.services.items():
+           if value is MagicF:
+               return key
+        return None
+    
+class MagicF:
+    
+    def __init__(self,
+        loop: asyncio.AbstractEventLoop,
+        config: 'Config',
+        master,
+        app_controller,
+    ):
+        self.loop = loop
+        self.app_config = config
+        self.subservices = self.app_config.magic_f_subservices
+        self.gui = MagicFGUI(
+            magic_f=self,
+            master=master,
+            app_controller=app_controller,
+            loop=loop
+        )
+    
+    def __name__(self):
+        for key, value in self.app_config.services.items():
+           if value is MagicF:
+               return key
+        return None
+    
+class MagicF:
+    
+    def __init__(self,
+        loop: asyncio.AbstractEventLoop,
+        config: 'Config',
+        master,
+        app_controller,
+    ):
+        self.loop = loop
+        self.app_config = config
+        self.subservices = self.app_config.magic_f_subservices
+        self.gui = MagicFGUI(
+            magic_f=self,
+            master=master,
+            app_controller=app_controller,
+            loop=loop
+        )
+    
+    def __name__(self):
+        for key, value in self.app_config.services.items():
+           if value is MagicF:
+               return key
+        return None
+    
+    def show_magic_f_main(self):
+        # Hide the current subservice screen
+        if self.gui.current_subservice_screen is not None:
+            self.gui.current_subservice_screen.gui.pack_forget()
+            self.gui.current_subservice_screen = None
+
+        # Show the main interface
+        for widget, pack_config in self.gui.original_pack_configs.items():
+            widget.pack(**pack_config)
+            
+    def show_subservice(self, app_name):
+        for widget in self.gui.winfo_children():
+            widget.pack_forget()
+        
+        app_class = self.subservices[app_name]
+        self.gui.current_subservice_screen = app_class(loop=self.loop, config=self.app_config, master=self.gui, mf_controller=self)
+        self.gui.current_subservice_screen.gui.pack(fill=tk.BOTH, expand=True)

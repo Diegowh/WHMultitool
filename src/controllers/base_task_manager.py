@@ -13,11 +13,14 @@ class BaseTaskManager(ABC):
     Base class for task managers,
     provides a basic structure for managing tasks in a separate thread.
     """
-    def __init__(self, loop: asyncio.AbstractEventLoop) -> None:
+    def __init__(self, loop: asyncio.AbstractEventLoop, repetitive_task: bool = True) -> None:
         self.loop = loop
         self.task = None
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
+        self.first_run = True
+        
+        self.repetitive_task = repetitive_task
 
     @abstractmethod
     async def _task(self) -> None:
@@ -38,21 +41,24 @@ class BaseTaskManager(ABC):
         """Method to encapsulate and control the task coroutine in a loop.
         """
         try:
+            self.task_running = True
             while self.task_running:
                 print("Running task...")
                 await self._task()
-
+    
                 # This is a non-blocking call.
                 # It's used to give control to the asyncio event loop.
                 # Allows other tasks to run before this task continues.
                 await asyncio.sleep(0)
-
+    
+                if not self.repetitive_task:
+                    self.task_running = False
+                    break
+    
         except asyncio.CancelledError:
             print("Task cancelled")
             self.task_running = False
-        # finally:
-        #     print("Task stopped")
-        #     self.task_running = False
+            self.first_run = True
 
     def start_task(self) -> None:
         """Starts the task coroutine in the asyncio loop.
@@ -76,6 +82,8 @@ class BaseTaskManager(ABC):
         """
         if self.task_running:
             self.stop_task()
+            self.task_running = False
+            self.first_run = True
             print("Task toggled off")
         else:
             self.start_task()
@@ -90,3 +98,7 @@ class BaseTaskManager(ABC):
 
         keyboard.unregister_all_hotkeys()
         print("Unregistered all hotkeys")
+
+    def register_hotkey(self, hotkey):
+        
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

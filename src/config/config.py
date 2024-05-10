@@ -20,11 +20,19 @@ class Config:
 
 
         self.services = SERVICES
-        
+        self.magic_f_subservices = MAGIC_F_SUBSERVICES
+        self.foods = FOODS
+        self.food_keywords = FOOD_KEYWORDS
+
+
         # Main loop
         self.main_loop_sleep_interval = MAIN_LOOP_SLEEP_INTERVAL
         self.detele_window_protocol = DELETE_WINDOW_PROTOCOL
         self.option_pattern = OPTION_PATTERN
+        
+        # Keep Only
+        self.keep_only_items = KEEP_ONLY_ITEMS
+        self.keep_only_item_sequence = KEEP_ONLY_ITEM_SEQUENCE
 
     def load_service(self, service_name: str) -> ServiceConfig | None:
         """Load the configuration of a service.

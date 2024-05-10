@@ -26,24 +26,31 @@ class AutoEggDrop(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-        controller: 'AppController',
+
+        app_controller: 'AppController',
         master
         ) -> None:
 
         super().__init__(loop=loop)
-        self.config = config.load_service(self.__name__())
+
+        self.app_config = config
+        self.config = self.app_config.load_service(self.__name__().upper())
         self.toggle_key = self.config.toggle_key
         self.register_hotkey(self.toggle_key)
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
             master=master,
-            controller=controller
+            app_controller=app_controller
             )
 
         print("AutoEggDrop initialized\n")
 
     def __name__(self):
-        return "AUTOEGGDROP"
+
+        for key, value in self.app_config.services.items():
+           if value is AutoEggDrop:
+               return key
+        return None
 
     async def _task(self):
         """Method to automate the process of dropping eggs from the inventory in the game.
@@ -63,7 +70,3 @@ class AutoEggDrop(BaseTaskManager):
             direction=self.config.move_direction_key,
             pre_delay=0.3
         )
-
-
-    def register_hotkey(self, hotkey):
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)

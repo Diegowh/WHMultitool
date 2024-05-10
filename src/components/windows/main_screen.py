@@ -24,10 +24,18 @@ class MainScreen(tk.Frame):
         separator_frame = tk.Canvas(self, height=1, width=250, bg='dark grey')
         separator_frame.pack(pady=(0, 10))
 
+        self.services_container = ttk.Frame(self)
+        self.services_container.pack(pady=10)
+        
         options = list(self.controller.services.keys())
+        
         for i, option in enumerate(options):
-            btn = ttk.Button(self, text=option, command=self.show_option_command(i))
-            btn.pack(pady=10)
+            btn = ttk.Button(
+                self.services_container,
+                text=option,
+                command=self.show_option_command(i)
+            )
+            btn.grid(row=i, column=0, pady=10)
 
         footer_frame = tk.Frame(self)
         footer_frame.place(relx=0.5, rely=1, anchor='s')

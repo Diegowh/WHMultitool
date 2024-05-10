@@ -33,7 +33,7 @@ class ConfigScreen(BaseFrame):
             label = tk.Label(frame, text=transcript_attr_name(attr_name), anchor='w')
             label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
 
-            entry = tk.Entry(frame, width=5)
+            entry = ttk.Entry(frame, width=5)
             entry.insert(0, str(value))
             entry.pack(side=tk.RIGHT, padx=(0, 10))
             
