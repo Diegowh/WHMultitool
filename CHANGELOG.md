@@ -17,3 +17,7 @@
 ## [1.1.2] - 10/05/2024
 
 - Improved some graphic components
+
+## [1.1.3] - 10/05/2024
+
+- KeepOnly now uses close button instead of pressing Esc
