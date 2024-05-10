@@ -48,6 +48,34 @@ FOOD_KEYWORDS = {
     "Berry": "berry",
 }
 
+# Keep Only
+KEEP_ONLY_ITEMS = [
+    "Metal",
+    "Stone",
+    "Wood",
+    "MejoBerry",
+    "TintoBerry",
+    "NarcoBerry",
+    # "Raw Meat",
+    # "Raw Fish",
+    # "Cooked Meat",
+    # "Berry",
+    "StimBerry",
+    # "Honey",
+    # "Sap",
+    # "Paste"
+    # "Veggies",
+]
+
+KEEP_ONLY_ITEM_SEQUENCE = {
+    "MejoBerry": ["v", "a", "t"],
+    "StimBerry": ["o", "a", "v"],
+    "TintoBerry": ["a", "v", "m"],
+    "NarcoBerry": ["v", "m", "z", "i"],
+    "Stone": ["a", "w", "f"],
+    "Metal": ["n", "c", "w"],
+    "Wood": ["t", "e"]
+}
 # Main Loop
 MAIN_LOOP_SLEEP_INTERVAL = 0.05
 DELETE_WINDOW_PROTOCOL = "WM_DELETE_WINDOW"

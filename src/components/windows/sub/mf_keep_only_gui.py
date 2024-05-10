@@ -1,3 +1,4 @@
+from tkinter import ttk
 from typing import TYPE_CHECKING
 import tkinter as tk
 from src.components.frames.title_frame import TitleFrame
@@ -17,6 +18,9 @@ class MFKeepOnlyGUI(ConfigurableFrame):
         self.mf_controller = mf_controller
         self.service_controller = mf_keep_only
         self.config = self.service_controller.config
+        
+        self.items: list[str] = self.mf_controller.app_config.keep_only_items
+        self.selected_item = None
         self.hotkey_label = None
         self.init_gui()
         
@@ -28,6 +32,8 @@ class MFKeepOnlyGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
+        self.create_item_selection()
+        
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to run the task", font=("Arial", 8, "italic"))
         self.toggle_key_label.pack(pady=10)
         
@@ -36,3 +42,15 @@ class MFKeepOnlyGUI(ConfigurableFrame):
         super().destroy()
         print("Magic-F -> KeepOnly, destroyed")
         self.mf_controller.show_magic_f_main()
+        
+    def create_item_selection(self):
+        self.selected_item = tk.StringVar(value=self.items[0] if self.items else None)
+        
+        for item in self.items:
+            rb = ttk.Radiobutton(
+                self,
+                text=item,
+                variable=self.selected_item,
+                value=item,
+            )
+            rb.pack()
