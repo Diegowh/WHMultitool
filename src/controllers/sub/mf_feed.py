@@ -48,7 +48,7 @@ class MFFeed(BaseTaskManager):
         if self.first_run:
             await pa.open_inventory(
                 hotkey=self.config.open_dino_inventory_key,
-                post_delay=self.config.load_inventory_wait_time
+                post_delay=self.config.load_inventory_waiting_time
             )
             self.first_run = False
         
