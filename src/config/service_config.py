@@ -29,8 +29,10 @@ class ServiceConfig:
         print(self.config.sections())
         if self.service_name in self.config:
             for key in self.config[self.service_name]:
-                setattr(self, key, self.config[self.service_name][key])
-                print(f"{key}: {self.config[self.service_name][key]}")
+                value = self.config[self.service_name][key]
+                if 'time' in key:
+                    value = float(value)
+                setattr(self, key, value)
 
     def update_attr(self, attr_name: str, new_value: str) -> None:
         """Update the configuration attribute of a service.
