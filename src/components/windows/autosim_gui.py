@@ -5,6 +5,7 @@ which is used as the GUI component of the Autosim class.
 
 
 import tkinter as tk
+from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.components.frames.configurable_frame import ConfigurableFrame
@@ -49,7 +50,7 @@ class AutoSimGUI(ConfigurableFrame):
         map_num_label.pack(side=tk.LEFT, fill=tk.X, expand=False, padx=10)
         
         vcmd = (self.register(validate_map_number), '%P')
-        map_num_entry = tk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
+        map_num_entry = ttk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
         map_num_entry.pack(side=tk.RIGHT, padx=(10, 10))
     
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))

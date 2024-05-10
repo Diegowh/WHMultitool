@@ -20,8 +20,8 @@ APP_TITLE = f"{APP_VERSION} - ADAT - {APP_NAME}"
 # Services
 SERVICES = {
     "AutoSim": AutoSim,
-    "AutoEggDrop": AutoEggDrop,
     "Magic-F": MagicF,
+    "AutoEggDrop": AutoEggDrop,
 }
 
 MAGIC_F_SUBSERVICES = {
