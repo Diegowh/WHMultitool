@@ -1,3 +1,4 @@
+from tkinter import ttk
 from typing import TYPE_CHECKING
 import tkinter as tk
 from src.components.frames.title_frame import TitleFrame
@@ -29,8 +30,10 @@ class MFRetrieveGUI(ConfigurableFrame):
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to run the task", font=("Arial", 8, "italic"))
-        self.toggle_key_label.pack(pady=10)
         
+        temp_label = ttk.Label(self, text="Nothing to see here yet")
+        temp_label.pack(pady=10)
+
     def destroy_gui(self):
         self.service_controller.destroy()
         super().destroy()
