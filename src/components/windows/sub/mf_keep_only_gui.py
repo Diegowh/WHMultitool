@@ -32,6 +32,9 @@ class MFKeepOnlyGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
+        self.item_selection_frame = ttk.Frame(self)
+        self.item_selection_frame.pack(pady=10)
+        
         self.create_item_selection()
         
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to run the task", font=("Arial", 8, "italic"))
@@ -46,11 +49,11 @@ class MFKeepOnlyGUI(ConfigurableFrame):
     def create_item_selection(self):
         self.selected_item = tk.StringVar(value=self.items[0] if self.items else None)
         
-        for item in self.items:
+        for index,item in enumerate(self.items):
             rb = ttk.Radiobutton(
-                self,
+                self.item_selection_frame,
                 text=item,
                 variable=self.selected_item,
                 value=item,
             )
-            rb.pack()
+            rb.grid(row=index, column=0, sticky='w')

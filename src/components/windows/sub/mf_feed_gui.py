@@ -34,23 +34,25 @@ class MFFeedGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-
-        self.create_food_selection()
+        self.item_selection_frame = ttk.Frame(self)
+        self.item_selection_frame.pack(pady=10)
+        
+        self.create_item_selection()
         
         self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
         self.toggle_key_label.pack(pady=20)
 
-    def create_food_selection(self):
+    def create_item_selection(self):
         self.selected_food = tk.StringVar(value=self.foods[0] if self.foods else None)
-        
-        for food in self.foods:
+
+        for index, food in enumerate(self.foods):
             rb = ttk.Radiobutton(
-                self,
+                self.item_selection_frame, 
                 text=food,
                 variable=self.selected_food,
                 value=food,
             )
-            rb.pack()
+            rb.grid(row=index, column=0, sticky='w')
             
     
     def destroy_gui(self):
