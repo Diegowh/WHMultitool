@@ -21,3 +21,11 @@
 ## [1.1.3] - 10/05/2024
 
 - KeepOnly now uses close button instead of pressing Esc
+
+## [1.1.4] - 10/05/2024
+
+- Fix time values not being converted into floating numbers
+
+## [1.1.5] - 10/05/2024
+
+- Adjust vertical padding config screen components
