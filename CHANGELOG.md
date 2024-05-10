@@ -2,8 +2,10 @@
 
 ## [1.0] - 09/05/2024
 
-### Added
-
 - Magic F Service
 
-### Fixed
+## [1.1] - 10/05/2024
+
+- Magic F Autofeed Service
+- Magic F KeepOnly Service
+- The app is now always displayed in the foreground
