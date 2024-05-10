@@ -56,7 +56,7 @@ class MFKeepOnly(BaseTaskManager):
         
         await pa.type_text(
             text=l,
-            post_delay=0.3
+            post_delay=self.config.after_type_text_waiting_time
         )
         
         await pa.move_cursor_and_click(
@@ -73,7 +73,7 @@ class MFKeepOnly(BaseTaskManager):
         print(f"Secuencia: {self.selected_item_secuence}")
         await pa.open_inventory(
             hotkey=self.config.open_dino_inventory_key,
-            post_delay=0.9,
+            post_delay=self.config.after_open_dino_inventory_waiting_time,
         )
         
         for l in self.selected_item_secuence:

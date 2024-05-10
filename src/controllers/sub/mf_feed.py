@@ -54,11 +54,13 @@ class MFFeed(BaseTaskManager):
         
         await pa.move_cursor_and_click(
             PlayerInventoryCoordinates.SEARCH_BAR,
-            post_delay=1
         )
-        # print("cursor moved and clicked to search bar")
-        await pa.type_text(text=self.food_keywords[self.gui.selected_food.get()], post_delay=1)
-        # print("typed food")
+        
+        await pa.type_text(
+            text=self.food_keywords[self.gui.selected_food.get()],
+            post_delay=self.config.after_type_text_waiting_time
+        )
+
         await pa.move_cursor_and_click(
             PlayerInventoryCoordinates.TRANSFER_ALL,
             post_delay=self.config.autofeed_interval_time
