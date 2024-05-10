@@ -57,13 +57,18 @@ class AutoEggDrop(BaseTaskManager):
         """
         await pa.open_inventory(
             hotkey=self.config.pop_item_key,
-            post_delay=0.3
+            post_delay=self.config.load_inventory_waiting_time
         )
-        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.SEARCH_BAR, post_delay=0.2)
+        await pa.move_cursor_and_click(
+            location=PlayerInventoryCoordinates.SEARCH_BAR,
+            post_delay=0.2
+        )
+        
         await pa.type_text(text="fert", post_delay=0.2)
-        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT,)
+        await pa.move_cursor_and_click(location=PlayerInventoryCoordinates.FIRST_SLOT)
         await pa.pop_item(
             hotkey=self.config.pop_item_key,
+            post_delay=self.config.after_pop_waiting_time
         )
         await pa.close_inventory()
         await pa.move(

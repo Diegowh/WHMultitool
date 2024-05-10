@@ -61,6 +61,7 @@ class MFKeepOnly(BaseTaskManager):
         
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.DROP_ALL,
+            post_delay=self.config.after_drop_waiting_time
         )
         
     

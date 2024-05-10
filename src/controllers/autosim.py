@@ -84,7 +84,7 @@ class AutoSim(BaseTaskManager):
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.JOIN,
-            post_delay=int(self.config.mod_selection_screen_waiting_time)
+            post_delay=self.config.mod_selection_screen_waiting_time
             )  # Click Join and wait 3 seconds for the mod selection screen to load
 
         await pa.move_cursor_and_click(
@@ -92,7 +92,7 @@ class AutoSim(BaseTaskManager):
         )  # Click Join
 
         await asyncio.sleep(
-            int(self.config.server_full_screen_waiting_time)
+            self.config.server_full_screen_waiting_time
             )  # Delay to allow the Server full message to appear
 
         await pa.move_cursor_and_click(
