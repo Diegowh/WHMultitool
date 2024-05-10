@@ -39,7 +39,9 @@ class AppController(tk.Tk):
         self.title(self.config.app_title)
         self.geometry(f"{self.config.app_weight}x{self.config.app_height}")
         self.resizable(False, False)
-
+        self.attributes("-topmost", True)
+        
+        
         self.main_screen = MainScreen(master=self, controller=self)
         self.main_screen.pack(fill=tk.BOTH, expand=True)
         self.current_service_screen = None
