@@ -78,4 +78,6 @@ class MFKeepOnly(BaseTaskManager):
         for l in self.selected_item_secuence:
             await self._drop_item(l)
         
-        await pa.close_inventory()
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.CLOSE
+        )
