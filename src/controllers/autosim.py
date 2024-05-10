@@ -45,6 +45,7 @@ class AutoSim(BaseTaskManager):
         self.gui = AutoSimGUI(
             autosim=self,
             master=master,
+
             app_controller=app_controller
         )
 

@@ -9,6 +9,8 @@ Date 5/2024
 """
 
 import asyncio
+import base64
+import tempfile
 import tkinter as tk
 from src.components.windows.main_screen import MainScreen
 from src.config.config import Config
@@ -32,6 +34,15 @@ class AppController(tk.Tk):
         super().__init__()
         self.protocol(self.config.detele_window_protocol, self.close_app)
         self.option_add(self.config.option_pattern, 0)
+
+        with open("src/assets/asset.txt", "r") as f:
+            encoded_str = f.read()
+        
+        image_data = base64.b64decode(encoded_str)
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".ico") as temp_icon:
+            temp_icon.write(image_data)
+            self.iconbitmap(temp_icon.name)
+
 
         self.services = self.config.services
 

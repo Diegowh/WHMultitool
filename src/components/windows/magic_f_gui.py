@@ -34,8 +34,10 @@ class MagicFGUI(BaseFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
+
         self.create_buttons()
         self.store_widget_configs()
+
     
     def destroy_gui(self):
         super().destroy()

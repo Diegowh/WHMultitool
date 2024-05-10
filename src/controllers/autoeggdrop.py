@@ -26,11 +26,13 @@ class AutoEggDrop(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
+
         app_controller: 'AppController',
         master
         ) -> None:
 
         super().__init__(loop=loop)
+
         self.app_config = config
         self.config = self.app_config.load_service(self.__name__().upper())
         self.toggle_key = self.config.toggle_key
@@ -44,6 +46,7 @@ class AutoEggDrop(BaseTaskManager):
         print("AutoEggDrop initialized\n")
 
     def __name__(self):
+
         for key, value in self.app_config.services.items():
            if value is AutoEggDrop:
                return key
