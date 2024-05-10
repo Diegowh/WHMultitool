@@ -9,7 +9,7 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 # Private settings for the application
 
 # Screen
-APP_VERSION = "v1.0"
+APP_VERSION = "v1.1.1"
 APP_NAME = "All in One"
 APP_WEIGHT = 400
 APP_HEIGHT = 500
