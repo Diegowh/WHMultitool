@@ -9,3 +9,7 @@
 - Magic F Autofeed Service
 - Magic F KeepOnly Service
 - The app is now always displayed in the foreground
+
+## [1.1.1] - 10/05/2024
+
+- Fix RadioButton position
