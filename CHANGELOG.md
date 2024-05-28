@@ -37,3 +37,8 @@
 ## [1.1.7] - 28/05/2024
 
 - Fix Autosim clicking back buttons faster than the loading time needed
+
+## [1.1.8] - 28/05/2024
+
+- Move Save button to bottom container to save space
+- Resize window app
