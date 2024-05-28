@@ -56,7 +56,7 @@ class AutoEggDrop(BaseTaskManager):
         """Method to automate the process of dropping eggs from the inventory in the game.
         """
         await pa.open_inventory(
-            hotkey=self.config.pop_item_key,
+            hotkey=self.config.inventory_key,
             post_delay=self.config.load_inventory_waiting_time
         )
         await pa.move_cursor_and_click(
