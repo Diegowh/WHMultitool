@@ -10,7 +10,7 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 
 # Screen
 
-APP_VERSION = "v1.1.5"
+APP_VERSION = "v1.1.6"
 APP_NAME = "All in One"
 APP_WEIGHT = 400
 APP_HEIGHT = 500
