@@ -72,7 +72,7 @@ class AutoSim(BaseTaskManager):
 
         pyautogui.write(self.gui.text_input.get())
         pyautogui.press('enter')
-        await asyncio.sleep(0.5)  # Wait for the map list to load
+        await asyncio.sleep(self.config.map_list_loading_waiting_time)  # Wait for the map list to load
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
@@ -89,11 +89,8 @@ class AutoSim(BaseTaskManager):
 
         await pa.move_cursor_and_click(
             ModsSelectionScreenCoordinates.JOIN,
+            post_delay=self.config.server_full_screen_waiting_time
         )  # Click Join
-
-        await asyncio.sleep(
-            self.config.server_full_screen_waiting_time
-            )  # Delay to allow the Server full message to appear
 
         await pa.move_cursor_and_click(
             ConnectionFailedScreenCoordinates.CANCEL,

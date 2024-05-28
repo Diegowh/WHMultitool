@@ -42,3 +42,4 @@
 
 - Move Save button to bottom container to save space
 - Resize window app
+- Allow more time configurations from config.ini for Autosim
