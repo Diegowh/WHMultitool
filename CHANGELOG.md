@@ -33,3 +33,7 @@
 ## [1.1.6] - 10/05/2024
 
 - Fix Auto egg drop not working
+
+## [1.1.7] - 28/05/2024
+
+- Fix Autosim clicking back buttons faster than the loading time needed

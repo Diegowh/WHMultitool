@@ -97,13 +97,15 @@ class AutoSim(BaseTaskManager):
 
         await pa.move_cursor_and_click(
             ConnectionFailedScreenCoordinates.CANCEL,
-            post_delay=0.5
+            post_delay=self.config.back_to_main_menu_waiting_time
         )
 
         await pa.move_cursor_and_click(
-            ServerSelectionScreenCoordinates.BACK
+            ServerSelectionScreenCoordinates.BACK,
+            post_delay=self.config.back_to_main_menu_waiting_time
         )
 
         await pa.move_cursor_and_click(
-            GameModeScreenCoordinates.BACK
+            GameModeScreenCoordinates.BACK,
+            post_delay=self.config.back_to_main_menu_waiting_time
         )
