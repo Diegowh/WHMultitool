@@ -13,7 +13,7 @@ class TitleFrame(tk.Frame):
         Initialize the GUI components.
         """
         title_label = tk.Label(self, text=self.title, font=("Arial", 15)) 
-        title_label.pack(pady=20)
+        title_label.pack(pady=6)
         
         separator_frame = tk.Canvas(self, height=1, width=250, bg='dark grey')
         separator_frame.pack(pady=(0, 10))

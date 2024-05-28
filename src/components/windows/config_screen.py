@@ -47,7 +47,7 @@ class ConfigScreen(BaseFrame):
 
             self.entries[attr_name] = entry
 
-        save_button = self.save_button()
+        
 
     def press_key(self, entry):
         entry.config(state='normal')
@@ -64,15 +64,22 @@ class ConfigScreen(BaseFrame):
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
-    def save_button(self):
-        save_button = ttk.Button(self, text="Save", command=self.save_config)
-        save_button.pack(pady=20)
+    def save_button(self, container):
+        save_button = ttk.Button(container, text="Save", command=self.save_config)
+        save_button.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return save_button
     
     def save_config(self):
         entries = self.get_entries()
         self.config.update(entries)
         
+    def create_widgets(self):
+        
+        bottom_container = super().create_widgets()
+        
+        save_button = self.save_button(bottom_container)
+        
+        return bottom_container
     
     def destroy_gui(self):
         super().destroy()
