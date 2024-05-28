@@ -37,3 +37,7 @@
 ## [1.1.7] - 28/05/2024
 
 - Fix Autosim clicking back buttons faster than the loading time needed
+
+## [1.1.8] - 28/05/2024
+
+- Allow more time configurations from config.ini for Autosim
