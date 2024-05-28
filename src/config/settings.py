@@ -12,8 +12,8 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 
 APP_VERSION = "v1.1.7"
 APP_NAME = "All in One"
-APP_WEIGHT = 400
-APP_HEIGHT = 500
+APP_WEIGHT = 300
+APP_HEIGHT = 380
 APP_TITLE = f"{APP_VERSION} - ADAT - {APP_NAME}"
 
 
