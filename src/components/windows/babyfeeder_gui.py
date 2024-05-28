@@ -1,0 +1,65 @@
+from typing import TYPE_CHECKING
+import tkinter as tk
+from tkinter import ttk
+from src.components.frames.title_frame import TitleFrame
+from typing import TYPE_CHECKING
+
+from src.components.frames.configurable_frame import ConfigurableFrame
+if TYPE_CHECKING:
+    from src.controllers.babyfeeder import BabyFeeder
+
+
+class BabyFeederGUI(ConfigurableFrame):
+    
+    def __init__(
+        self,
+        babyfeeder: 'BabyFeeder',
+        master,
+        app_controller,
+    ):
+        super().__init__(master=master)
+        
+        self.master = master
+        self.app_controller = app_controller
+        self.service_controller = babyfeeder
+        
+        self.config = self.service_controller.config
+        self.foods: list[str] = self.service_controller.app_config.foods
+        self.toggle_key_label = None
+        self.selected_food = None
+        self.init_gui()
+        
+    def init_gui(self):
+        
+        title_frame = TitleFrame(
+            self,
+            self.service_controller.__name__()
+        )
+        title_frame.pack(side=tk.TOP, fill=tk.X)
+        
+        self.item_selection_frame = ttk.Frame(self)
+        self.item_selection_frame.pack(pady=10)
+        
+        self.create_item_selection()
+        
+        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
+        self.toggle_key_label.pack(pady=20)
+
+    def create_item_selection(self):
+        self.selected_food = tk.StringVar(value=self.foods[0] if self.foods else None)
+
+        for index, food in enumerate(self.foods):
+            rb = ttk.Radiobutton(
+                self.item_selection_frame, 
+                text=food,
+                variable=self.selected_food,
+                value=food,
+            )
+            rb.grid(row=index, column=0, sticky='w')
+            
+    
+    def destroy_gui(self):
+        self.service_controller.destroy()
+        super().destroy()
+        print("BabyFeeder, destroyed")
+        self.app_controller.show_main()
