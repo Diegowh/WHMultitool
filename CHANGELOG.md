@@ -29,3 +29,7 @@
 ## [1.1.5] - 10/05/2024
 
 - Adjust vertical padding config screen components
+
+## [1.1.6] - 10/05/2024
+
+- Fix Auto egg drop not working
