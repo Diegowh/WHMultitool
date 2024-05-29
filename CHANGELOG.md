@@ -48,3 +48,8 @@
 
 - Implement BabyFeeder with two different modes: Single and Loop
 - Temporary deactivate Magic F
+
+## [1.2.1] - 29/05/2024
+
+- Now move duration time is configurable
+- Small config window padding adjustment 
