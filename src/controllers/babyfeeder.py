@@ -43,23 +43,50 @@ class BabyFeeder(BaseTaskManager):
         return None
     
     async def _task(self):
-        if self.first_run:
+        print(f"BabyFeeder mode: {self.gui.mode.get()}")
+        
+        if self.gui.mode.get() == "Loop":
+            if self.first_run:
+                await pa.open_inventory(
+                    hotkey=self.config.open_dino_inventory_key,
+                    post_delay=self.config.load_inventory_waiting_time
+                )
+                self.first_run = False
+            
+            await pa.move_cursor_and_click(
+                PlayerInventoryCoordinates.SEARCH_BAR,
+            )
+            
+            await pa.type_text(
+                text=self.food_keywords[self.gui.selected_food.get()],
+                post_delay=self.config.after_type_text_waiting_time
+            )
+
+            await pa.move_cursor_and_click(
+                PlayerInventoryCoordinates.TRANSFER_ALL,
+                post_delay=self.config.autofeed_interval_time
+            )
+
+        elif self.gui.mode.get() == "Single":
+            
+            self.repetitive_task = False
             await pa.open_inventory(
                 hotkey=self.config.open_dino_inventory_key,
                 post_delay=self.config.load_inventory_waiting_time
             )
-            self.first_run = False
-        
-        await pa.move_cursor_and_click(
-            PlayerInventoryCoordinates.SEARCH_BAR,
-        )
-        
-        await pa.type_text(
-            text=self.food_keywords[self.gui.selected_food.get()],
-            post_delay=self.config.after_type_text_waiting_time
-        )
+            await pa.move_cursor_and_click(
+                PlayerInventoryCoordinates.SEARCH_BAR,
+            )
+            
+            await pa.type_text(
+                text=self.food_keywords[self.gui.selected_food.get()],
+                post_delay=self.config.after_type_text_waiting_time
+            )
 
-        await pa.move_cursor_and_click(
-            PlayerInventoryCoordinates.TRANSFER_ALL,
-            post_delay=self.config.autofeed_interval_time
-        )
+            await pa.move_cursor_and_click(
+                PlayerInventoryCoordinates.TRANSFER_ALL
+            )
+            await pa.move_cursor_and_click(
+                PlayerInventoryCoordinates.CLOSE,
+            )
+            
