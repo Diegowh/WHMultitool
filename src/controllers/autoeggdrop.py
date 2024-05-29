@@ -73,5 +73,6 @@ class AutoEggDrop(BaseTaskManager):
         await pa.close_inventory()
         await pa.move(
             direction=self.config.move_direction_key,
+            duration =self.config.move_duration_time,
             pre_delay=0.3
         )
