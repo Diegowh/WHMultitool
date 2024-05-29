@@ -53,3 +53,7 @@
 
 - Now move duration time is configurable
 - Small config window padding adjustment 
+
+## [1.2.2] - 29/05/2024
+
+- Manage FileNotFoundError exceptions with messagebox.

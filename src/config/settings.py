@@ -11,7 +11,7 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 
 # Screen
 
-APP_VERSION = "v1.2.1"
+APP_VERSION = "v1.2.2"
 APP_NAME = "All in One"
 APP_WEIGHT = 300
 APP_HEIGHT = 320
