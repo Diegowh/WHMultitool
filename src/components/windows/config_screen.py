@@ -29,7 +29,7 @@ class ConfigScreen(BaseFrame):
         for attr_name in config_attributes:
             value = getattr(self.config, attr_name)
             frame = tk.Frame(self)
-            frame.pack(fill=tk.X, padx=10, pady=2)
+            frame.pack(fill=tk.X, padx=10, pady=1)
             label = tk.Label(frame, text=transcript_attr_name(attr_name), anchor='w')
             label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
 
@@ -39,7 +39,7 @@ class ConfigScreen(BaseFrame):
             
             if "key" in attr_name:
                 button = ttk.Button(frame, text="Press Key", command=lambda entry=entry: self.press_key(entry))
-                button.pack(padx=5, pady=2)
+                button.pack(padx=5, pady=1)
                 entry.config(state='readonly')
 
             elif "time" in attr_name:
