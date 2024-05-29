@@ -57,3 +57,7 @@
 ## [1.2.2] - 29/05/2024
 
 - Manage FileNotFoundError exceptions with messagebox.
+
+## [1.2.3] - 29/05/2024
+
+- Added a message box to provide visual confirmation after configurations have been saved.
