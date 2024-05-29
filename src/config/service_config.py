@@ -4,7 +4,7 @@ Module for handling service configuration
 
 
 from configparser import ConfigParser
-from src.config.exceptions import ConfigError
+from tkinter import messagebox
 
 # __current_dir__ = os.path.dirname(os.path.abspath(__file__))
 CONFIG_FILE_NAME = "src/config/config.ini"
@@ -19,8 +19,11 @@ class ServiceConfig:
         self.config = ConfigParser()
         try:
             self.config.read(CONFIG_FILE_NAME)
-        except FileNotFoundError as exc:
-            raise ConfigError("config.ini was not found") from exc
+        except FileNotFoundError:
+            self.withdraw()
+            messagebox.showerror("Error", "Config file not found. Make sure the src folder is in the same directory as the executable.")
+            self.destroy()
+            return
 
         self.service_name = service_name
         self._load_config()

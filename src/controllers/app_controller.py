@@ -14,8 +14,7 @@ import tempfile
 import tkinter as tk
 from src.components.windows.main_screen import MainScreen
 from src.config.config import Config
-
-
+from tkinter import messagebox
 
 class AppController(tk.Tk):
     """
@@ -35,9 +34,16 @@ class AppController(tk.Tk):
         self.protocol(self.config.detele_window_protocol, self.close_app)
         self.option_add(self.config.option_pattern, 0)
 
-        with open("src/assets/asset.txt", "r") as f:
-            encoded_str = f.read()
-        
+        try:
+            with open("src/assets/asset.txt", "r") as f:
+                encoded_str = f.read()
+        except FileNotFoundError:
+            self.withdraw()
+            messagebox.showerror("Error", "Asset file not found. Make sure the src folder is in the same directory as the executable.")
+            self.destroy()
+            return
+            
+
         image_data = base64.b64decode(encoded_str)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ico") as temp_icon:
             temp_icon.write(image_data)
