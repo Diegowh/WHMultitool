@@ -43,3 +43,8 @@
 - Move Save button to bottom container to save space
 - Resize window app
 - Allow more time configurations from config.ini for Autosim
+
+## [1.2.0] - 29/05/2024
+
+- Implement BabyFeeder with two different modes: Single and Loop
+- Temporary deactivate Magic F
