@@ -68,7 +68,7 @@ class BabyFeederGUI(ConfigurableFrame):
         self.mode_selection_frame = ttk.Frame(self.selection_frame)
         self.mode_selection_frame.grid(row=0, column=1, sticky='e', padx=40)
 
-        modes = ["Single", "Bucle"]
+        modes = ["Single", "Loop"]
         for index, mode in enumerate(modes):
             rb = ttk.Radiobutton(
                 self.mode_selection_frame, 
