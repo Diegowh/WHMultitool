@@ -1,5 +1,6 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
+from src.controllers.babyfeeder import BabyFeeder
 from src.controllers.magic_f import MagicF
 from src.controllers.sub.mf_feed import MFFeed
 from src.controllers.sub.mf_retrieve import MFRetrieve
@@ -10,24 +11,24 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 
 # Screen
 
-APP_VERSION = "v1.1.8"
+APP_VERSION = "v1.2"
 APP_NAME = "All in One"
 APP_WEIGHT = 300
 APP_HEIGHT = 320
-APP_TITLE = f"{APP_VERSION} - ADAT - {APP_NAME}"
+APP_TITLE = f"ADAT - {APP_NAME}"
 
 
 
 # Services
 SERVICES = {
     "AutoSim": AutoSim,
-    "Magic-F": MagicF,
+    # "Magic-F": MagicF,
     "AutoEggDrop": AutoEggDrop,
+    "BabyFeeder": BabyFeeder
 }
 
 MAGIC_F_SUBSERVICES = {
     "KeepOnly": MFKeepOnly,
-    "AutoFeed": MFFeed,
     "Retrieve": MFRetrieve,
 }
 
