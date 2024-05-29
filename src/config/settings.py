@@ -29,7 +29,6 @@ SERVICES = {
 
 MAGIC_F_SUBSERVICES = {
     "KeepOnly": MFKeepOnly,
-    "AutoFeed": MFFeed,
     "Retrieve": MFRetrieve,
 }
 
