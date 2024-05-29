@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
+from src.config.settings import APP_VERSION
 
 if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
@@ -40,7 +41,7 @@ class MainScreen(tk.Frame):
         footer_frame = tk.Frame(self)
         footer_frame.place(relx=0.5, rely=1, anchor='s')
         
-        footer_label = tk.Label(footer_frame, text="2024 | wallhack", font=("Arial", 8, "italic"), fg="grey")
+        footer_label = tk.Label(footer_frame, text=f"{APP_VERSION} | wallhack", font=("Arial", 8, "italic"), fg="grey")
         footer_label.pack(pady=10)
 
     def show_option_command(self, i):
