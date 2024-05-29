@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 import keyboard
 from src.components.frames.base_frame import BaseFrame
@@ -72,6 +73,7 @@ class ConfigScreen(BaseFrame):
     def save_config(self):
         entries = self.get_entries()
         self.config.update(entries)
+        messagebox.showinfo(title=None, message="Config saved successfully!")
         
     def create_widgets(self):
         
