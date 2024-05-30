@@ -99,6 +99,6 @@ class BaseTaskManager(ABC):
         keyboard.unregister_all_hotkeys()
         print("Unregistered all hotkeys")
 
-    def register_hotkey(self, hotkey):
+    def register_hotkey(self, hotkey, supress: bool = True):
         
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=supress)

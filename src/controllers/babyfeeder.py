@@ -28,7 +28,7 @@ class BabyFeeder(BaseTaskManager):
         
         self.food_keywords = self.app_config.food_keywords
         self.toggle_key = self.config.toggle_key
-        self.register_hotkey(self.toggle_key)
+        self.register_hotkey(self.toggle_key, supress=False)
         
         self.gui = BabyFeederGUI(
             babyfeeder=self,
@@ -46,15 +46,10 @@ class BabyFeeder(BaseTaskManager):
         print(f"BabyFeeder mode: {self.gui.mode.get()}")
         
         if self.gui.mode.get() == "Loop":
-            if self.first_run:
-                await pa.open_inventory(
-                    hotkey=self.config.open_dino_inventory_key,
-                    post_delay=self.config.load_inventory_waiting_time
-                )
-                self.first_run = False
             
             await pa.move_cursor_and_click(
                 PlayerInventoryCoordinates.SEARCH_BAR,
+                pre_delay=self.config.load_inventory_waiting_time
             )
             
             await pa.type_text(
@@ -70,12 +65,9 @@ class BabyFeeder(BaseTaskManager):
         elif self.gui.mode.get() == "Single":
             
             self.repetitive_task = False
-            await pa.open_inventory(
-                hotkey=self.config.open_dino_inventory_key,
-                post_delay=self.config.load_inventory_waiting_time
-            )
             await pa.move_cursor_and_click(
                 PlayerInventoryCoordinates.SEARCH_BAR,
+                pre_delay=self.config.load_inventory_waiting_time
             )
             
             await pa.type_text(
