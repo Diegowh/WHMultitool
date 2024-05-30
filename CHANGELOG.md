@@ -61,3 +61,7 @@
 ## [1.2.3] - 29/05/2024
 
 - Added a message box to provide visual confirmation after configurations have been saved.
+
+## [1.2.4] - 29/05/2024
+
+- Removed key supression for BabyFeeder
