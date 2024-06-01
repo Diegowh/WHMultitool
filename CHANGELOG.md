@@ -65,3 +65,7 @@
 ## [1.2.4] - 29/05/2024
 
 - Removed key supression for BabyFeeder
+
+## [1.2.5] - 01/06/2024
+
+- Now coroutines only work when Ark is on focus
