@@ -21,7 +21,7 @@ class BabyFeeder(BaseTaskManager):
         app_controller: 'AppController'
     ) -> None:
         
-        super().__init__(loop)
+        super().__init__(loop, app_controller=app_controller)
         
         self.app_config = config
         self.config = self.app_config.load_service(self.__name__().upper())

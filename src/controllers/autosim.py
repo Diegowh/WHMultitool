@@ -36,7 +36,7 @@ class AutoSim(BaseTaskManager):
         app_controller: 'AppController'
     ) -> None:
 
-        super().__init__(loop=loop)
+        super().__init__(loop=loop, app_controller=app_controller)
         self.app_config = config
         self.config = self.app_config.load_service(self.__name__().upper())
         self.toggle_key = self.config.toggle_key

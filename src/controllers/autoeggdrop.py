@@ -31,7 +31,7 @@ class AutoEggDrop(BaseTaskManager):
         master
         ) -> None:
 
-        super().__init__(loop=loop)
+        super().__init__(loop=loop, app_controller=app_controller)
 
         self.app_config = config
         self.config = self.app_config.load_service(self.__name__().upper())
