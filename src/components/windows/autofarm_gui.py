@@ -40,7 +40,8 @@ class AutoFarmGUI(ConfigurableFrame):
         self.toggle_key_label = ttk.Label(
             self,
             text=f"Select to throw away when pressing {(self.config.toggle_key).upper()}",
-            font=("Arial", 8, "italic")
+            font=("Arial", 8, "italic"),
+            foreground="#800000"
         )
         self.toggle_key_label.pack(pady=10)
         

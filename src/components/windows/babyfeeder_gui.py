@@ -38,18 +38,19 @@ class BabyFeederGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
+        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
+        self.toggle_key_label.pack(pady=20)
+        
         self.selection_frame = ttk.Frame(self)
         self.selection_frame.pack(pady=10, fill=tk.X)
 
         self.create_item_selection()
         self.create_mode_selection()
 
-        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
-        self.toggle_key_label.pack(pady=20)
 
     def create_item_selection(self):
         self.item_selection_frame = ttk.Frame(self.selection_frame)
-        self.item_selection_frame.grid(row=0, column=0, sticky='w', padx=20)
+        self.item_selection_frame.grid(row=0, column=0, sticky='w', padx=60)
 
         self.selected_food = tk.StringVar(value=self.foods[0] if self.foods else None)
 

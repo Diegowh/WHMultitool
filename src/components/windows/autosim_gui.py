@@ -43,6 +43,11 @@ class AutoSimGUI(ConfigurableFrame):
         
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
+    
+        self.toggle_key_label = ttk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
+        self.toggle_key_label.pack(pady=10)
+        
+        
         map_num_frame = tk.Frame(self)
         map_num_frame.pack(padx=10, pady=10)
         
@@ -52,9 +57,6 @@ class AutoSimGUI(ConfigurableFrame):
         vcmd = (self.register(validate_map_number), '%P')
         map_num_entry = ttk.Entry(map_num_frame, textvariable=self.text_input, width=5, validate='key', validatecommand=vcmd)
         map_num_entry.pack(side=tk.RIGHT, padx=(10, 10))
-    
-        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"))
-        self.toggle_key_label.pack(pady=10)
     
     def destroy_gui(self) -> None:
         self.service_controller.destroy()
