@@ -69,3 +69,7 @@
 ## [1.2.5] - 01/06/2024
 
 - Now coroutines only work when Ark is on focus
+
+## [1.2.6] - 03/06/2024
+
+- Fixed Service Config not re-loading after saving new changes
