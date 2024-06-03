@@ -46,5 +46,4 @@ class AutoEggDropGUI(ConfigurableFrame):
     def destroy_gui(self):
         self.service_controller.destroy()
         super().destroy()
-        print("AutoEggDrop destroyed")
         self.app_controller.show_main()

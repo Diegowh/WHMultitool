@@ -29,7 +29,6 @@ class ServiceConfig:
         self._load_config()
 
     def _load_config(self) -> None:
-        print(self.config.sections())
         if self.service_name in self.config:
             for key in self.config[self.service_name]:
                 value = self.config[self.service_name][key]

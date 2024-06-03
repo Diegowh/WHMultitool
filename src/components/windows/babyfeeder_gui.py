@@ -81,5 +81,4 @@ class BabyFeederGUI(ConfigurableFrame):
     def destroy_gui(self):
         self.service_controller.destroy()
         super().destroy()
-        print("BabyFeeder, destroyed")
         self.app_controller.show_main()

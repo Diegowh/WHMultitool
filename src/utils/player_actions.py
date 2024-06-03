@@ -221,7 +221,6 @@ async def move_cursor_and_click(
     )
 
     pyautogui.click(clicks=clicks)
-    print("Clicked")
     await asyncio.sleep(post_delay)
 
 

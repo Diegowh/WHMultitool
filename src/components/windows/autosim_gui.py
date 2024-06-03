@@ -59,5 +59,4 @@ class AutoSimGUI(ConfigurableFrame):
     def destroy_gui(self) -> None:
         self.service_controller.destroy()
         super().destroy()
-        print("AutoSim destroyed")
         self.app_controller.show_main()
