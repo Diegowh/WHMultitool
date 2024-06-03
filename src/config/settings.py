@@ -1,11 +1,9 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.babyfeeder import BabyFeeder
-from src.controllers.magic_f import MagicF
-from src.controllers.sub.mf_feed import MFFeed
 from src.controllers.sub.mf_retrieve import MFRetrieve
 from src.controllers.sub.mf_keep_only import MFKeepOnly
-
+from src.controllers.autofarm import AutoFarm
 
 # Private settings for the application
 
@@ -24,7 +22,8 @@ SERVICES = {
     "AutoSim": AutoSim,
     # "Magic-F": MagicF,
     "AutoEggDrop": AutoEggDrop,
-    "BabyFeeder": BabyFeeder
+    "BabyFeeder": BabyFeeder,
+    "AutoFarm": AutoFarm,
 }
 
 MAGIC_F_SUBSERVICES = {
