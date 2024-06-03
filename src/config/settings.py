@@ -11,8 +11,8 @@ from src.controllers.autofarm import AutoFarm
 
 APP_VERSION = "v1.2.6"
 APP_NAME = "All in One"
-APP_WEIGHT = 300
-APP_HEIGHT = 320
+APP_WIDTH = 400
+APP_HEIGHT = 350
 APP_TITLE = f"ADAT - {APP_NAME}"
 
 
