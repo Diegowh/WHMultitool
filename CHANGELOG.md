@@ -77,3 +77,7 @@
 ## [1.3.0] - 03/06/2024
 
 - Implement AutoFarm
+
+## [1.3.1] - 03/06/2024
+
+- Changed label colors and descriptions

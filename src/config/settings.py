@@ -9,7 +9,7 @@ from src.controllers.autofarm import AutoFarm
 
 # Screen
 
-APP_VERSION = "v1.3.0"
+APP_VERSION = "v1.3.1"
 APP_NAME = "All in One"
 APP_WIDTH = 400
 APP_HEIGHT = 350
