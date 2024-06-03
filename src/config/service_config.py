@@ -60,3 +60,6 @@ class ServiceConfig:
     def update(self, new_config: dict) -> None:
         for attr_name, value in new_config.items():
             self.update_attr(attr_name, value)
+        
+        # re-load the config
+        self._load_config()
