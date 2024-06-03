@@ -73,3 +73,7 @@
 ## [1.2.6] - 03/06/2024
 
 - Fixed Service Config not re-loading after saving new changes
+
+## [1.3.0] - 03/06/2024
+
+- Implement AutoFarm
