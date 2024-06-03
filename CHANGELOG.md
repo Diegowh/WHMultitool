@@ -61,3 +61,15 @@
 ## [1.2.3] - 29/05/2024
 
 - Added a message box to provide visual confirmation after configurations have been saved.
+
+## [1.2.4] - 29/05/2024
+
+- Removed key supression for BabyFeeder
+
+## [1.2.5] - 01/06/2024
+
+- Now coroutines only work when Ark is on focus
+
+## [1.2.6] - 03/06/2024
+
+- Fixed Service Config not re-loading after saving new changes

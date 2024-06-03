@@ -5,20 +5,29 @@ Base class for service task managers.
 
 import asyncio
 from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 import keyboard
+if TYPE_CHECKING:
+    from src.controllers.app_controller import AppController
 
 class BaseTaskManager(ABC):
     """
     Base class for task managers,
     provides a basic structure for managing tasks in a separate thread.
     """
-    def __init__(self, loop: asyncio.AbstractEventLoop, repetitive_task: bool = True) -> None:
+    def __init__(self,
+        loop: asyncio.AbstractEventLoop,
+        app_controller: 'AppController',
+        repetitive_task: bool = True,
+    ) -> None:
+        
         self.loop = loop
         self.task = None
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
         self.first_run = True
+        self.app_controller = app_controller
         
         self.repetitive_task = repetitive_task
 
@@ -66,9 +75,10 @@ class BaseTaskManager(ABC):
         Args:
             coro (asyncio.Coroutine): The coroutine to start.
         """
-        self.task = self.loop.create_task(self.coroutine())
-        self.task_running = True
-        print("Task started")
+        if self.app_controller.is_ark_in_focus:
+            self.task = self.loop.create_task(self.coroutine())
+            self.task_running = True
+            print("Task started")
 
     def stop_task(self) -> None:
         """Stops the task coroutine in the asyncio loop.
@@ -99,6 +109,6 @@ class BaseTaskManager(ABC):
         keyboard.unregister_all_hotkeys()
         print("Unregistered all hotkeys")
 
-    def register_hotkey(self, hotkey):
+    def register_hotkey(self, hotkey, supress: bool = True):
         
-        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=True)
+        keyboard.register_hotkey(hotkey, self.toggle_task, suppress=supress)

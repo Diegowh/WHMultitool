@@ -14,7 +14,10 @@ import tempfile
 import tkinter as tk
 from src.components.windows.main_screen import MainScreen
 from src.config.config import Config
+from src.config.settings import ARK_ASCENDED_WINDOW_TITLE
 from tkinter import messagebox
+import pygetwindow as gw
+
 
 class AppController(tk.Tk):
     """
@@ -33,6 +36,7 @@ class AppController(tk.Tk):
         super().__init__()
         self.protocol(self.config.detele_window_protocol, self.close_app)
         self.option_add(self.config.option_pattern, 0)
+        self.is_ark_in_focus = False
 
         try:
             with open("src/assets/asset.txt", "r") as f:
@@ -77,6 +81,7 @@ class AppController(tk.Tk):
     async def mainloop(self, _n=0): # pylint: disable=W0236
         while not self.app_closing:
             self.update()
+            self.is_ark_in_focus = self.check_if_ark_in_focus()
             await asyncio.sleep(self.config.main_loop_sleep_interval)
 
 
@@ -101,6 +106,15 @@ class AppController(tk.Tk):
         # I had to add this line to make the MainScreen visible in MacOS.
         # I didn't have this issue in Windows.
         self.update_idletasks()
+
+    @staticmethod
+    def check_if_ark_in_focus() -> bool:
+        try:
+            active_window_title = gw.getActiveWindowTitle()
+        except Exception:
+            return False
+
+        return active_window_title == ARK_ASCENDED_WINDOW_TITLE
 
 
 async def run():

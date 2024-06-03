@@ -11,7 +11,7 @@ from src.controllers.sub.mf_keep_only import MFKeepOnly
 
 # Screen
 
-APP_VERSION = "v1.2.3"
+APP_VERSION = "v1.2.6"
 APP_NAME = "All in One"
 APP_WEIGHT = 300
 APP_HEIGHT = 320
@@ -82,3 +82,4 @@ KEEP_ONLY_ITEM_SEQUENCE = {
 MAIN_LOOP_SLEEP_INTERVAL = 0.05
 DELETE_WINDOW_PROTOCOL = "WM_DELETE_WINDOW"
 OPTION_PATTERN = "*tearOff"
+ARK_ASCENDED_WINDOW_TITLE = "ArkAscended"
