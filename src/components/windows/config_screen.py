@@ -88,8 +88,8 @@ class ConfigScreen(BaseFrame):
         if hasattr(self.service, "register_hotkey"):
             self.service.register_hotkey(self.config.toggle_key)
             
-            # Update the toggle key label
-            self.service.gui.toggle_key_label.config(text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off")
+            # # Update the toggle key label
+            # self.service.gui.toggle_key_label.config(text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off")
     
         self.service.gui.pack(fill=tk.BOTH, expand=True)
         

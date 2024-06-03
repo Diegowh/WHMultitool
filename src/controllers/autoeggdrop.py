@@ -43,8 +43,6 @@ class AutoEggDrop(BaseTaskManager):
             app_controller=app_controller
             )
 
-        print("AutoEggDrop initialized\n")
-
     def __name__(self):
 
         for key, value in self.app_config.services.items():

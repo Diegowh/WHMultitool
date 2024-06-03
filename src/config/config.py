@@ -14,7 +14,7 @@ class Config:
     def __init__(self) -> None:
         self.app_version = APP_VERSION
         self.app_name = APP_NAME
-        self.app_weight = APP_WEIGHT
+        self.app_width = APP_WIDTH
         self.app_height = APP_HEIGHT
         self.app_title = APP_TITLE
 

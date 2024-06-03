@@ -52,7 +52,6 @@ class BaseTaskManager(ABC):
         try:
             self.task_running = True
             while self.task_running:
-                print("Running task...")
                 await self._task()
     
                 # This is a non-blocking call.
@@ -65,7 +64,6 @@ class BaseTaskManager(ABC):
                     break
     
         except asyncio.CancelledError:
-            print("Task cancelled")
             self.task_running = False
             self.first_run = True
 
@@ -78,14 +76,12 @@ class BaseTaskManager(ABC):
         if self.app_controller.is_ark_in_focus:
             self.task = self.loop.create_task(self.coroutine())
             self.task_running = True
-            print("Task started")
 
     def stop_task(self) -> None:
         """Stops the task coroutine in the asyncio loop.
         """
         if self.task is not None:
             self.task.cancel()
-            print("Task stopped")
 
     def toggle_task(self) -> None:
         """Toggles the task coroutine on and off.
@@ -94,20 +90,16 @@ class BaseTaskManager(ABC):
             self.stop_task()
             self.task_running = False
             self.first_run = True
-            print("Task toggled off")
         else:
             self.start_task()
-            print("Task toggled on")
 
     def destroy(self) -> None:
         """Destroys the asyncio loop and the thread.
         """
-        print("Destroying TaskManager...")
         if self.task is not None:
             self.loop.call_soon_threadsafe(self.task.cancel)
 
         keyboard.unregister_all_hotkeys()
-        print("Unregistered all hotkeys")
 
     def register_hotkey(self, hotkey, supress: bool = True):
         

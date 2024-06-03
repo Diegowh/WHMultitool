@@ -43,7 +43,6 @@ class BabyFeeder(BaseTaskManager):
         return None
     
     async def _task(self):
-        print(f"BabyFeeder mode: {self.gui.mode.get()}")
         
         if self.gui.mode.get() == "Loop":
             

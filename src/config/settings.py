@@ -1,20 +1,18 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.babyfeeder import BabyFeeder
-from src.controllers.magic_f import MagicF
-from src.controllers.sub.mf_feed import MFFeed
 from src.controllers.sub.mf_retrieve import MFRetrieve
 from src.controllers.sub.mf_keep_only import MFKeepOnly
-
+from src.controllers.autofarm import AutoFarm
 
 # Private settings for the application
 
 # Screen
 
-APP_VERSION = "v1.2.6"
+APP_VERSION = "v1.3.1"
 APP_NAME = "All in One"
-APP_WEIGHT = 300
-APP_HEIGHT = 320
+APP_WIDTH = 400
+APP_HEIGHT = 350
 APP_TITLE = f"ADAT - {APP_NAME}"
 
 
@@ -24,7 +22,8 @@ SERVICES = {
     "AutoSim": AutoSim,
     # "Magic-F": MagicF,
     "AutoEggDrop": AutoEggDrop,
-    "BabyFeeder": BabyFeeder
+    "BabyFeeder": BabyFeeder,
+    "AutoFarm": AutoFarm,
 }
 
 MAGIC_F_SUBSERVICES = {
