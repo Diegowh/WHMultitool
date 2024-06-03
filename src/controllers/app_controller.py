@@ -58,7 +58,7 @@ class AppController(tk.Tk):
 
         # Main Tkinter window configuration
         self.title(self.config.app_title)
-        self.geometry(f"{self.config.app_weight}x{self.config.app_height}")
+        self.geometry(f"{self.config.app_width}x{self.config.app_height}")
         self.resizable(False, False)
         self.attributes("-topmost", True)
         
