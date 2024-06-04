@@ -44,10 +44,10 @@ FOOD_KEYWORDS = {
 }
 
 MAGIC_F_OPTIONS = {
-    "Paste Mode": "pas",
-    "Sap Mode": "sap",
-    "Honey Mode": "honey",
     "Veggies Mode": "veggies",
+    "Honey Mode": "honey",
+    "Sap Mode": "sap",
+    "Paste Mode": "pas",
     "Dumper": "dumper",
     "Crafter": "crafter"
 }
