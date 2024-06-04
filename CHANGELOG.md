@@ -81,3 +81,7 @@
 ## [1.3.1] - 03/06/2024
 
 - Changed label colors and descriptions
+
+## [1.4.0] - 04/06/2024
+
+- Implement Magic-F - Veggies Mode
