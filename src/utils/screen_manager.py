@@ -48,6 +48,12 @@ class PlayerInventoryCoordinates(ScreenCoordsEnum):
     FOLDER_VIEW = (0.33, 0.18)
     TOGGLE_TOOLTIPS = (0.36, 0.18)
     FIRST_SLOT = (0.11, 0.26)
+    SLOT1 = (0.116, 0.262)
+    SLOT2 = (0.163, 0.265)
+    SLOT3 = (0.212, 0.266)
+    SLOT7 = (0.114, 0.351)
+    SLOT8 = (0.164, 0.351)
+    SLOT9 = (0.212, 0.354)
     CLOSE = (0.937, 0.06)
 
 
@@ -67,6 +73,12 @@ class StructureInventoryCoordinates(ScreenCoordsEnum):
     YOU_BUTTON = (0.41, 0.13)
     STRUCTURE_BUTTON = (0.58, 0.13)
     CLOSE = (0.937, 0.06)
+    SLOT1= (0.465, 0.497)
+    SLOT2= (0.698, 0.264)
+    SLOT3= (0.746, 0.267)
+    SLOT7= (0.65, 0.348)
+    SLOT8= (0.699, 0.349)
+    SLOT9= (0.749, 0.347)
 
 
 class MainMenuScreenCoordinates(ScreenCoordsEnum):
