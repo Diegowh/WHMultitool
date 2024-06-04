@@ -1,3 +1,4 @@
+import asyncio
 from src.controllers.base_task_manager import BaseTaskManager
 from typing import TYPE_CHECKING
 from src.utils import player_actions as pa
@@ -32,6 +33,7 @@ class MagicF(BaseTaskManager):
         
         self.options = self.app_config.magic_f_options
         self.first_dump_loop = True
+        self.first_craft_loop = True
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
@@ -104,7 +106,26 @@ class MagicF(BaseTaskManager):
                     await pa.pop_item(post_delay=0)
 
     async def _crafter_task(self):
-        ...
+        
+        if self.first_craft_loop:
+            item = self.gui.entries['Crafter'].get()
+            await pa.move_cursor_and_click(
+                StructureInventoryCoordinates.SEARCH_BAR,
+                pre_delay=self.config.load_inventory_waiting_time
+            )
+            await pa.type_text(
+                text=item,
+                post_delay=self.config.after_type_text_waiting_time
+            )
+            self.first_craft_loop = False
+
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.SLOT1,
+        )
+        for _ in range(10):
+            await pa.craft_all()
+        
+        await asyncio.sleep(self.config.autocraft_interval_time)
         
     async def _retrieve_task(self, item: str):
         
