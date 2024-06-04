@@ -1,15 +1,14 @@
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.babyfeeder import BabyFeeder
-from src.controllers.sub.mf_retrieve import MFRetrieve
-from src.controllers.sub.mf_keep_only import MFKeepOnly
 from src.controllers.autofarm import AutoFarm
+from src.controllers.magic_f import MagicF
 
 # Private settings for the application
 
 # Screen
 
-APP_VERSION = "v1.3.1"
+APP_VERSION = "v1.7.0"
 APP_NAME = "All in One"
 APP_WIDTH = 400
 APP_HEIGHT = 350
@@ -20,15 +19,10 @@ APP_TITLE = f"ADAT - {APP_NAME}"
 # Services
 SERVICES = {
     "AutoSim": AutoSim,
-    # "Magic-F": MagicF,
     "AutoEggDrop": AutoEggDrop,
     "BabyFeeder": BabyFeeder,
     "AutoFarm": AutoFarm,
-}
-
-MAGIC_F_SUBSERVICES = {
-    "KeepOnly": MFKeepOnly,
-    "Retrieve": MFRetrieve,
+    "Magic-F": MagicF
 }
 
 
@@ -49,34 +43,15 @@ FOOD_KEYWORDS = {
     "Berry": "berry",
 }
 
-# Keep Only
-KEEP_ONLY_ITEMS = [
-    "Metal",
-    "Stone",
-    "Wood",
-    "MejoBerry",
-    "TintoBerry",
-    "NarcoBerry",
-    # "Raw Meat",
-    # "Raw Fish",
-    # "Cooked Meat",
-    # "Berry",
-    "StimBerry",
-    # "Honey",
-    # "Sap",
-    # "Paste"
-    # "Veggies",
-]
-
-KEEP_ONLY_ITEM_SEQUENCE = {
-    "MejoBerry": ["v", "a", "t"],
-    "StimBerry": ["o", "a", "v"],
-    "TintoBerry": ["a", "v", "m"],
-    "NarcoBerry": ["v", "m", "z", "i"],
-    "Stone": ["a", "w", "f"],
-    "Metal": ["n", "c", "w"],
-    "Wood": ["t", "e"]
+MAGIC_F_OPTIONS = {
+    "Veggies Mode": "veggies",
+    "Honey Mode": "honey",
+    "Sap Mode": "sap",
+    "Paste Mode": "pas",
+    "Dumper": "dumper",
+    "Crafter": "crafter"
 }
+
 # Main Loop
 MAIN_LOOP_SLEEP_INTERVAL = 0.05
 DELETE_WINDOW_PROTOCOL = "WM_DELETE_WINDOW"

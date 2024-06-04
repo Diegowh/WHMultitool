@@ -88,6 +88,19 @@ async def jump(
 
 
 @validate_hotkey
+async def craft_all(
+    hotkey: str = 'a',
+    pre_delay: float = None,
+    post_delay: float = 0.2
+    ) -> None:
+    
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+    
+    keyboard.press_and_release(hotkey)
+    await asyncio.sleep(post_delay)
+
+@validate_hotkey
 async def pop_item(
     hotkey: str = 'o',
     pre_delay: float = None,
@@ -243,4 +256,44 @@ async def type_text(
     # it's more reliable and faster when typing long texts in ARK.
     pyperclip.copy(text)
     pyautogui.hotkey('ctrl', 'v')
+    await asyncio.sleep(post_delay)
+
+
+@validate_hotkey
+async def key_down(
+    key: str,
+    pre_delay: float = None,
+    post_delay: float = 0.2
+) -> None:
+    """Press a key down.
+
+    Args:
+        key (str): Key to press down.
+        pre_delay (float, optional): Previous delay before executing the action. Defaults to None.
+        post_delay (float, optional): Posterior delay after executing the action. Defaults to 0.2.
+    """
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+
+    keyboard.press(key)
+    await asyncio.sleep(post_delay)
+    
+    
+@validate_hotkey
+async def key_up(
+    key: str,
+    pre_delay: float = None,
+    post_delay: float = 0.2
+) -> None:
+    """Release a key.
+
+    Args:
+        key (str): Key to release.
+        pre_delay (float, optional): Previous delay before executing the action. Defaults to None.
+        post_delay (float, optional): Posterior delay after executing the action. Defaults to 0.2.
+    """
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+
+    keyboard.release(key)
     await asyncio.sleep(post_delay)
