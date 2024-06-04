@@ -31,7 +31,7 @@ class MagicF(BaseTaskManager):
         self.register_hotkey(self.toggle_key, supress=False)
         
         self.options = self.app_config.magic_f_options
-        
+        self.first_dump_loop = True
         self.gui = MagicFGUI(
             magic_f=self,
             master=master,
@@ -76,8 +76,33 @@ class MagicF(BaseTaskManager):
         
 
     async def _dumper_task(self):
-        ...
+        item = self.gui.entries['Dumper'].get()
         
+
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.SEARCH_BAR,
+            pre_delay=self.config.load_inventory_waiting_time
+        )
+        await pa.type_text(
+            text=item,
+            post_delay=self.config.after_type_text_waiting_time
+        )
+        
+        inventory_slots = [
+            StructureInventoryCoordinates.SLOT1,
+            StructureInventoryCoordinates.SLOT2,
+            StructureInventoryCoordinates.SLOT3,
+            StructureInventoryCoordinates.SLOT7,
+            StructureInventoryCoordinates.SLOT8,
+            StructureInventoryCoordinates.SLOT9
+        ]
+        
+        while True:
+            for slot in inventory_slots:
+                await pa.move_cursor_and_click(slot, post_delay=0)
+                for _ in range(5):
+                    await pa.pop_item(post_delay=0)
+
     async def _crafter_task(self):
         ...
         
