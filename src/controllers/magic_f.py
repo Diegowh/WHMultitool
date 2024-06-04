@@ -54,7 +54,7 @@ class MagicF(BaseTaskManager):
         elif selected_option == "veggies":
             await self._veggies_task()
         else:
-            await self._retrieve_task()
+            await self._retrieve_task(item=selected_option)
 
 
     async def _veggies_task(self):
@@ -81,5 +81,24 @@ class MagicF(BaseTaskManager):
     async def _crafter_task(self):
         ...
         
-    async def _retrieve_task(self):
-        ...
+    async def _retrieve_task(self, item: str):
+        
+        self.repetitive_task = False
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.SEARCH_BAR,
+            pre_delay=self.config.load_inventory_waiting_time
+        )
+        
+        await pa.type_text(
+            text=item,
+            post_delay=self.config.after_type_text_waiting_time
+        )
+        
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.TRANSFER_ALL,
+        )
+        
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.CLOSE
+        )
+        
