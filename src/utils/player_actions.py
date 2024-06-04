@@ -88,6 +88,19 @@ async def jump(
 
 
 @validate_hotkey
+async def craft_all(
+    hotkey: str = 'a',
+    pre_delay: float = None,
+    post_delay: float = 0.2
+    ) -> None:
+    
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+    
+    keyboard.press_and_release(hotkey)
+    await asyncio.sleep(post_delay)
+
+@validate_hotkey
 async def pop_item(
     hotkey: str = 'o',
     pre_delay: float = None,
