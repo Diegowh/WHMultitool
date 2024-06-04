@@ -73,12 +73,12 @@ class StructureInventoryCoordinates(ScreenCoordsEnum):
     YOU_BUTTON = (0.41, 0.13)
     STRUCTURE_BUTTON = (0.58, 0.13)
     CLOSE = (0.937, 0.06)
-    SLOT1= (0.465, 0.497)
-    SLOT2= (0.698, 0.264)
-    SLOT3= (0.746, 0.267)
-    SLOT7= (0.65, 0.348)
-    SLOT8= (0.699, 0.349)
-    SLOT9= (0.749, 0.347)
+    SLOT1 = (0.65, 0.262)
+    SLOT2 = (0.698, 0.264)
+    SLOT3 = (0.746, 0.267)
+    SLOT7 = (0.65, 0.348)
+    SLOT8 = (0.699, 0.349)
+    SLOT9 = (0.749, 0.347)
 
 
 class MainMenuScreenCoordinates(ScreenCoordsEnum):
