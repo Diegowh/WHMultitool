@@ -22,7 +22,7 @@ class MagicFGUI(ConfigurableFrame):
         self.service_controller = magic_f
         
         self.config = self.service_controller.config
-        
+        self.entries = {}
         self.toggle_key_label = None
         self.selected_option = None
         self.init_gui()
@@ -56,8 +56,8 @@ class MagicFGUI(ConfigurableFrame):
                 )
                 radiobutton.pack(side=tk.LEFT, pady=2)
 
-                self.entry = ttk.Entry(frame, width=10)
-                self.entry.pack(side=tk.LEFT, padx=10)
+                self.entries[name] = ttk.Entry(frame, width=10)
+                self.entries[name].pack(side=tk.LEFT, padx=10)
             else:
                 radiobutton = ttk.Radiobutton(
                     self.selection_frame,
