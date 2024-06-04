@@ -244,3 +244,43 @@ async def type_text(
     pyperclip.copy(text)
     pyautogui.hotkey('ctrl', 'v')
     await asyncio.sleep(post_delay)
+
+
+@validate_hotkey
+async def key_down(
+    key: str,
+    pre_delay: float = None,
+    post_delay: float = 0.2
+) -> None:
+    """Press a key down.
+
+    Args:
+        key (str): Key to press down.
+        pre_delay (float, optional): Previous delay before executing the action. Defaults to None.
+        post_delay (float, optional): Posterior delay after executing the action. Defaults to 0.2.
+    """
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+
+    keyboard.press(key)
+    await asyncio.sleep(post_delay)
+    
+    
+@validate_hotkey
+async def key_up(
+    key: str,
+    pre_delay: float = None,
+    post_delay: float = 0.2
+) -> None:
+    """Release a key.
+
+    Args:
+        key (str): Key to release.
+        pre_delay (float, optional): Previous delay before executing the action. Defaults to None.
+        post_delay (float, optional): Posterior delay after executing the action. Defaults to 0.2.
+    """
+    if pre_delay is not None:
+        time.sleep(pre_delay)
+
+    keyboard.release(key)
+    await asyncio.sleep(post_delay)
