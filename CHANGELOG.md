@@ -88,4 +88,12 @@
 
 ## [1.5.0] - 04/06/2024
 
-- Implement Magic-F - Retrieve Mode
+- Implement Magic-F - Retrieve
+
+## [1.6.0] - 04/06/2024
+
+- Implement Magic-F - Dump
+
+## [1.7.0] - 04/06/2024
+
+- Implement Magic-F - Craft

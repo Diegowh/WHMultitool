@@ -8,7 +8,7 @@ from src.controllers.magic_f import MagicF
 
 # Screen
 
-APP_VERSION = "v1.5.0"
+APP_VERSION = "v1.7.0"
 APP_NAME = "All in One"
 APP_WIDTH = 400
 APP_HEIGHT = 350
