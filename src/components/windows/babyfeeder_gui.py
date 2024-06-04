@@ -1,4 +1,3 @@
-from typing import TYPE_CHECKING
 import tkinter as tk
 from tkinter import ttk
 from src.components.frames.title_frame import TitleFrame
