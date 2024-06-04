@@ -42,7 +42,7 @@ class MagicFGUI(ConfigurableFrame):
         self.selection_frame = ttk.Frame(self)
         self.selection_frame.place(relx=0.5, rely=0.5, anchor='center')
 
-        self.selected_option = tk.StringVar()
+        self.selected_option = tk.StringVar(value="veggies")
         for name, value in self.service_controller.options.items():
             if name == "Dumper" or name == "Crafter":
                 frame = ttk.Frame(self.selection_frame)
