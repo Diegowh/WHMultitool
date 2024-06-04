@@ -85,3 +85,7 @@
 ## [1.4.0] - 04/06/2024
 
 - Implement Magic-F - Veggies Mode
+
+## [1.5.0] - 04/06/2024
+
+- Implement Magic-F - Retrieve Mode
