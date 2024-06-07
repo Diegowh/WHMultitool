@@ -97,3 +97,7 @@
 ## [1.7.0] - 04/06/2024
 
 - Implement Magic-F - Craft
+
+## [1.7.2] - 07/06/2024
+
+- Implement Poetry for packaging and version control
