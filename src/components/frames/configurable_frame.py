@@ -21,7 +21,8 @@ class ConfigurableFrame(BaseFrame):
         self.pack_forget()
         
         # Create the configuration screen
-        config_screen = ConfigScreen(service, self.master).pack(fill=tk.BOTH, expand=True)
+        config_screen = (ConfigScreen(service, self.master))
+        config_screen.pack(fill=tk.BOTH, expand=True)
  
     def config_btn(self, container):
         config_button = ttk.Button(container, text="Config", command=lambda: self.open_service_config(self.service_controller))
