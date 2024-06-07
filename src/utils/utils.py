@@ -6,6 +6,7 @@ Module to handle utility functions, not enough related to be in a separate modul
 import pyautogui
 import pyperclip
 import base64
+import toml
 
 
 def favicon_encoder():
@@ -37,3 +38,10 @@ def transcript_attr_name(attr_name: str) -> str:
     assert isinstance(attr_name, str)
     attr_name = attr_name.replace("_", " ")
     return attr_name.title()
+
+
+def get_version():
+    pyproject = toml.load("pyproject.toml")
+    version = pyproject.get("tool", {}).get("poetry", {}).get("version", "")
+
+    return version
