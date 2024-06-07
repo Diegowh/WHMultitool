@@ -19,7 +19,7 @@ from src.utils.screen_manager import (
     ConnectionFailedScreenCoordinates,
 )
 if TYPE_CHECKING:
-    from config.config import Config
+    from src.config.config import Config
     from src.controllers.app_controller import AppController
 
 
