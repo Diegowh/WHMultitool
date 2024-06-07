@@ -100,6 +100,7 @@ async def craft_all(
     keyboard.press_and_release(hotkey)
     await asyncio.sleep(post_delay)
 
+
 @validate_hotkey
 async def pop_item(
     hotkey: str = 'o',
@@ -118,6 +119,7 @@ async def pop_item(
 
     keyboard.press_and_release(hotkey)
     await asyncio.sleep(post_delay)
+
 
 @validate_hotkey
 async def move(

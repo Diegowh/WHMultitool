@@ -2,41 +2,44 @@
 Base class for service task managers.
 """
 
-
 import asyncio
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
 import keyboard
+
 if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
+
 
 class BaseTaskManager(ABC):
     """
     Base class for task managers,
     provides a basic structure for managing tasks in a separate thread.
     """
-    def __init__(self,
+
+    def __init__(
+        self,
         loop: asyncio.AbstractEventLoop,
         app_controller: 'AppController',
         repetitive_task: bool = True,
     ) -> None:
-        
+
         self.loop = loop
         self.task = None
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
         self.first_run = True
         self.app_controller = app_controller
-        
+
         self.repetitive_task = repetitive_task
 
     @abstractmethod
     async def _task(self) -> None:
         """
-        Abstract method repersenting the core task to be performed by a service controller.
+        Abstract method representing the core task to be performed by a service controller.
         
-        This metod is intended to be overridden by subclasses
+        This method is intended to be overridden by subclasses
         to define a sequence of in-game actions.
         
         These actions are specific to the service
@@ -53,16 +56,16 @@ class BaseTaskManager(ABC):
             self.task_running = True
             while self.task_running:
                 await self._task()
-    
+
                 # This is a non-blocking call.
                 # It's used to give control to the asyncio event loop.
                 # Allows other tasks to run before this task continues.
                 await asyncio.sleep(0)
-    
+
                 if not self.repetitive_task:
                     self.task_running = False
                     break
-    
+
         except asyncio.CancelledError:
             self.task_running = False
             self.first_run = True
@@ -102,5 +105,5 @@ class BaseTaskManager(ABC):
         keyboard.unregister_all_hotkeys()
 
     def register_hotkey(self, hotkey, supress: bool = True):
-        
+
         keyboard.register_hotkey(hotkey, self.toggle_task, suppress=supress)

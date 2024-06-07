@@ -10,11 +10,11 @@ from src.components.windows.magic_f_gui import MagicFGUI
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
-    from config.config import Config
+    from src.config.config import Config
     from src.controllers.app_controller import AppController
 
+
 class MagicF(BaseTaskManager):
-    
 
     def __init__(
         self,
@@ -58,7 +58,6 @@ class MagicF(BaseTaskManager):
         else:
             await self._retrieve_task(item=selected_option)
 
-
     async def _veggies_task(self):
         self.repetitive_task = False
         await pa.move_cursor_and_click(
@@ -75,11 +74,9 @@ class MagicF(BaseTaskManager):
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.CLOSE
         )
-        
 
     async def _dumper_task(self):
         item = self.gui.entries['Dumper'].get()
-        
 
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,

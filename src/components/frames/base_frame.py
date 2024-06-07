@@ -13,7 +13,7 @@ class BaseFrame(tk.Frame, ABC):
     """This class is used as a base class for all the frames in the application.
     It inherits from tk.Frame and is an abstract class.
     
-    Has the functionallity to create the common widgets needed for all the frames.
+    Has the functionality to create the common widgets needed for all the frames.
     """
     def __init__(self, master=None):
         super().__init__(master)

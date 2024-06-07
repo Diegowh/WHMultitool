@@ -18,15 +18,13 @@ class Config:
         self.app_height = APP_HEIGHT
         self.app_title = APP_TITLE
 
-
         self.services = SERVICES
         self.foods = FOODS
         self.food_keywords = FOOD_KEYWORDS
 
-
         # Main loop
         self.main_loop_sleep_interval = MAIN_LOOP_SLEEP_INTERVAL
-        self.detele_window_protocol = DELETE_WINDOW_PROTOCOL
+        self.delete_window_protocol = DELETE_WINDOW_PROTOCOL
         self.option_pattern = OPTION_PATTERN
         
         # Magic F

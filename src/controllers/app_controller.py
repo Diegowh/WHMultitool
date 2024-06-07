@@ -28,13 +28,13 @@ class AppController(tk.Tk):
     def __init__(self, config: Config):
         self.config = config
 
-        # I had to add these lins to simulate Tkinter's mainloop in asyncio
+        # I had to add these lines to simulate Tkinter's mainloop in asyncio
         # This way I can control the mainloop for the different
         # controllers that needs to run in parallel
         self.loop = asyncio.get_event_loop()
         self.app_closing = False
         super().__init__()
-        self.protocol(self.config.detele_window_protocol, self.close_app)
+        self.protocol(self.config.delete_window_protocol, self.close_app)
         self.option_add(self.config.option_pattern, 0)
         self.is_ark_in_focus = False
 
@@ -46,13 +46,11 @@ class AppController(tk.Tk):
             messagebox.showerror("Error", "Asset file not found. Make sure the src folder is in the same directory as the executable.")
             self.destroy()
             return
-            
 
         image_data = base64.b64decode(encoded_str)
         with tempfile.NamedTemporaryFile(delete=False, suffix=".ico") as temp_icon:
             temp_icon.write(image_data)
             self.iconbitmap(temp_icon.name)
-
 
         self.services = self.config.services
 
@@ -61,8 +59,7 @@ class AppController(tk.Tk):
         self.geometry(f"{self.config.app_width}x{self.config.app_height}")
         self.resizable(False, False)
         self.attributes("-topmost", True)
-        
-        
+
         self.main_screen = MainScreen(master=self, controller=self)
         self.main_screen.pack(fill=tk.BOTH, expand=True)
         self.current_service_screen = None

@@ -8,7 +8,6 @@ import pyperclip
 import base64
 
 
-
 def favicon_encoder():
     icon_path = "src/assets/favicon.ico"
     with open(icon_path, "rb") as image_file:
@@ -32,6 +31,7 @@ def dummy_routine():
     pyautogui.hotkey('ctrl', 'v')
     pyautogui.press('enter')
     print("TERMINADA RUTINA!!")
+
 
 def transcript_attr_name(attr_name: str) -> str:
     assert isinstance(attr_name, str)

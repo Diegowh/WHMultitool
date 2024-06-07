@@ -7,6 +7,7 @@ from src.components.frames.configurable_frame import ConfigurableFrame
 if TYPE_CHECKING:
     from src.controllers.magic_f import MagicF
 
+
 class MagicFGUI(ConfigurableFrame):
     
     def __init__(
@@ -16,7 +17,8 @@ class MagicFGUI(ConfigurableFrame):
         app_controller,
     ):
         super().__init__(master=master)
-        
+
+        self.selection_frame = None
         self.master = master
         self.app_controller = app_controller
         self.service_controller = magic_f
@@ -26,8 +28,7 @@ class MagicFGUI(ConfigurableFrame):
         self.toggle_key_label = None
         self.selected_option = None
         self.init_gui()
-        
-    
+
     def init_gui(self):
         
         title_frame = TitleFrame(
@@ -36,7 +37,12 @@ class MagicFGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-        self.toggle_key_label = tk.Label(self, text=f"Select mode to enable when pressing {(self.config.toggle_key).upper()}", font=("Arial", 8, "italic"), foreground="#800000")
+        self.toggle_key_label = tk.Label(
+            self,
+            text=f"Select mode to enable when pressing {self.config.toggle_key.upper()}",
+            font=("Arial", 8, "italic"),
+            foreground="#800000"
+        )
         self.toggle_key_label.pack(pady=20)
         
         self.selection_frame = ttk.Frame(self)
@@ -66,8 +72,7 @@ class MagicFGUI(ConfigurableFrame):
                     value=value
                 )
                 radiobutton.pack(anchor='w')
-            
-    
+
     def destroy_gui(self):
         self.service_controller.destroy()
         super().destroy()

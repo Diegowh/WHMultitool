@@ -15,7 +15,6 @@ APP_HEIGHT = 350
 APP_TITLE = f"ADAT - {APP_NAME}"
 
 
-
 # Services
 SERVICES = {
     "AutoSim": AutoSim,

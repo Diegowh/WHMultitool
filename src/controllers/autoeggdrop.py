@@ -14,7 +14,7 @@ from src.utils.screen_manager import (
 )
 
 if TYPE_CHECKING:
-    from config.config import Config
+    from src.config.config import Config
     from src.controllers.app_controller import AppController
 
 
@@ -29,7 +29,7 @@ class AutoEggDrop(BaseTaskManager):
 
         app_controller: 'AppController',
         master
-        ) -> None:
+    ) -> None:
 
         super().__init__(loop=loop, app_controller=app_controller)
 
@@ -46,8 +46,8 @@ class AutoEggDrop(BaseTaskManager):
     def __name__(self):
 
         for key, value in self.app_config.services.items():
-           if value is AutoEggDrop:
-               return key
+            if value is AutoEggDrop:
+                return key
         return None
 
     async def _task(self):

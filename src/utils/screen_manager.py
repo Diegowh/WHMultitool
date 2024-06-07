@@ -100,6 +100,7 @@ class GameModeScreenCoordinates(ScreenCoordsEnum):
     MODS_LIST = (0.76, 0.521)
     BACK = (0.499, 0.893)
 
+
 class ServerSelectionScreenCoordinates(ScreenCoordsEnum):
     """
     This class is used to store the relative screen coordinates of the server selection screen.
@@ -126,7 +127,8 @@ class ConnectionFailedScreenCoordinates(ScreenCoordsEnum):
     """
     ACCEPT = (0.443, 0.676)
     CANCEL = (0.558, 0.676)
-    
+
+
 def relative_position(abs_position: tuple, screen_res: tuple) -> tuple[float, float]:
     """
     This function converts absolute screen coordinates to relative screen coordinates.
@@ -160,6 +162,7 @@ def get_mouse_relative_position() -> tuple[int, int]:
         relative_coords = relative_position(absolute_coords, screen_resolution)
         print(relative_coords)
         time.sleep(1)
+
 
 if __name__ == "__main__":
     get_mouse_relative_position()

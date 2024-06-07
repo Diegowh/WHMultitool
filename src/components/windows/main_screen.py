@@ -8,11 +8,13 @@ if TYPE_CHECKING:
 
 __APP_NAME__ = "All in One"
 
+
 class MainScreen(tk.Frame):
     """This class represents the main screen of the app.
     """
     def __init__(self, master, controller: 'AppController'):
         super().__init__(master)
+        self.services_container = None
         self.controller = controller
         self.create_widgets()
 

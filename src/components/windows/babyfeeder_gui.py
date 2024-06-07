@@ -17,7 +17,10 @@ class BabyFeederGUI(ConfigurableFrame):
         app_controller,
     ):
         super().__init__(master=master)
-        
+
+        self.mode_selection_frame = None
+        self.item_selection_frame = None
+        self.selection_frame = None
         self.master = master
         self.app_controller = app_controller
         self.service_controller = babyfeeder
@@ -45,7 +48,6 @@ class BabyFeederGUI(ConfigurableFrame):
 
         self.create_item_selection()
         self.create_mode_selection()
-
 
     def create_item_selection(self):
         self.item_selection_frame = ttk.Frame(self.selection_frame)

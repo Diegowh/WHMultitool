@@ -51,8 +51,8 @@ class AutoSim(BaseTaskManager):
 
     def __name__(self):
         for key, value in self.app_config.services.items():
-           if value is AutoSim:
-               return key
+            if value is AutoSim:
+                return key
         return None
 
     async def _task(self):
@@ -60,7 +60,7 @@ class AutoSim(BaseTaskManager):
         """
         await pa.move_cursor_and_click(
             MainMenuScreenCoordinates.PRESS_TO_START
-        ) # Press middle button on the start screen
+        )  # Press middle button on the start screen
 
         await pa.move_cursor_and_click(
             GameModeScreenCoordinates.JOIN_GAME

@@ -10,6 +10,7 @@ from tkinter import messagebox
 CONFIG_FILE_NAME = "src/config/config.ini"
 # __config_path__ = os.path.join(__current_dir__, CONFIG_FILE_NAME)
 
+
 class ServiceConfig:
     """
     Configuration class for a service.
@@ -21,7 +22,10 @@ class ServiceConfig:
             self.config.read(CONFIG_FILE_NAME)
         except FileNotFoundError:
             self.withdraw()
-            messagebox.showerror("Error", "Config file not found. Make sure the src folder is in the same directory as the executable.")
+            messagebox.showerror(
+                "Error",
+                "Config file not found. Make sure the src folder is in the same directory as the executable."
+            )
             self.destroy()
             return
 

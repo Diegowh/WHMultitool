@@ -8,8 +8,9 @@ from src.components.windows.babyfeeder_gui import BabyFeederGUI
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
-    from config.config import Config
+    from src.config.config import Config
     from src.controllers.app_controller import AppController
+
 
 class BabyFeeder(BaseTaskManager):
     

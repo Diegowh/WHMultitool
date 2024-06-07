@@ -1,12 +1,10 @@
 import tkinter as tk
 from tkinter import messagebox
 
-import keyboard
 from src.components.frames.base_frame import BaseFrame
 from src.components.frames.title_frame import TitleFrame
 from tkinter import ttk
 from src.utils.utils import transcript_attr_name
-from src.config.service_config import ServiceConfig
 from src.utils.validators import validate_time_sleep_valid_input
 
 

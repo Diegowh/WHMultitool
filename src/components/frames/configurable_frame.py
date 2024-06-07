@@ -9,13 +9,13 @@ from src.components.windows.config_screen import ConfigScreen
 if TYPE_CHECKING:
     from src.controllers.base_task_manager import BaseTaskManager
 
+
 class ConfigurableFrame(BaseFrame):
     
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-    
-        
+
     def open_service_config(self, service:  'BaseTaskManager') -> None:
         keyboard.unregister_all_hotkeys()
         self.pack_forget()
@@ -37,4 +37,3 @@ class ConfigurableFrame(BaseFrame):
         config_button = self.config_btn(bottom_container)
         
         return bottom_container
-    

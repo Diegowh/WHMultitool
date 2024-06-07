@@ -7,9 +7,6 @@ from src.components.frames.configurable_frame import ConfigurableFrame
 
 if TYPE_CHECKING:
     from src.controllers.autofarm import AutoFarm
-    
-    
-
 
 
 class AutoFarmGUI(ConfigurableFrame):
@@ -21,14 +18,14 @@ class AutoFarmGUI(ConfigurableFrame):
         app_controller
     ) -> None:
         super().__init__(master=master)
-        
+
+        self.check_vars = None
         self.master = master
         self.app_controller = app_controller
         self.service_controller = autofarm
         self.config = self.service_controller.config
         self.toggle_key_label = None
         self.init_gui()
-        
     
     def init_gui(self):
         title_frame = TitleFrame(
@@ -39,7 +36,7 @@ class AutoFarmGUI(ConfigurableFrame):
         
         self.toggle_key_label = ttk.Label(
             self,
-            text=f"Select to throw away when pressing {(self.config.toggle_key).upper()}",
+            text=f"Select to throw away when pressing {self.config.toggle_key.upper()}",
             font=("Arial", 8, "italic"),
             foreground="#800000"
         )
@@ -55,7 +52,7 @@ class AutoFarmGUI(ConfigurableFrame):
     def checkbox_container(self):
         container = ttk.Frame(self)
         container.pack(padx=20, fill=tk.X)
-        
+
         self.check_vars = {
             resource: tk.IntVar() for resource in self.service_controller.resources.keys()
         }

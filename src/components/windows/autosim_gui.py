@@ -42,11 +42,9 @@ class AutoSimGUI(ConfigurableFrame):
         )
         
         title_frame.pack(side=tk.TOP, fill=tk.X)
-        
-    
+
         self.toggle_key_label = ttk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
         self.toggle_key_label.pack(pady=10)
-        
         
         map_num_frame = tk.Frame(self)
         map_num_frame.pack(padx=10, pady=10)
