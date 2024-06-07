@@ -3,12 +3,13 @@ from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.babyfeeder import BabyFeeder
 from src.controllers.autofarm import AutoFarm
 from src.controllers.magic_f import MagicF
+from src.utils.utils import get_version
 
 # Private settings for the application
 
 # Screen
-
-APP_VERSION = "v1.7.0"
+_version = get_version()
+APP_VERSION = f"v{_version}"
 APP_NAME = "All in One"
 APP_WIDTH = 400
 APP_HEIGHT = 350
