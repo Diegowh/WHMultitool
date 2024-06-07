@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "all-in-one"
-version = "0.1.0"
+version = "1.7.1"
 description = ""
 authors = ["diegowh <contacto.diegowh@gmail.com>"]
 license = "MIT"
@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.11"
 keyboard = "^0.13.5"
 pyautogui = "^0.9.54"
+toml = "^0.10.2"
 
 
 [build-system]
