@@ -1,5 +1,5 @@
 """
-Module responsible of the entire configuration of the application.
+Module responsible for the entire configuration of the application.
 """
 
 
