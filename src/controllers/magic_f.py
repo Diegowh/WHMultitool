@@ -25,9 +25,11 @@ class MagicF(BaseTaskManager):
         app_controller: 'AppController'
     ):
         
-        super().__init__(loop, app_controller=app_controller)
-        
-        self.app_config = config
+        super().__init__(
+            loop=loop,
+            config=config,
+            app_controller=app_controller
+        )
         self.service_config = load_service(self.__class__.__name__.upper())
         self.toggle_key = self.service_config.toggle_key
         self.register_hotkey(self.toggle_key, supress=False)

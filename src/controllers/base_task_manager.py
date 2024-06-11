@@ -10,6 +10,8 @@ import keyboard
 
 if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
+    from src.config.config import Config
+
 
 
 class BaseTaskManager(ABC):
@@ -21,6 +23,7 @@ class BaseTaskManager(ABC):
     def __init__(
         self,
         loop: asyncio.AbstractEventLoop,
+        config: 'Config',
         app_controller: 'AppController',
         repetitive_task: bool = True,
     ) -> None:
@@ -30,11 +33,10 @@ class BaseTaskManager(ABC):
         self.task_name = self.task.get_name() if self.task is not None else None
         self.task_running = False
         self.first_run = True
+        self.app_config = config
         self.app_controller = app_controller
 
         self.repetitive_task = repetitive_task
-        self.app_config = None
-
 
     @abstractmethod
     async def _task(self) -> None:

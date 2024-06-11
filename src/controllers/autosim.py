@@ -25,7 +25,6 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-
 class AutoSim(BaseTaskManager):
     """
     This class is the controller for the AutoSim service.
@@ -38,8 +37,12 @@ class AutoSim(BaseTaskManager):
         app_controller: 'AppController'
     ) -> None:
 
-        super().__init__(loop=loop, app_controller=app_controller)
-        self.app_config = config
+        super().__init__(
+            loop=loop,
+            config=config,
+            app_controller=app_controller
+        )
+
         self.service_config = load_service(self.__class__.__name__.upper())
         self.toggle_key = self.service_config.toggle_key
 
