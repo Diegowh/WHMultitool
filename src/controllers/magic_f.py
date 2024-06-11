@@ -7,6 +7,7 @@ from src.utils.screen_manager import (
     PlayerInventoryCoordinates
 )
 from src.components.windows.magic_f_gui import MagicFGUI
+from src.config.config import load_service
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
@@ -27,8 +28,8 @@ class MagicF(BaseTaskManager):
         super().__init__(loop, app_controller=app_controller)
         
         self.app_config = config
-        self.config = self.app_config.load_service(self.__name__().upper())
-        self.toggle_key = self.config.toggle_key
+        self.service_config = load_service(self.__class__.__name__.upper())
+        self.toggle_key = self.service_config.toggle_key
         self.register_hotkey(self.toggle_key, supress=False)
         
         self.options = self.app_config.magic_f_options
@@ -39,13 +40,7 @@ class MagicF(BaseTaskManager):
             master=master,
             app_controller=app_controller
         )
-        
-    def __name__(self):
-        for key, value in self.app_config.services.items():
-            if value is MagicF:
-                return key
-        return None
-    
+
     async def _task(self):
         selected_option = self.gui.selected_option.get()
         
@@ -62,13 +57,13 @@ class MagicF(BaseTaskManager):
         self.repetitive_task = False
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.TRANSFER_ALL,
-            pre_delay=self.config.load_inventory_waiting_time,
-            post_delay=self.config.transfer_all_waiting_time
+            pre_delay=self.service_config.load_inventory_waiting_time,
+            post_delay=self.service_config.transfer_all_waiting_time
         )
         
         await pa.move_cursor_and_click(
             PlayerInventoryCoordinates.TRANSFER_ALL,
-            post_delay=self.config.transfer_all_waiting_time
+            post_delay=self.service_config.transfer_all_waiting_time
         )
         
         await pa.move_cursor_and_click(
@@ -80,11 +75,11 @@ class MagicF(BaseTaskManager):
 
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,
-            pre_delay=self.config.load_inventory_waiting_time
+            pre_delay=self.service_config.load_inventory_waiting_time
         )
         await pa.type_text(
             text=item,
-            post_delay=self.config.after_type_text_waiting_time
+            post_delay=self.service_config.after_type_text_waiting_time
         )
         
         inventory_slots = [
@@ -108,11 +103,11 @@ class MagicF(BaseTaskManager):
             item = self.gui.entries['Crafter'].get()
             await pa.move_cursor_and_click(
                 StructureInventoryCoordinates.SEARCH_BAR,
-                pre_delay=self.config.load_inventory_waiting_time
+                pre_delay=self.service_config.load_inventory_waiting_time
             )
             await pa.type_text(
                 text=item,
-                post_delay=self.config.after_type_text_waiting_time
+                post_delay=self.service_config.after_type_text_waiting_time
             )
             self.first_craft_loop = False
 
@@ -122,19 +117,19 @@ class MagicF(BaseTaskManager):
         for _ in range(10):
             await pa.craft_all()
         
-        await asyncio.sleep(self.config.autocraft_interval_time)
+        await asyncio.sleep(self.service_config.autocraft_interval_time)
         
     async def _retrieve_task(self, item: str):
         
         self.repetitive_task = False
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,
-            pre_delay=self.config.load_inventory_waiting_time
+            pre_delay=self.service_config.load_inventory_waiting_time
         )
         
         await pa.type_text(
             text=item,
-            post_delay=self.config.after_type_text_waiting_time
+            post_delay=self.service_config.after_type_text_waiting_time
         )
         
         await pa.move_cursor_and_click(

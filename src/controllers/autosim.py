@@ -18,6 +18,8 @@ from src.utils.screen_manager import (
     MainMenuScreenCoordinates,
     ConnectionFailedScreenCoordinates,
 )
+from src.config.config import load_service
+
 if TYPE_CHECKING:
     from src.config.config import Config
     from src.controllers.app_controller import AppController
@@ -38,8 +40,8 @@ class AutoSim(BaseTaskManager):
 
         super().__init__(loop=loop, app_controller=app_controller)
         self.app_config = config
-        self.config = self.app_config.load_service(self.__name__().upper())
-        self.toggle_key = self.config.toggle_key
+        self.service_config = load_service(self.__class__.__name__.upper())
+        self.toggle_key = self.service_config.toggle_key
 
         self.register_hotkey(self.toggle_key)
         self.gui = AutoSimGUI(
@@ -48,12 +50,6 @@ class AutoSim(BaseTaskManager):
 
             app_controller=app_controller
         )
-
-    def __name__(self):
-        for key, value in self.app_config.services.items():
-            if value is AutoSim:
-                return key
-        return None
 
     async def _task(self):
         """Method to automate the process of trying to join a full server in the game.
@@ -72,7 +68,7 @@ class AutoSim(BaseTaskManager):
 
         pyautogui.write(self.gui.text_input.get())
         pyautogui.press('enter')
-        await asyncio.sleep(self.config.map_list_loading_waiting_time)  # Wait for the map list to load
+        await asyncio.sleep(self.service_config.map_list_loading_waiting_time)  # Wait for the map list to load
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.FIRST_SERVER
@@ -84,25 +80,25 @@ class AutoSim(BaseTaskManager):
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.JOIN,
-            post_delay=self.config.mod_selection_screen_waiting_time
+            post_delay=self.service_config.mod_selection_screen_waiting_time
             )  # Click Join and wait 3 seconds for the mod selection screen to load
 
         await pa.move_cursor_and_click(
             ModsSelectionScreenCoordinates.JOIN,
-            post_delay=self.config.server_full_screen_waiting_time
+            post_delay=self.service_config.server_full_screen_waiting_time
         )  # Click Join
 
         await pa.move_cursor_and_click(
             ConnectionFailedScreenCoordinates.CANCEL,
-            post_delay=self.config.back_to_main_menu_waiting_time
+            post_delay=self.service_config.back_to_main_menu_waiting_time
         )
 
         await pa.move_cursor_and_click(
             ServerSelectionScreenCoordinates.BACK,
-            post_delay=self.config.back_to_main_menu_waiting_time
+            post_delay=self.service_config.back_to_main_menu_waiting_time
         )
 
         await pa.move_cursor_and_click(
             GameModeScreenCoordinates.BACK,
-            post_delay=self.config.back_to_main_menu_waiting_time
+            post_delay=self.service_config.back_to_main_menu_waiting_time
         )

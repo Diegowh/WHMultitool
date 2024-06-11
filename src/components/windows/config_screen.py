@@ -12,7 +12,7 @@ class ConfigScreen(BaseFrame):
     def __init__(self, service, master=None):
         super().__init__(master)
         self.service = service
-        self.config = self.service.config
+        self.config = self.service.service_config
         self.entries = {}
         self.init_gui()
 

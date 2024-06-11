@@ -25,7 +25,7 @@ class BabyFeederGUI(ConfigurableFrame):
         self.app_controller = app_controller
         self.service_controller = babyfeeder
         
-        self.config = self.service_controller.config
+        self.config = self.service_controller.service_config
         self.foods: list[str] = self.service_controller.app_config.foods
         self.toggle_key_label = None
         self.selected_food = None
@@ -36,7 +36,7 @@ class BabyFeederGUI(ConfigurableFrame):
         
         title_frame = TitleFrame(
             self,
-            self.service_controller.__name__()
+            self.service_controller.__class__.__name__
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         

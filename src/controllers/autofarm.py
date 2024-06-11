@@ -7,6 +7,7 @@ from src.utils import player_actions as pa
 from src.utils.screen_manager import (
     StructureInventoryCoordinates
 )
+from src.config.config import load_service
 
 if TYPE_CHECKING:
     from src.config.config import Config
@@ -54,8 +55,8 @@ class AutoFarm(BaseTaskManager):
     
         super().__init__(loop=loop, app_controller=app_controller)
         self.app_config = config
-        self.config = self.app_config.load_service(self.__name__().upper())
-        self.toggle_key = self.config.toggle_key
+        self.service_config = load_service(self.__class__.__name__.upper())
+        self.toggle_key = self.service_config.toggle_key
         
         self.register_hotkey(self.toggle_key, supress=False)
         
@@ -65,13 +66,7 @@ class AutoFarm(BaseTaskManager):
             master=master,
             app_controller=app_controller
         )
-        
-    def __name__(self):
-        for key, value in self.app_config.services.items():
-            if value is AutoFarm:
-                return key
-        return None
-    
+
     async def _task(self):
         
         self.repetitive_task = False
@@ -90,11 +85,11 @@ class AutoFarm(BaseTaskManager):
         
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,
-            pre_delay=self.config.load_inventory_waiting_time
+            pre_delay=self.service_config.load_inventory_waiting_time
         )
         await pa.type_text(
             text=resource,
-            post_delay=self.config.after_type_text_waiting_time
+            post_delay=self.service_config.after_type_text_waiting_time
         )
         
         await pa.move_cursor_and_click(
