@@ -97,3 +97,33 @@ class Config:
 
     # Magic F
     magic_f_options: Dict[str, str] = field(default_factory=lambda: MAGIC_F_OPTIONS)
+
+    # AutoFarm
+    autofarm_resources = {
+            "Stone": "Stone",
+            "Wood": "Wood",
+            "Thatch": "Thatch",
+            "Crystal": "Crystal",
+            "Berries": "Berr",
+            "Rare Flower": "Flow",
+            "Rare Mushroom": "Mushr",
+            "Flint": "Flint",
+            "Metal": "Metal",
+            "Obsidian": "Obsi",
+            "Raw": "Raw",
+            "Hide": "Hide",
+            "Fiber": "Fiber",
+            "Chitin": "Chitin",
+            "Seed": "Seed",
+            "Amarberry": "Amar",
+            "Azulberry": "Azul",
+            "Cianberry": "Cian",
+            "Magenberry": "Magen",
+            "Mejoberry": "Mejo",
+            "Narcoberry": "Narcob",
+            "Stimberry": "Stimb",
+            "Verdeberry": "Verdeb",
+            "Tintoberry": "Tinto",
+            "Pelt": "Pelt",
+            "Primitive": "Prim"
+        }

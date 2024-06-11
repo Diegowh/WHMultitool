@@ -13,35 +13,6 @@ if TYPE_CHECKING:
     from src.config.config import Config
     from src.controllers.app_controller import AppController
 
-RESOURCES = {
-    "Stone": "Stone",
-    "Wood": "Wood",
-    "Thatch": "Thatch",
-    "Crystal": "Crystal",
-    "Berries": "Berr",
-    "Rare Flower": "Flow",
-    "Rare Mushroom": "Mushr",
-    "Flint": "Flint",
-    "Metal": "Metal",
-    "Obsidian": "Obsi",
-    "Raw": "Raw",
-    "Hide": "Hide",
-    "Fiber": "Fiber",
-    "Chitin": "Chitin",
-    "Seed": "Seed",
-    "Amarberry": "Amar",
-    "Azulberry": "Azul",
-    "Cianberry": "Cian",
-    "Magenberry": "Magen",
-    "Mejoberry": "Mejo",
-    "Narcoberry": "Narcob",
-    "Stimberry": "Stimb",
-    "Verdeberry": "Verdeb",
-    "Tintoberry": "Tinto",
-    "Pelt": "Pelt",
-    "Primitive": "Prim"
-}
-
 
 class AutoFarm(BaseTaskManager):
 
@@ -60,10 +31,9 @@ class AutoFarm(BaseTaskManager):
         )
         self.service_config = load_service(self.__class__.__name__.upper())
         self.toggle_key = self.service_config.toggle_key
-        
         self.register_hotkey(self.toggle_key, supress=False)
         
-        self.resources = RESOURCES
+        self.resources = self.app_config.autofarm_resources
         self.gui = AutoFarmGUI(
             autofarm=self,
             master=master,
