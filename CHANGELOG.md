@@ -101,3 +101,7 @@
 ## [1.7.2] - 07/06/2024
 
 - Implement Poetry for packaging and version control
+
+## [1.7.3] 11/06/2024
+
+- Refactor Config.py
