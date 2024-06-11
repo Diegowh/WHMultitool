@@ -13,10 +13,17 @@ import base64
 import tempfile
 import tkinter as tk
 from src.components.windows.main_screen import MainScreen
-from src.config.config import Config
-from src.config.settings import ARK_ASCENDED_WINDOW_TITLE
+from src.config.config import Config, ARK_ASCENDED_WINDOW_TITLE
 from tkinter import messagebox
 import pygetwindow as gw
+from src.controllers.autosim import AutoSim
+from src.controllers.autoeggdrop import AutoEggDrop
+from src.controllers.babyfeeder import BabyFeeder
+from src.controllers.autofarm import AutoFarm
+from src.controllers.magic_f import MagicF
+
+
+
 
 
 class AppController(tk.Tk):
@@ -37,6 +44,13 @@ class AppController(tk.Tk):
         self.protocol(self.config.delete_window_protocol, self.close_app)
         self.option_add(self.config.option_pattern, 0)
         self.is_ark_in_focus = False
+        self.services = {
+            AutoSim: "Auto-Sim",
+            AutoEggDrop: "Auto-Eggdrop",
+            BabyFeeder: "Baby Feeder",
+            AutoFarm: "Auto-Farm",
+            MagicF: "Magic-F"
+        }
 
         try:
             with open("src/assets/asset.txt", "r") as f:
@@ -52,15 +66,13 @@ class AppController(tk.Tk):
             temp_icon.write(image_data)
             self.iconbitmap(temp_icon.name)
 
-        self.services = self.config.services
-
         # Main Tkinter window configuration
         self.title(self.config.app_title)
         self.geometry(f"{self.config.app_width}x{self.config.app_height}")
         self.resizable(False, False)
         self.attributes("-topmost", True)
 
-        self.main_screen = MainScreen(master=self, controller=self)
+        self.main_screen = MainScreen(master=self, app_controller=self)
         self.main_screen.pack(fill=tk.BOTH, expand=True)
         self.current_service_screen = None
 
@@ -81,17 +93,20 @@ class AppController(tk.Tk):
             self.is_ark_in_focus = self.check_if_ark_in_focus()
             await asyncio.sleep(self.config.main_loop_sleep_interval)
 
-
-    def show_option(self, i):
+    def show_option(self, class_):
         """Shows the screen of the selected option and initializes its controller.
 
         Args:
-            i (int): Index of the selected option.
+            class_ (callable): Class controller of the selected option.
         """
         self.main_screen.pack_forget()
-        app_name = list(self.services.keys())[i]
-        app_class = self.services[app_name]
-        self.current_service_screen = app_class(loop=self.loop, config=self.config, master=self, app_controller=self).gui
+
+        self.current_service_screen = class_(
+            loop=self.loop,
+            config=self.config,
+            master=self,
+            app_controller=self
+        ).gui
         self.current_service_screen.pack(fill=tk.BOTH, expand=True)
 
     def show_main(self):

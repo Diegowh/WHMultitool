@@ -33,6 +33,8 @@ class BaseTaskManager(ABC):
         self.app_controller = app_controller
 
         self.repetitive_task = repetitive_task
+        self.app_config = None
+
 
     @abstractmethod
     async def _task(self) -> None:

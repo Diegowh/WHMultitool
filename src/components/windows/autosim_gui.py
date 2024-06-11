@@ -27,7 +27,7 @@ class AutoSimGUI(ConfigurableFrame):
         self.app_controller = app_controller
         self.text_input = tk.StringVar()
         self.service_controller = autosim
-        self.config = self.service_controller.config
+        self.config = self.service_controller.service_config
         self.toggle_key_label = None
         self.init_gui()
 
@@ -38,12 +38,12 @@ class AutoSimGUI(ConfigurableFrame):
         
         title_frame = TitleFrame(
             self,
-            self.service_controller.__name__()
+            self.service_controller.__class__.__name__
         )
         
         title_frame.pack(side=tk.TOP, fill=tk.X)
 
-        self.toggle_key_label = ttk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
+        self.toggle_key_label = ttk.Label(self, text=f"Press '{self.config.toggle_key.upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
         self.toggle_key_label.pack(pady=10)
         
         map_num_frame = tk.Frame(self)
