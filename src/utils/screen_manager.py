@@ -20,6 +20,7 @@ __all__ = [
     "ModsSelectionScreenCoordinates",
     "relative_position",
     "get_screen_resolution",
+    "ConnectionFailedScreenCoordinates"
 ]
 
 
