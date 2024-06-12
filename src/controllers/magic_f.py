@@ -1,13 +1,13 @@
 import asyncio
-from src.controllers.base_task_manager import BaseTaskManager
 from typing import TYPE_CHECKING
+
+from src.components.windows.magic_f_gui import MagicFGUI
+from src.controllers.service import Service
 from src.utils import player_actions as pa
 from src.utils.screen_manager import (
     StructureInventoryCoordinates,
     PlayerInventoryCoordinates
 )
-from src.components.windows.magic_f_gui import MagicFGUI
-from src.config.config import load_service
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
@@ -15,36 +15,30 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class MagicF:
+class MagicF(Service):
 
     def __init__(
         self,
-        loop: 'AbstractEventLoop',
+        loop: asyncio.AbstractEventLoop,
         config: 'Config',
         master,
         app_controller: 'AppController'
-    ):
-
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.task_manager = BaseTaskManager(
+    ) -> None:
+        super().__init__(
             loop=loop,
             config=config,
+            master=master,
             app_controller=app_controller,
-            service_actions=self.service_actions
+            gui=MagicFGUI,
+            supress_hotkey=False
         )
-        self.task_manager.register_hotkey(self.toggle_key, supress=False)
         
         self.options = self.task_manager.app_config.magic_f_options
         self.first_dump_loop = True
         self.first_craft_loop = True
-        self.gui = MagicFGUI(
-            magic_f=self,
-            master=master,
-            app_controller=app_controller
-        )
+        super().init_gui()
 
-    async def service_actions(self):
+    async def on_toggle_key(self):
         selected_option = self.gui.selected_option.get()
         
         if selected_option == "dumper":

@@ -1,11 +1,12 @@
+import asyncio
 from typing import TYPE_CHECKING
+
+from src.components.windows.babyfeeder_gui import BabyFeederGUI
+from src.controllers.service import Service
 from src.utils import player_actions as pa
 from src.utils.screen_manager import (
     PlayerInventoryCoordinates,
 )
-from src.controllers.base_task_manager import BaseTaskManager
-from src.components.windows.babyfeeder_gui import BabyFeederGUI
-from src.config.config import load_service
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
@@ -13,35 +14,27 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class BabyFeeder:
-    
+class BabyFeeder(Service):
+
     def __init__(
         self,
-        loop: 'AbstractEventLoop',
+        loop: asyncio.AbstractEventLoop,
         config: 'Config',
         master,
         app_controller: 'AppController'
     ) -> None:
-
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.task_manager = BaseTaskManager(
+        super().__init__(
             loop=loop,
             config=config,
-            app_controller=app_controller,
-            service_actions=self.service_actions
-        )
-
-        self.task_manager.register_hotkey(self.toggle_key, supress=False)
-        self.food_keywords = self.task_manager.app_config.food_keywords
-
-        self.gui = BabyFeederGUI(
-            babyfeeder=self,
             master=master,
-            app_controller=app_controller
+            app_controller=app_controller,
+            gui=BabyFeederGUI,
+            supress_hotkey=False
         )
-    
-    async def service_actions(self):
+        self.food_keywords = self.task_manager.app_config.food_keywords
+        super().init_gui()
+
+    async def on_toggle_key(self):
         
         if self.gui.mode.get() == "Loop":
             
