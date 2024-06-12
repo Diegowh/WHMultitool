@@ -57,6 +57,6 @@ class AutoSimGUI(ConfigurableFrame):
         map_num_entry.pack(side=tk.RIGHT, padx=(10, 10))
     
     def destroy_gui(self) -> None:
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()

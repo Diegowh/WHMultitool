@@ -45,7 +45,7 @@ class AutoFarmGUI(ConfigurableFrame):
         checkbox_container = self.checkbox_container()
         
     def destroy_gui(self):
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()
 

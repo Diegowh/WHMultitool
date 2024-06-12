@@ -74,6 +74,6 @@ class MagicFGUI(ConfigurableFrame):
                 radiobutton.pack(anchor='w')
 
     def destroy_gui(self):
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()

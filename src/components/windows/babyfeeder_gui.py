@@ -26,7 +26,7 @@ class BabyFeederGUI(ConfigurableFrame):
         self.service_controller = babyfeeder
         
         self.config = self.service_controller.service_config
-        self.foods: list[str] = self.service_controller.app_config.foods
+        self.foods: list[str] = self.service_controller.task_manager.app_config.foods
         self.toggle_key_label = None
         self.selected_food = None
         self.mode = None
@@ -40,7 +40,12 @@ class BabyFeederGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-        self.toggle_key_label = tk.Label(self, text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off", font=("Arial", 8, "italic"), foreground="#800000")
+        self.toggle_key_label = tk.Label(
+            self,
+            text=f"Press '{self.config.toggle_key.upper()}' to toggle on/off",
+            font=("Arial", 8, "italic"),
+            foreground="#800000"
+        )
         self.toggle_key_label.pack(pady=20)
         
         self.selection_frame = ttk.Frame(self)
@@ -81,6 +86,6 @@ class BabyFeederGUI(ConfigurableFrame):
             rb.grid(row=index, column=0, sticky='w')
 
     def destroy_gui(self):
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()
