@@ -105,3 +105,7 @@
 ## [1.7.3] 11/06/2024
 
 - Refactor Config.py
+
+## [1.7.4] 12/06/2024
+
+- Refactor Service Controllers

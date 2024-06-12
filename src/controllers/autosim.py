@@ -6,11 +6,11 @@ which is used to automate the process of joining a game in the game Among Us.
 
 import asyncio
 from typing import TYPE_CHECKING
-import keyboard
 import pyautogui
-from src.controllers.base_task_manager import BaseTaskManager
+
 from src.components.windows.autosim_gui import AutoSimGUI
-import src.utils.player_actions as pa
+from src.controllers.service import Service
+from src.utils import player_actions as pa
 from src.utils.screen_manager import (
     ModsSelectionScreenCoordinates,
     ServerSelectionScreenCoordinates,
@@ -18,15 +18,13 @@ from src.utils.screen_manager import (
     MainMenuScreenCoordinates,
     ConnectionFailedScreenCoordinates,
 )
-from src.config.config import load_service
 
 if TYPE_CHECKING:
     from src.config.config import Config
     from src.controllers.app_controller import AppController
 
 
-
-class AutoSim(BaseTaskManager):
+class AutoSim(Service):
     """
     This class is the controller for the AutoSim service.
     """
@@ -37,21 +35,16 @@ class AutoSim(BaseTaskManager):
         master,
         app_controller: 'AppController'
     ) -> None:
-
-        super().__init__(loop=loop, app_controller=app_controller)
-        self.app_config = config
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-
-        self.register_hotkey(self.toggle_key)
-        self.gui = AutoSimGUI(
-            autosim=self,
+        super().__init__(
+            loop=loop,
+            config=config,
             master=master,
-
-            app_controller=app_controller
+            app_controller=app_controller,
+            gui=AutoSimGUI,
         )
 
-    async def _task(self):
+        super().init_gui()
+    async def on_toggle_key(self):
         """Method to automate the process of trying to join a full server in the game.
         """
         await pa.move_cursor_and_click(

@@ -2,27 +2,28 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
+
 from src.components.frames.title_frame import TitleFrame
 from src.components.frames.configurable_frame import ConfigurableFrame
+from src.components.windows.service_gui import ServiceGUI
 
 if TYPE_CHECKING:
-    from src.controllers.autofarm import AutoFarm
+    from src.controllers.service import Service
 
 
 class AutoFarmGUI(ConfigurableFrame):
     
     def __init__(
         self,
-        autofarm: 'AutoFarm',
+        service_controller: 'Service',
         master,
         app_controller
     ) -> None:
         super().__init__(master=master)
 
         self.check_vars = None
-        self.master = master
         self.app_controller = app_controller
-        self.service_controller = autofarm
+        self.service_controller = service_controller
         self.config = self.service_controller.service_config
         self.toggle_key_label = None
         self.init_gui()
@@ -45,7 +46,7 @@ class AutoFarmGUI(ConfigurableFrame):
         checkbox_container = self.checkbox_container()
         
     def destroy_gui(self):
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()
 

@@ -20,6 +20,7 @@ __all__ = [
     "ModsSelectionScreenCoordinates",
     "relative_position",
     "get_screen_resolution",
+    "ConnectionFailedScreenCoordinates"
 ]
 
 
@@ -142,10 +143,10 @@ def get_screen_resolution() -> tuple[int, int]:
     """
     This function returns the screen resolution of the monitor.
     """
-    return (pyautogui.size().width, pyautogui.size().height)
+    return pyautogui.size().width, pyautogui.size().height
 
 
-def get_mouse_relative_position() -> tuple[int, int]:
+def get_mouse_relative_position():
     """Get the relative position of the mouse on the screen. Based on the screen resolution.
 
     Returns:

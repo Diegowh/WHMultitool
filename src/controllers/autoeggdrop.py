@@ -3,22 +3,20 @@ This module is the controller for the AutoEggDrop service.
 """
 
 
-from typing import TYPE_CHECKING
 import asyncio
-import src.utils.player_actions as pa
+from typing import TYPE_CHECKING
+
 from src.components.windows.autoeggdrop_gui import AutoEggDropGUI
-from src.controllers.base_task_manager import BaseTaskManager
-from src.utils.screen_manager import (
-    PlayerInventoryCoordinates,
-)
-from src.config.config import load_service
+from src.controllers.service import Service
+from src.utils import player_actions as pa
+from src.utils.screen_manager import PlayerInventoryCoordinates
 
 if TYPE_CHECKING:
     from src.config.config import Config
     from src.controllers.app_controller import AppController
 
 
-class AutoEggDrop(BaseTaskManager):
+class AutoEggDrop(Service):
     """ 
     This class is the controller for the AutoEggDrop service.
     """
@@ -26,24 +24,18 @@ class AutoEggDrop(BaseTaskManager):
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-
-        app_controller: 'AppController',
-        master
+        master,
+        app_controller: 'AppController'
     ) -> None:
-
-        super().__init__(loop=loop, app_controller=app_controller)
-
-        self.app_config = config
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.register_hotkey(self.toggle_key)
-        self.gui = AutoEggDropGUI(
-            auto_eggdrop=self,
+        super().__init__(
+            loop=loop,
+            config=config,
             master=master,
-            app_controller=app_controller
-            )
-
-    async def _task(self):
+            app_controller=app_controller,
+            gui=AutoEggDropGUI,
+        )
+        super().init_gui()
+    async def on_toggle_key(self):
         """Method to automate the process of dropping eggs from the inventory in the game.
         """
         await pa.open_inventory(

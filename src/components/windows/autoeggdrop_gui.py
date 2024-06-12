@@ -13,18 +13,22 @@ from src.components.frames.configurable_frame import ConfigurableFrame
 from src.components.frames.title_frame import TitleFrame
 
 if TYPE_CHECKING:
-    from src.controllers.autoeggdrop import AutoEggDrop
+    from src.controllers.service import Service
 
 
 class AutoEggDropGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoEggDrop component.
     """
-    def __init__(self, auto_eggdrop: 'AutoEggDrop', master, app_controller) -> None:
+    def __init__(
+            self,
+            service_controller: 'Service',
+            master,
+            app_controller
+    ) -> None:
         super().__init__(master=master)
 
-        self.master = master
         self.app_controller = app_controller
-        self.service_controller = auto_eggdrop
+        self.service_controller = service_controller
         self.config = self.service_controller.service_config
         self.toggle_key_label = None
         self.init_gui()
@@ -48,6 +52,6 @@ class AutoEggDropGUI(ConfigurableFrame):
         self.toggle_key_label.pack(pady=10)
 
     def destroy_gui(self):
-        self.service_controller.destroy()
+        self.service_controller.task_manager.destroy()
         super().destroy()
         self.app_controller.show_main()

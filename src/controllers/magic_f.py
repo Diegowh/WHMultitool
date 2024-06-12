@@ -1,13 +1,13 @@
 import asyncio
-from src.controllers.base_task_manager import BaseTaskManager
 from typing import TYPE_CHECKING
+
+from src.components.windows.magic_f_gui import MagicFGUI
+from src.controllers.service import Service
 from src.utils import player_actions as pa
 from src.utils.screen_manager import (
     StructureInventoryCoordinates,
     PlayerInventoryCoordinates
 )
-from src.components.windows.magic_f_gui import MagicFGUI
-from src.config.config import load_service
 
 if TYPE_CHECKING:
     from asyncio import AbstractEventLoop
@@ -15,33 +15,30 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class MagicF(BaseTaskManager):
+class MagicF(Service):
 
     def __init__(
         self,
-        loop: 'AbstractEventLoop',
+        loop: asyncio.AbstractEventLoop,
         config: 'Config',
         master,
         app_controller: 'AppController'
-    ):
+    ) -> None:
+        super().__init__(
+            loop=loop,
+            config=config,
+            master=master,
+            app_controller=app_controller,
+            gui=MagicFGUI,
+            supress_hotkey=False
+        )
         
-        super().__init__(loop, app_controller=app_controller)
-        
-        self.app_config = config
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.register_hotkey(self.toggle_key, supress=False)
-        
-        self.options = self.app_config.magic_f_options
+        self.options = self.task_manager.app_config.magic_f_options
         self.first_dump_loop = True
         self.first_craft_loop = True
-        self.gui = MagicFGUI(
-            magic_f=self,
-            master=master,
-            app_controller=app_controller
-        )
+        super().init_gui()
 
-    async def _task(self):
+    async def on_toggle_key(self):
         selected_option = self.gui.selected_option.get()
         
         if selected_option == "dumper":
@@ -54,7 +51,7 @@ class MagicF(BaseTaskManager):
             await self._retrieve_task(item=selected_option)
 
     async def _veggies_task(self):
-        self.repetitive_task = False
+        self.task_manager.repetitive_task = False
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.TRANSFER_ALL,
             pre_delay=self.service_config.load_inventory_waiting_time,
@@ -121,7 +118,7 @@ class MagicF(BaseTaskManager):
         
     async def _retrieve_task(self, item: str):
         
-        self.repetitive_task = False
+        self.task_manager.repetitive_task = False
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,
             pre_delay=self.service_config.load_inventory_waiting_time

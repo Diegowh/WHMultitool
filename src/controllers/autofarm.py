@@ -1,49 +1,18 @@
 
 import asyncio
 from typing import TYPE_CHECKING
-from src.controllers.base_task_manager import BaseTaskManager
+
 from src.components.windows.autofarm_gui import AutoFarmGUI
+from src.controllers.service import Service
 from src.utils import player_actions as pa
-from src.utils.screen_manager import (
-    StructureInventoryCoordinates
-)
-from src.config.config import load_service
+from src.utils.screen_manager import StructureInventoryCoordinates
 
 if TYPE_CHECKING:
     from src.config.config import Config
     from src.controllers.app_controller import AppController
 
-RESOURCES = {
-    "Stone": "Stone",
-    "Wood": "Wood",
-    "Thatch": "Thatch",
-    "Crystal": "Crystal",
-    "Berries": "Berr",
-    "Rare Flower": "Flow",
-    "Rare Mushroom": "Mushr",
-    "Flint": "Flint",
-    "Metal": "Metal",
-    "Obsidian": "Obsi",
-    "Raw": "Raw",
-    "Hide": "Hide",
-    "Fiber": "Fiber",
-    "Chitin": "Chitin",
-    "Seed": "Seed",
-    "Amarberry": "Amar",
-    "Azulberry": "Azul",
-    "Cianberry": "Cian",
-    "Magenberry": "Magen",
-    "Mejoberry": "Mejo",
-    "Narcoberry": "Narcob",
-    "Stimberry": "Stimb",
-    "Verdeberry": "Verdeb",
-    "Tintoberry": "Tinto",
-    "Pelt": "Pelt",
-    "Primitive": "Prim"
-}
 
-
-class AutoFarm(BaseTaskManager):
+class AutoFarm(Service):
 
     def __init__(
         self,
@@ -51,25 +20,21 @@ class AutoFarm(BaseTaskManager):
         config: 'Config',
         master,
         app_controller: 'AppController'
-    ):
-    
-        super().__init__(loop=loop, app_controller=app_controller)
-        self.app_config = config
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        
-        self.register_hotkey(self.toggle_key, supress=False)
-        
-        self.resources = RESOURCES
-        self.gui = AutoFarmGUI(
-            autofarm=self,
+    ) -> None:
+        super().__init__(
+            loop=loop,
+            config=config,
             master=master,
-            app_controller=app_controller
+            app_controller=app_controller,
+            gui=AutoFarmGUI,
+            supress_hotkey=False
         )
+        self.resources = self.task_manager.app_config.autofarm_resources  # TODO: Darle un par de vueltas a esto
+        super().init_gui()
 
-    async def _task(self):
+    async def on_toggle_key(self):
         
-        self.repetitive_task = False
+        self.task_manager.repetitive_task = False
         
         selected_resources = self.gui.get_selected_resources()
         selected_values = [self.resources[resource] for resource in selected_resources]
