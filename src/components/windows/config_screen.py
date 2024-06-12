@@ -1,3 +1,4 @@
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk, messagebox
 
@@ -26,29 +27,29 @@ class ConfigScreen(BaseFrame):
         config_attributes = self.config.config[self.config.service_name]
         for attr_name in config_attributes:
             value = getattr(self.config, attr_name)
-            frame = tk.Frame(self)
+            frame = ctk.CTkFrame(self)
             frame.pack(fill=tk.X, padx=10, pady=1)
-            label = tk.Label(frame, text=transcript_attr_name(attr_name), anchor='w')
+            label = ctk.CTkLabel(frame, text=transcript_attr_name(attr_name), anchor='w')
             label.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=10)
 
-            entry = ttk.Entry(frame, width=5)
+            entry = ctk.CTkEntry(frame, width=5)
             entry.insert(0, str(value))
             entry.pack(side=tk.RIGHT, padx=(0, 10))
             
             if "key" in attr_name:
-                button = ttk.Button(frame, text="Press Key", command=lambda entry=entry: self.press_key(entry))
+                button = ctk.CTkButton(frame, text="Press Key", command=lambda entry=entry: self.press_key(entry))
                 button.pack(padx=5, pady=1)
-                entry.config(state='readonly')
+                entry.configure(state='readonly')
 
             elif "time" in attr_name:
-                entry.config(validate='key', validatecommand=vcmd)
+                entry.configure(validate='key', validatecommand=vcmd)
 
             self.entries[attr_name] = entry
 
         
 
     def press_key(self, entry):
-        entry.config(state='normal')
+        entry.configure(state='normal')
         entry.focus_set()
         entry.bind('<Key>', self.update_entry)
 
@@ -57,13 +58,13 @@ class ConfigScreen(BaseFrame):
         entry = event.widget
         entry.delete(0, 'end')
         entry.insert(0, key)
-        entry.config(state='readonly')
+        entry.configure(state='readonly')
     
     def get_entries(self):
         return {key: entry.get() for key, entry in self.entries.items()}
     
     def save_button(self, container):
-        save_button = ttk.Button(container, text="Save", command=self.save_config)
+        save_button = ctk.CTkButton(container, text="Save", command=self.save_config)
         save_button.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return save_button
     

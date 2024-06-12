@@ -1,3 +1,4 @@
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
@@ -15,6 +16,7 @@ class ConfigurableFrame(BaseFrame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
+        self.service_controller = None
 
     def open_service_config(self, service:  'BaseTaskManager') -> None:
         keyboard.unregister_all_hotkeys()
@@ -24,8 +26,12 @@ class ConfigurableFrame(BaseFrame):
         config_screen = (ConfigScreen(service, self.master))
         config_screen.pack(fill=tk.BOTH, expand=True)
  
-    def config_btn(self, container) -> ttk.Button:
-        config_button = ttk.Button(container, text="Config", command=lambda: self.open_service_config(self.service_controller))
+    def config_btn(self, container) -> ctk.CTkButton:
+        config_button = ctk.CTkButton(
+            container,
+            text="Config",
+            command=lambda: self.open_service_config(self.service_controller)
+        )
         config_button.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return config_button
 

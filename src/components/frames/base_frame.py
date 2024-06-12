@@ -3,13 +3,13 @@ This module contains the BaseFrame class,
 which is used as a base class for all the frames in the application.
 """
 
-
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk
 from abc import ABC, abstractmethod
 
 
-class BaseFrame(tk.Frame, ABC):
+class BaseFrame(ctk.CTkFrame, ABC):
     """This class is used as a base class for all the frames in the application.
     It inherits from tk.Frame and is an abstract class.
     
@@ -35,16 +35,16 @@ class BaseFrame(tk.Frame, ABC):
     #     self.destroy_gui()
 
     def back_btn(self, container):
-        back_btn = ttk.Button(container, text="Back", command=self.destroy_gui)
+        back_btn = ctk.CTkButton(container, text="Back", command=self.destroy_gui)
         back_btn.pack(side=tk.LEFT, padx=10, pady=20, expand=True)
         return back_btn
 
-    def bottom_container(self) -> tk.Frame:
-        bottom_container = tk.Frame(self)
+    def bottom_container(self) -> ctk.CTkFrame:
+        bottom_container = ctk.CTkFrame(self)
         bottom_container.pack(side=tk.BOTTOM, fill=tk.X)
         return bottom_container
     
-    def create_widgets(self) -> tk.Frame:
+    def create_widgets(self) -> ctk.CTkFrame:
         """This method creates the common widgets for all the frames.
         """
         bottom_container = self.bottom_container()

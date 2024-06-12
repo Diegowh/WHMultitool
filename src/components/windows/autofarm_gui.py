@@ -1,11 +1,11 @@
 
+import customtkinter as ctk
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.components.frames.title_frame import TitleFrame
 from src.components.frames.configurable_frame import ConfigurableFrame
-from src.components.windows.service_gui import ServiceGUI
 
 if TYPE_CHECKING:
     from src.controllers.service import Service
@@ -35,11 +35,11 @@ class AutoFarmGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-        self.toggle_key_label = ttk.Label(
+        self.toggle_key_label = ctk.CTkLabel(
             self,
             text=f"Select to throw away when pressing {self.config.toggle_key.upper()}",
             font=("Arial", 8, "italic"),
-            foreground="#800000"
+            text_color="#800000"
         )
         self.toggle_key_label.pack(pady=10)
         
@@ -51,7 +51,7 @@ class AutoFarmGUI(ConfigurableFrame):
         self.app_controller.show_main()
 
     def checkbox_container(self):
-        container = ttk.Frame(self)
+        container = ctk.CTkFrame(self)
         container.pack(padx=20, fill=tk.X)
 
         self.check_vars = {
@@ -60,7 +60,7 @@ class AutoFarmGUI(ConfigurableFrame):
         
         for i, resource in enumerate(self.service_controller.resources.keys()):
             row, col = divmod(i, 4)
-            checkbox = ttk.Checkbutton(
+            checkbox = ctk.CTkCheckBox(
                 container,
                 text=resource,
                 variable=self.check_vars[resource]

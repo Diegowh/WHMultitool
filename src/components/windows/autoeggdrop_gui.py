@@ -4,7 +4,7 @@ This module contains class which represents the GUI of the AutoEggDrop service.
 AutoEggDropGUI is a subclass of BaseFrame, which is a subclass of tkinter.Frame.
 """
 
-
+import customtkinter as ctk
 import tkinter as tk
 from typing import TYPE_CHECKING
 
@@ -43,11 +43,11 @@ class AutoEggDropGUI(ConfigurableFrame):
         )
         title_frame.pack(side=tk.TOP, fill=tk.X)
         
-        self.toggle_key_label = tk.Label(
+        self.toggle_key_label = ctk.CTkLabel(
             self,
             text=f"Press '{self.config.toggle_key.upper()}' to toggle on/off",
             font=("Arial", 8, "italic"),
-            foreground="#800000"
+            text_color="#800000"
         )
         self.toggle_key_label.pack(pady=10)
 

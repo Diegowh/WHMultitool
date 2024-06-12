@@ -13,6 +13,7 @@ import base64
 import tempfile
 import tkinter as tk
 from tkinter import messagebox
+import customtkinter
 
 import pygetwindow as gw
 
@@ -25,7 +26,7 @@ from src.controllers.autofarm import AutoFarm
 from src.controllers.magic_f import MagicF
 
 
-class AppController(tk.Tk):
+class AppController(customtkinter.CTk):
     """
     Main controller of the application.
     
