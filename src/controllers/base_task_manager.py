@@ -13,8 +13,7 @@ if TYPE_CHECKING:
     from src.config.config import Config
 
 
-
-class BaseTaskManager(ABC):
+class BaseTaskManager:
     """
     Base class for task managers,
     provides a basic structure for managing tasks in a separate thread.
@@ -25,6 +24,7 @@ class BaseTaskManager(ABC):
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
         app_controller: 'AppController',
+        service_actions,
         repetitive_task: bool = True,
     ) -> None:
 
@@ -35,23 +35,23 @@ class BaseTaskManager(ABC):
         self.first_run = True
         self.app_config = config
         self.app_controller = app_controller
-
+        self.service_actions = service_actions
         self.repetitive_task = repetitive_task
 
-    @abstractmethod
-    async def _task(self) -> None:
-        """
-        Abstract method representing the core task to be performed by a service controller.
-        
-        This method is intended to be overridden by subclasses
-        to define a sequence of in-game actions.
-        
-        These actions are specific to the service
-        and are executed repeatedly  in a loop while the task is running.
-        
-        For example, a service controller might define this method
-        to automate a series of clicks, cursor movements, and text inputs.
-        """
+    # @abstractmethod
+    # async def _task(self) -> None:
+    #     """
+    #     Abstract method representing the core task to be performed by a service controller.
+    #
+    #     This method is intended to be overridden by subclasses
+    #     to define a sequence of in-game actions.
+    #
+    #     These actions are specific to the service
+    #     and are executed repeatedly  in a loop while the task is running.
+    #
+    #     For example, a service controller might define this method
+    #     to automate a series of clicks, cursor movements, and text inputs.
+    #     """
 
     async def coroutine(self) -> None:
         """Method to encapsulate and control the task coroutine in a loop.
@@ -59,7 +59,7 @@ class BaseTaskManager(ABC):
         try:
             self.task_running = True
             while self.task_running:
-                await self._task()
+                await self.service_actions()
 
                 # This is a non-blocking call.
                 # It's used to give control to the asyncio event loop.
