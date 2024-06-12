@@ -11,6 +11,7 @@ python = "^3.11"
 keyboard = "^0.13.5"
 pyautogui = "^0.9.54"
 toml = "^0.10.2"
+customtkinter = "^5.2.2"
 
 
 [build-system]
