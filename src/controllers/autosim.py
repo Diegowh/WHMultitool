@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class AutoSim(BaseTaskManager):
+class AutoSim:
     """
     This class is the controller for the AutoSim service.
     """
@@ -37,23 +37,23 @@ class AutoSim(BaseTaskManager):
         app_controller: 'AppController'
     ) -> None:
 
-        super().__init__(
+        self.service_config = load_service(self.__class__.__name__.upper())
+
+        self.toggle_key = self.service_config.toggle_key
+        self.task_manager = BaseTaskManager(
             loop=loop,
             config=config,
-            app_controller=app_controller
+            app_controller=app_controller,
+            service_actions=self.service_actions
         )
-
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-
-        self.register_hotkey(self.toggle_key)
+        self.task_manager.register_hotkey(self.toggle_key)
         self.gui = AutoSimGUI(
             autosim=self,
             master=master,
             app_controller=app_controller
         )
 
-    async def _task(self):
+    async def service_actions(self):
         """Method to automate the process of trying to join a full server in the game.
         """
         await pa.move_cursor_and_click(

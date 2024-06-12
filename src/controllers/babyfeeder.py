@@ -13,7 +13,7 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class BabyFeeder(BaseTaskManager):
+class BabyFeeder:
     
     def __init__(
         self,
@@ -22,26 +22,26 @@ class BabyFeeder(BaseTaskManager):
         master,
         app_controller: 'AppController'
     ) -> None:
-        
-        super().__init__(
-            loop=loop,
-            config=config,
-            app_controller=app_controller
-        )
 
         self.service_config = load_service(self.__class__.__name__.upper())
-
-        self.food_keywords = self.app_config.food_keywords
         self.toggle_key = self.service_config.toggle_key
-        self.register_hotkey(self.toggle_key, supress=False)
-        
+        self.task_manager = BaseTaskManager(
+            loop=loop,
+            config=config,
+            app_controller=app_controller,
+            service_actions=self.service_actions
+        )
+
+        self.task_manager.register_hotkey(self.toggle_key, supress=False)
+        self.food_keywords = self.task_manager.app_config.food_keywords
+
         self.gui = BabyFeederGUI(
             babyfeeder=self,
             master=master,
             app_controller=app_controller
         )
     
-    async def _task(self):
+    async def service_actions(self):
         
         if self.gui.mode.get() == "Loop":
             
@@ -62,7 +62,7 @@ class BabyFeeder(BaseTaskManager):
 
         elif self.gui.mode.get() == "Single":
             
-            self.repetitive_task = False
+            self.task_manager.repetitive_task = False
             await pa.move_cursor_and_click(
                 PlayerInventoryCoordinates.SEARCH_BAR,
                 pre_delay=self.service_config.load_inventory_waiting_time

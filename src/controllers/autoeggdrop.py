@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class AutoEggDrop(BaseTaskManager):
+class AutoEggDrop:
     """ 
     This class is the controller for the AutoEggDrop service.
     """
@@ -30,21 +30,23 @@ class AutoEggDrop(BaseTaskManager):
         master
     ) -> None:
 
-        super().__init__(
+        self.service_config = load_service(self.__class__.__name__.upper())
+
+        self.toggle_key = self.service_config.toggle_key
+        self.task_manager = BaseTaskManager(
             loop=loop,
             config=config,
-            app_controller=app_controller
+            app_controller=app_controller,
+            service_actions=self.service_actions
         )
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.register_hotkey(self.toggle_key)
+        self.task_manager.register_hotkey(self.toggle_key)
         self.gui = AutoEggDropGUI(
             auto_eggdrop=self,
             master=master,
             app_controller=app_controller
             )
 
-    async def _task(self):
+    async def service_actions(self):
         """Method to automate the process of dropping eggs from the inventory in the game.
         """
         await pa.open_inventory(

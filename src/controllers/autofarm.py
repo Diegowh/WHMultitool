@@ -14,35 +14,36 @@ if TYPE_CHECKING:
     from src.controllers.app_controller import AppController
 
 
-class AutoFarm(BaseTaskManager):
+class AutoFarm:
 
     def __init__(
         self,
         loop: asyncio.AbstractEventLoop,
         config: 'Config',
-        master,
-        app_controller: 'AppController'
-    ):
-    
-        super().__init__(
+        app_controller: 'AppController',
+        master
+    ) -> None:
+
+        self.service_config = load_service(self.__class__.__name__.upper())
+
+        self.toggle_key = self.service_config.toggle_key
+        self.task_manager = BaseTaskManager(
             loop=loop,
             config=config,
-            app_controller=app_controller
+            app_controller=app_controller,
+            service_actions=self.service_actions
         )
-        self.service_config = load_service(self.__class__.__name__.upper())
-        self.toggle_key = self.service_config.toggle_key
-        self.register_hotkey(self.toggle_key, supress=False)
-        
-        self.resources = self.app_config.autofarm_resources
+        self.task_manager.register_hotkey(self.toggle_key, supress=False)
+        self.resources = self.task_manager.app_config.autofarm_resources  # TODO: Darle un par de vueltas a esto
         self.gui = AutoFarmGUI(
             autofarm=self,
             master=master,
             app_controller=app_controller
         )
 
-    async def _task(self):
+    async def service_actions(self):
         
-        self.repetitive_task = False
+        self.task_manager.repetitive_task = False
         
         selected_resources = self.gui.get_selected_resources()
         selected_values = [self.resources[resource] for resource in selected_resources]
