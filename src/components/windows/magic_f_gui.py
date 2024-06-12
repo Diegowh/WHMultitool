@@ -1,18 +1,19 @@
 import tkinter as tk
 from tkinter import ttk
-from src.components.frames.title_frame import TitleFrame
 from typing import TYPE_CHECKING
 
 from src.components.frames.configurable_frame import ConfigurableFrame
+from src.components.frames.title_frame import TitleFrame
+
 if TYPE_CHECKING:
-    from src.controllers.magic_f import MagicF
+    from src.controllers.service import Service
 
 
 class MagicFGUI(ConfigurableFrame):
     
     def __init__(
         self,
-        magic_f: 'MagicF',
+        service_controller: 'Service',
         master,
         app_controller,
     ):
@@ -21,7 +22,7 @@ class MagicFGUI(ConfigurableFrame):
         self.selection_frame = None
         self.master = master
         self.app_controller = app_controller
-        self.service_controller = magic_f
+        self.service_controller = service_controller
         
         self.config = self.service_controller.service_config
         self.entries = {}

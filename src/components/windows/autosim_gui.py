@@ -9,24 +9,29 @@ from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.components.frames.configurable_frame import ConfigurableFrame
-
-from src.utils.validators import validate_map_number
+from src.components.windows.service_gui import ServiceGUI
 from src.components.frames.title_frame import TitleFrame
+from src.utils.validators import validate_map_number
 
 if TYPE_CHECKING:
-    from src.controllers.autosim import AutoSim
+    from src.controllers.service import Service
 
 
 class AutoSimGUI(ConfigurableFrame):
     """Class that represents the GUI of the AutoSim component.
     """
-    def __init__(self, autosim: 'AutoSim', master, app_controller) -> None:
+    def __init__(
+            self,
+            service_controller: 'Service',
+            master,
+            app_controller
+    ) -> None:
         super().__init__(master=master)
 
         self.master = master
         self.app_controller = app_controller
         self.text_input = tk.StringVar()
-        self.service_controller = autosim
+        self.service_controller = service_controller
         self.config = self.service_controller.service_config
         self.toggle_key_label = None
         self.init_gui()
