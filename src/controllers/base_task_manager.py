@@ -3,10 +3,8 @@ Base class for service task managers.
 """
 
 import asyncio
-from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING
-
 import keyboard
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.controllers.app_controller import AppController

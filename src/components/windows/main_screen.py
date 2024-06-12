@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
+
 from src.config.config import APP_VERSION
 
 if TYPE_CHECKING:

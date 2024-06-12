@@ -12,18 +12,17 @@ import asyncio
 import base64
 import tempfile
 import tkinter as tk
+from tkinter import messagebox
+
+import pygetwindow as gw
+
 from src.components.windows.main_screen import MainScreen
 from src.config.config import Config, ARK_ASCENDED_WINDOW_TITLE
-from tkinter import messagebox
-import pygetwindow as gw
 from src.controllers.autosim import AutoSim
 from src.controllers.autoeggdrop import AutoEggDrop
 from src.controllers.babyfeeder import BabyFeeder
 from src.controllers.autofarm import AutoFarm
 from src.controllers.magic_f import MagicF
-
-
-
 
 
 class AppController(tk.Tk):
