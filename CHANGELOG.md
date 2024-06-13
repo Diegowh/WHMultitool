@@ -117,3 +117,7 @@
 ## [1.7.6] 13/06/2024
 
 - Rename BaseTaskManager
+
+## [1.8.0] 13/06/2024
+
+- Added Keep Only options for Magic-F
