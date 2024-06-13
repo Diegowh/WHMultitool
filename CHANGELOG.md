@@ -109,3 +109,7 @@
 ## [1.7.4] 12/06/2024
 
 - Refactor Service Controllers
+
+## [1.7.5] 13/06/2024
+
+- Fixed typo in Verdberry
