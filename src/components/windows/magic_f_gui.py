@@ -50,29 +50,34 @@ class MagicFGUI(ConfigurableFrame):
         self.selection_frame.place(relx=0.5, rely=0.5, anchor='center')
 
         self.selected_option = tk.StringVar(value="veggies")
-        for name, value in self.service_controller.options.items():
-            if name == "Dumper" or name == "Crafter":
-                frame = ttk.Frame(self.selection_frame)
-                frame.pack(anchor='w')
+        options = list(self.service_controller.options.items())
+        for i in range(0, len(options), 5):  # Para que sea de columnas de maximo 5 radiobuttons por columna
+            frame = ttk.Frame(self.selection_frame)
+            frame.pack(side=tk.LEFT, anchor='n', padx=10)
 
-                radiobutton = ttk.Radiobutton(
-                    frame,
-                    text=name,
-                    variable=self.selected_option,
-                    value=value,
-                )
-                radiobutton.pack(side=tk.LEFT, pady=2)
+            for name, value in options[i:i + 5]:
+                if name == "Dumper" or name == "Crafter":
+                    sub_frame = ttk.Frame(frame)
+                    sub_frame.pack(anchor='w')
 
-                self.entries[name] = ttk.Entry(frame, width=10)
-                self.entries[name].pack(side=tk.LEFT, padx=10)
-            else:
-                radiobutton = ttk.Radiobutton(
-                    self.selection_frame,
-                    text=name,
-                    variable=self.selected_option,
-                    value=value
-                )
-                radiobutton.pack(anchor='w')
+                    radiobutton = ttk.Radiobutton(
+                        sub_frame,
+                        text=name,
+                        variable=self.selected_option,
+                        value=value,
+                    )
+                    radiobutton.pack(side=tk.LEFT, pady=2)
+
+                    self.entries[name] = ttk.Entry(sub_frame, width=10)
+                    self.entries[name].pack(side=tk.LEFT, padx=10)
+                else:
+                    radiobutton = ttk.Radiobutton(
+                        frame,
+                        text=name,
+                        variable=self.selected_option,
+                        value=value
+                    )
+                    radiobutton.pack(anchor='w')
 
     def destroy_gui(self):
         self.service_controller.task_manager.destroy()
