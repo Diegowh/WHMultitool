@@ -113,3 +113,7 @@
 ## [1.7.5] 13/06/2024
 
 - Fixed typo in Verdberry
+
+## [1.7.6] 13/06/2024
+
+- Rename BaseTaskManager
