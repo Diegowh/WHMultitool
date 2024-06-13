@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Type
 from src.config.config import load_service
-from src.controllers.base_task_manager import BaseTaskManager
+from src.controllers.task_manager import TaskManager
 from abc import ABC, abstractmethod
 
 
@@ -29,7 +29,7 @@ class Service(ABC):
         self.service_config = load_service(self.__class__.__name__.upper())
 
         self.toggle_key = self.service_config.toggle_key
-        self.task_manager = BaseTaskManager(
+        self.task_manager = TaskManager(
             loop=loop,
             config=config,
             app_controller=self.app_controller,

@@ -7,7 +7,7 @@ import keyboard
 from src.components.frames.base_frame import BaseFrame
 from src.components.windows.config_screen import ConfigScreen
 if TYPE_CHECKING:
-    from src.controllers.base_task_manager import BaseTaskManager
+    from src.controllers.task_manager import TaskManager
 
 
 class ConfigurableFrame(BaseFrame):
@@ -16,7 +16,7 @@ class ConfigurableFrame(BaseFrame):
         super().__init__(master)
         self.master = master
 
-    def open_service_config(self, service:  'BaseTaskManager') -> None:
+    def open_service_config(self, service: 'TaskManager') -> None:
         keyboard.unregister_all_hotkeys()
         self.pack_forget()
         

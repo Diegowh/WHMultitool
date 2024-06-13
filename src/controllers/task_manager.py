@@ -11,7 +11,7 @@ if TYPE_CHECKING:
     from src.config.config import Config
 
 
-class BaseTaskManager:
+class TaskManager:
     """
     Base class for task managers,
     provides a basic structure for managing tasks in a separate thread.
