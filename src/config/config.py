@@ -122,7 +122,7 @@ class Config:
             "Mejoberry": "Mejo",
             "Narcoberry": "Narcob",
             "Stimberry": "Stimb",
-            "Verdeberry": "Verdeb",
+            "Verdberry": "Verdb",
             "Tintoberry": "Tinto",
             "Pelt": "Pelt",
             "Primitive": "Prim"
