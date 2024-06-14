@@ -129,3 +129,7 @@
 ## [1.8.2] 14/06/2024
 
 - Now uses service title instead of class name
+
+## [1.8.3] 14/06/2024
+
+- Fixed module issues
