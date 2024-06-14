@@ -125,3 +125,7 @@
 ## [1.8.1] 14/06/2024
 
 - Fixed hotkey not being registered after closing config screen
+
+## [1.8.2] 14/06/2024
+
+- Now uses service title instead of class name

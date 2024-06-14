@@ -19,10 +19,10 @@ APP_TITLE = f"ADAT - {APP_NAME}"
 
 # Services
 SERVICES = {
-    "AutoSim": "Auto-Sim",
-    "AutoEggDrop": "Auto-Eggdrop",
+    "AutoSim": "Auto Sim",
+    "AutoEggDrop": "Auto Eggdrop",
     "BabyFeeder": "Baby Feeder",
-    "AutoFarm": "Auto-Farm",
+    "AutoFarm": "Auto Farm",
     "MagicF": "Magic-F"
 }
 
