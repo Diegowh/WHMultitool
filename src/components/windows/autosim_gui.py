@@ -43,7 +43,7 @@ class AutoSimGUI(ConfigurableFrame):
         
         title_frame = TitleFrame(
             self,
-            self.service_controller.__class__.__name__
+            self.service_controller.service_title
         )
         
         title_frame.pack(side=tk.TOP, fill=tk.X)

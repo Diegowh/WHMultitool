@@ -36,6 +36,7 @@ class Service(ABC):
             service_actions=self.on_toggle_key
         )
         self.task_manager.register_hotkey(self.toggle_key, supress=supress_hotkey)
+        self.service_title = self.app_controller.config.services[self.__class__.__name__]
         self.gui = None
 
     @abstractmethod
