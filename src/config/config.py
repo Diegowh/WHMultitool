@@ -45,6 +45,10 @@ FOOD_KEYWORDS = {
 
 MAGIC_F_OPTIONS = {
     "Veggies Mode": "veggies",
+    "Keep Mejoberry": "mejoberry",
+    "Keep Tintoberry": "tintoberry",
+    "Keep Narcoberry": "narcoberry",
+    "Keep Stimberry": "stimberry",
     "Honey Mode": "honey",
     "Sap Mode": "sap",
     "Paste Mode": "pas",

@@ -117,3 +117,11 @@
 ## [1.7.6] 13/06/2024
 
 - Rename BaseTaskManager
+
+## [1.8.0] 13/06/2024
+
+- Added Keep Only options for Magic-F
+
+## [1.8.1] 14/06/2024
+
+- Fixed hotkey not being registered after closing config screen

@@ -38,10 +38,23 @@ class MagicF(Service):
         self.first_craft_loop = True
         super().init_gui()
 
+        self.keep_only_items = {
+            "mejoberry": ["a", "d", "t"],
+            "tintoberry": ["m", "a", "d"],
+            "narcoberry": ["m", "i", "d", "l"],
+            "stimberry": ["a", "d", "o"],
+        }
+
     async def on_toggle_key(self):
         selected_option = self.gui.selected_option.get()
-        
-        if selected_option == "dumper":
+        if "berry" in selected_option:
+            self.task_manager.repetitive_task = False
+            await asyncio.sleep(self.service_config.load_inventory_waiting_time)
+            for item in self.keep_only_items[selected_option]:
+                await self.drop_all(resource=item)
+                await asyncio.sleep(0)
+
+        elif selected_option == "dumper":
             await self._dumper_task()
         elif selected_option == "crafter":
             await self._crafter_task()
@@ -136,4 +149,16 @@ class MagicF(Service):
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.CLOSE
         )
-        
+
+    async def drop_all(self, resource):
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.SEARCH_BAR,
+        )
+        await pa.type_text(
+            text=resource,
+            post_delay=self.service_config.after_type_text_waiting_time
+        )
+
+        await pa.move_cursor_and_click(
+            StructureInventoryCoordinates.DROP_ALL,
+        )
