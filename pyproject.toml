@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "all-in-one"
-version = "1.8.0"
+version = "1.8.1"
 description = ""
 authors = ["diegowh <contacto.diegowh@gmail.com>"]
 license = "MIT"
