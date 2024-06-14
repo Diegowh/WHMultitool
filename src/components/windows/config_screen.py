@@ -82,8 +82,8 @@ class ConfigScreen(BaseFrame):
     
     def destroy_gui(self):
         super().destroy()
-        if hasattr(self.service, "register_hotkey"):
-            self.service.register_hotkey(self.config.toggle_key)
+        if hasattr(self.service.task_manager, "register_hotkey"):
+            self.service.task_manager.register_hotkey(self.config.toggle_key)
             
             # # Update the toggle key label
             # self.service.gui.toggle_key_label.config(text=f"Press '{(self.config.toggle_key).upper()}' to toggle on/off")
