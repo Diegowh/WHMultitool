@@ -47,7 +47,6 @@ class MagicF(Service):
 
     async def on_toggle_key(self):
         selected_option = self.gui.selected_option.get()
-        print(selected_option)
         if "berry" in selected_option:
             self.task_manager.repetitive_task = False
             await asyncio.sleep(self.service_config.load_inventory_waiting_time)
