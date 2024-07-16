@@ -41,7 +41,11 @@ def transcript_attr_name(attr_name: str) -> str:
 
 
 def get_version():
-    pyproject = toml.load("pyproject.toml")
-    version = pyproject.get("tool", {}).get("poetry", {}).get("version", "")
+    try:
+        pyproject = toml.load("pyproject.toml")
+        version = pyproject.get("tool", {}).get("poetry", {}).get("version", "")
+
+    except FileNotFoundError:
+        return "1.8.4"
 
     return version
