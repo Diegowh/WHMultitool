@@ -49,7 +49,7 @@ class MagicFGUI(ConfigurableFrame):
         self.selection_frame = ttk.Frame(self)
         self.selection_frame.place(relx=0.5, rely=0.5, anchor='center')
 
-        self.selected_option = tk.StringVar(value="veggies")
+        self.selected_option = tk.StringVar(value="fish")
         options = list(self.service_controller.options.items())
         for i in range(0, len(options), 5):  # Para que sea de columnas de maximo 5 radiobuttons por columna
             frame = ttk.Frame(self.selection_frame)

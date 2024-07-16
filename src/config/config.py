@@ -53,7 +53,8 @@ MAGIC_F_OPTIONS = {
     "Sap Mode": "sap",
     "Paste Mode": "pas",
     "Dumper": "dumper",
-    "Crafter": "crafter"
+    "Crafter": "crafter",
+    "Fish Mode": "fish",
 }
 
 # Main Loop

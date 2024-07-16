@@ -53,7 +53,8 @@ class MagicF(Service):
             for item in self.keep_only_items[selected_option]:
                 await self.drop_all(resource=item)
                 await asyncio.sleep(0)
-
+        elif selected_option == "fish":
+            await self._retrieve_task(item=selected_option, fish_mode=True)
         elif selected_option == "dumper":
             await self._dumper_task()
         elif selected_option == "crafter":
@@ -129,8 +130,23 @@ class MagicF(Service):
         
         await asyncio.sleep(self.service_config.autocraft_interval_time)
         
-    async def _retrieve_task(self, item: str):
-        
+    async def _retrieve_task(self, item: str, fish_mode: bool = False):
+
+        if fish_mode:
+
+            await pa.move_cursor_and_click(
+                StructureInventoryCoordinates.SEARCH_BAR,
+                pre_delay=self.service_config.load_inventory_waiting_time
+            )
+
+            await pa.type_text(
+                text="prim"
+            )
+
+            await pa.move_cursor_and_click(
+                StructureInventoryCoordinates.DROP_ALL
+            )
+
         self.task_manager.repetitive_task = False
         await pa.move_cursor_and_click(
             StructureInventoryCoordinates.SEARCH_BAR,
