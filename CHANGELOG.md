@@ -133,3 +133,11 @@
 ## [1.8.3] 14/06/2024
 
 - Fixed module issues
+
+## [1.8.4] 14/06/2024
+
+- Handled exception when pyproject.toml is missing
+
+## [1.8.5] 16/07/2024
+
+- Implement fish meat retrieving
